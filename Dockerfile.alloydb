@@ -31,8 +31,9 @@ RUN addgroup -g 1001 mcp && \
 # Set up application directory
 WORKDIR /app
 
-# Install Google Cloud AlloyDB connector and PostgreSQL driver
-RUN pip3 install --no-cache-dir psycopg2-binary==2.9.9 google-cloud-alloydb-connector>=0.2.0 google-auth>=2.23.0
+# Create virtual environment and install Google Cloud AlloyDB connector and PostgreSQL driver
+RUN python3 -m venv /opt/venv && \
+    /opt/venv/bin/pip install --no-cache-dir psycopg2-binary==2.9.9 google-cloud-alloydb-connector>=0.2.0 google-auth>=2.23.0
 
 # Download and install MCP Toolbox
 ARG TOOLBOX_VERSION=0.9.0
@@ -73,6 +74,7 @@ EXPOSE 5000
 ENV DB_TYPE=alloydb
 ENV TOOLBOX_PORT=5000
 ENV TOOLBOX_LOG_LEVEL=info
+ENV PATH="/opt/venv/bin:$PATH"
 
 # Use tini as init system
 ENTRYPOINT ["/sbin/tini", "--"]
