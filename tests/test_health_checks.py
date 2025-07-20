@@ -4,7 +4,8 @@ Health check tests for MCP Database Servers.
 
 import pytest
 import requests
-from conftest import POSTGRES_MCP_URL, MYSQL_MCP_URL
+import os
+from conftest import POSTGRES_MCP_URL, MYSQL_MCP_URL, SNOWFLAKE_MCP_URL, REDSHIFT_MCP_URL
 
 
 class TestHealthChecks:
@@ -79,3 +80,33 @@ class TestHealthChecks:
         # Should have one row with value 1
         content = response["result"]["content"]
         assert len(content) > 0
+    
+    @pytest.mark.snowflake
+    @pytest.mark.skipif(
+        not os.getenv("SNOWFLAKE_ACCOUNT") and not os.getenv("TEST_SNOWFLAKE_MOCK"), 
+        reason="Snowflake not available"
+    )
+    def test_snowflake_health(self):
+        """Test Snowflake MCP server health endpoint."""
+        response = requests.get(f"{SNOWFLAKE_MCP_URL}/health", timeout=30)
+        assert response.status_code == 200
+        
+        health_data = response.json()
+        assert "status" in health_data
+        assert health_data["status"] in ["healthy", "ready"]
+        assert "timestamp" in health_data
+    
+    @pytest.mark.redshift
+    @pytest.mark.skipif(
+        not os.getenv("REDSHIFT_HOST") and not os.getenv("TEST_REDSHIFT_MOCK"), 
+        reason="Redshift not available"
+    )
+    def test_redshift_health(self):
+        """Test Redshift MCP server health endpoint."""
+        response = requests.get(f"{REDSHIFT_MCP_URL}/health", timeout=30)
+        assert response.status_code == 200
+        
+        health_data = response.json()
+        assert "status" in health_data
+        assert health_data["status"] in ["healthy", "ready"]
+        assert "timestamp" in health_data

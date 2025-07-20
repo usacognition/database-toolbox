@@ -4,7 +4,8 @@ Integration tests for MCP Database Servers.
 
 import pytest
 import time
-from conftest import POSTGRES_MCP_URL, MYSQL_MCP_URL
+import os
+from conftest import POSTGRES_MCP_URL, MYSQL_MCP_URL, SNOWFLAKE_MCP_URL, REDSHIFT_MCP_URL
 
 
 @pytest.mark.integration

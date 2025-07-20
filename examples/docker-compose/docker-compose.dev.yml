@@ -146,6 +146,67 @@ services:
     networks:
       - mcp-dev
 
+  # MCP Snowflake Server (mock for testing)
+  mcp-snowflake:
+    build:
+      context: ../../
+      dockerfile: Dockerfile.snowflake
+    container_name: dev-mcp-snowflake
+    environment:
+      DB_TYPE: snowflake
+      SNOWFLAKE_ACCOUNT: mock-account.snowflakecomputing.com
+      SNOWFLAKE_USER: mock_user
+      SNOWFLAKE_PASSWORD: mock_password
+      SNOWFLAKE_DATABASE: MOCK_DB
+      SNOWFLAKE_SCHEMA: PUBLIC
+      SNOWFLAKE_WAREHOUSE: MOCK_WH
+      SNOWFLAKE_ROLE: PUBLIC
+      TOOLBOX_PORT: 5002
+      TOOLBOX_LOG_LEVEL: debug
+      ENABLE_STDIO: "false"
+    ports:
+      - "5002:5002"
+    healthcheck:
+      test: ["CMD", "/app/scripts/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - mcp-dev
+    profiles:
+      - snowflake
+
+  # MCP Redshift Server (mock for testing)
+  mcp-redshift:
+    build:
+      context: ../../
+      dockerfile: Dockerfile.redshift
+    container_name: dev-mcp-redshift
+    environment:
+      DB_TYPE: redshift
+      REDSHIFT_HOST: mock-cluster.abc123.us-west-2.redshift.amazonaws.com
+      REDSHIFT_PORT: 5439
+      REDSHIFT_DATABASE: mock_db
+      REDSHIFT_USER: mock_user
+      REDSHIFT_PASSWORD: mock_password
+      REDSHIFT_SSL_MODE: require
+      TOOLBOX_PORT: 5003
+      TOOLBOX_LOG_LEVEL: debug
+      ENABLE_STDIO: "false"
+    ports:
+      - "5003:5003"
+    healthcheck:
+      test: ["CMD", "/app/scripts/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - mcp-dev
+    profiles:
+      - redshift
+
   # MCP Test Runner
   mcp-tester:
     build:
@@ -160,6 +221,8 @@ services:
     environment:
       POSTGRES_MCP_URL: http://mcp-postgres:5000
       MYSQL_MCP_URL: http://mcp-mysql:5001
+      SNOWFLAKE_MCP_URL: http://mcp-snowflake:5002
+      REDSHIFT_MCP_URL: http://mcp-redshift:5003
       TEST_TIMEOUT: 60
     volumes:
       - ../../tests:/app/tests:ro
