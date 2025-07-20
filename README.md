@@ -130,7 +130,7 @@ Add to your MCP client config:
         "-e", "DB_NAME=your_database",
         "-e", "DB_USER=your_username",
         "-e", "DB_PASSWORD=your_password",
-        "@toolbox-images/postgres:latest"
+        "@toolbox-images/postgres"
       ]
     }
   }
@@ -184,7 +184,7 @@ Add to your MCP client config:
         "-e", "DB_NAME=your_database",
         "-e", "DB_USER=your_username",
         "-e", "DB_PASSWORD=your_password",
-        "@toolbox-images/mysql:latest"
+        "@toolbox-images/mysql"
       ]
     }
   }
@@ -242,7 +242,7 @@ Add to your MCP client config:
         "-e", "SNOWFLAKE_PASSWORD=your_password",
         "-e", "SNOWFLAKE_DATABASE=your_database",
         "-e", "SNOWFLAKE_WAREHOUSE=your_warehouse",
-        "@toolbox-images/snowflake:latest"
+        "@toolbox-images/snowflake"
       ]
     }
   }
@@ -297,7 +297,7 @@ Add to your MCP client config:
         "-e", "REDSHIFT_DATABASE=your_database",
         "-e", "REDSHIFT_USER=your_username",
         "-e", "REDSHIFT_PASSWORD=your_password",
-        "@toolbox-images/redshift:latest"
+        "@toolbox-images/redshift"
       ]
     }
   }
@@ -354,7 +354,7 @@ Add to your MCP client config:
         "-e", "SQLSERVER_DATABASE=your_database",
         "-e", "SQLSERVER_USER=your_username",
         "-e", "SQLSERVER_PASSWORD=your_password",
-        "@toolbox-images/sqlserver:latest"
+        "@toolbox-images/sqlserver"
       ]
     }
   }
@@ -399,7 +399,7 @@ Add to your MCP client config:
         "-p", "5000:5000",
         "-e", "SQLITE_DATABASE_PATH=/data/database.db",
         "-v", "/host/path/to/database:/data",
-        "@toolbox-images/sqlite:latest"
+        "@toolbox-images/sqlite"
       ]
     }
   }
@@ -449,7 +449,7 @@ Add to your MCP client config:
         "-e", "BIGQUERY_PROJECT_ID=your-project-id",
         "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
         "-v", "/host/path/to/credentials:/credentials",
-        "@toolbox-images/bigquery:latest"
+        "@toolbox-images/bigquery"
       ]
     }
   }
@@ -501,7 +501,7 @@ Add to your MCP client config:
         "-e", "DB_PASSWORD=your_password",
         "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
         "-v", "/host/path/to/credentials:/credentials",
-        "@toolbox-images/alloydb:latest"
+        "@toolbox-images/alloydb"
       ]
     }
   }
@@ -550,7 +550,7 @@ Add to your MCP client config:
         "-e", "SPANNER_DATABASE_ID=your-database-id",
         "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
         "-v", "/host/path/to/credentials:/credentials",
-        "@toolbox-images/spanner:latest"
+        "@toolbox-images/spanner"
       ]
     }
   }
@@ -599,7 +599,7 @@ Add to your MCP client config:
         "-e", "FIRESTORE_PROJECT_ID=your-project-id",
         "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
         "-v", "/host/path/to/credentials:/credentials",
-        "@toolbox-images/firestore:latest"
+        "@toolbox-images/firestore"
       ]
     }
   }
@@ -647,7 +647,7 @@ Add to your MCP client config:
         "-p", "5000:5000",
         "-e", "SUPABASE_URL=https://your-project.supabase.co",
         "-e", "SUPABASE_SERVICE_ROLE_KEY=your_service_role_key",
-        "@toolbox-images/supabase:latest"
+        "@toolbox-images/supabase"
       ]
     }
   }
@@ -699,7 +699,7 @@ Add to your MCP client config:
         "-e", "NEO4J_URI=bolt://your-neo4j-host.com:7687",
         "-e", "NEO4J_USER=neo4j",
         "-e", "NEO4J_PASSWORD=your_password",
-        "@toolbox-images/neo4j:latest"
+        "@toolbox-images/neo4j"
       ]
     }
   }
@@ -750,7 +750,7 @@ Add to your MCP client config:
         "-p", "5000:5000",
         "-e", "REDIS_HOST=your-redis-host.com",
         "-e", "REDIS_PASSWORD=your_password",
-        "@toolbox-images/redis:latest"
+        "@toolbox-images/redis"
       ]
     }
   }
