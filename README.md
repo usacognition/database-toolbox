@@ -634,6 +634,291 @@ Each database server provides a standardized set of MCP tools:
 - **`list_databases`** - List available databases (if supported)
 - **`get_connection_info`** - Get current connection details
 
+## 🔌 MCP Client Configuration
+
+To use these database servers with MCP clients, you need to configure the client to connect to the running server. Here are configurations for popular MCP clients:
+
+### Claude Desktop
+
+Add the following configuration to your Claude Desktop config file:
+
+**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
+**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+#### Basic Server Configuration
+
+```json
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-postgres",
+        "-p", "5000:5000",
+        "-e", "DB_HOST=your-postgres-host.com",
+        "-e", "DB_NAME=your_database",
+        "-e", "DB_USER=your_username",
+        "-e", "DB_PASSWORD=your_password",
+        "@toolbox-images/postgres:latest"
+      ]
+    }
+  }
+}
+```
+
+#### Multiple Database Servers
+
+```json
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-postgres",
+        "-p", "5000:5000",
+        "-e", "DB_HOST=postgres.example.com",
+        "-e", "DB_NAME=production_db",
+        "-e", "DB_USER=app_user",
+        "-e", "DB_PASSWORD=secure_password",
+        "@toolbox-images/postgres:latest"
+      ]
+    },
+    "mysql": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-mysql", 
+        "-p", "5001:5000",
+        "-e", "DB_HOST=mysql.example.com",
+        "-e", "DB_NAME=analytics_db",
+        "-e", "DB_USER=analyst",
+        "-e", "DB_PASSWORD=mysql_password",
+        "@toolbox-images/mysql:latest"
+      ]
+    },
+    "snowflake": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-snowflake",
+        "-p", "5002:5000",
+        "-e", "SNOWFLAKE_ACCOUNT=abc12345.snowflakecomputing.com",
+        "-e", "SNOWFLAKE_USER=john.doe@company.com",
+        "-e", "SNOWFLAKE_PASSWORD=snowflake_password",
+        "-e", "SNOWFLAKE_DATABASE=ANALYTICS_DB",
+        "-e", "SNOWFLAKE_WAREHOUSE=COMPUTE_WH",
+        "@toolbox-images/snowflake:latest"
+      ]
+    }
+  }
+}
+```
+
+#### Using Environment Files
+
+For better security, use environment files:
+
+```json
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-postgres",
+        "-p", "5000:5000",
+        "--env-file", "/path/to/postgres.env",
+        "@toolbox-images/postgres:latest"
+      ]
+    }
+  }
+}
+```
+
+Create `/path/to/postgres.env`:
+```env
+DB_HOST=your-postgres-host.com
+DB_NAME=your_database
+DB_USER=your_username
+DB_PASSWORD=your_password
+DB_SSL_MODE=prefer
+```
+
+### HTTP-based MCP Clients
+
+For clients that connect via HTTP, you'll need to run the servers in daemon mode and connect to their endpoints:
+
+#### Server URLs
+```
+PostgreSQL:    http://localhost:5000
+MySQL:         http://localhost:5001
+Snowflake:     http://localhost:5002
+BigQuery:      http://localhost:5003
+# ... etc for other databases
+```
+
+#### Generic HTTP Client Configuration
+
+```json
+{
+  "servers": [
+    {
+      "name": "postgres",
+      "url": "http://localhost:5000",
+      "type": "http"
+    },
+    {
+      "name": "mysql", 
+      "url": "http://localhost:5001",
+      "type": "http"
+    }
+  ]
+}
+```
+
+### Custom MCP Clients
+
+For custom MCP client implementations, connect to the servers using:
+
+#### Stdio Transport
+```python
+import subprocess
+from mcp import ClientSession, StdioServerParameters
+
+# Start the Docker container with stdio transport
+server_params = StdioServerParameters(
+    command="docker",
+    args=[
+        "run", "--rm", "-i",
+        "--name", "mcp-postgres",
+        "-e", "DB_HOST=your-host",
+        "-e", "DB_NAME=your_db",
+        "-e", "DB_USER=your_user", 
+        "-e", "DB_PASSWORD=your_password",
+        "-e", "ENABLE_STDIO=true",
+        "@toolbox-images/postgres:latest"
+    ]
+)
+
+async with ClientSession(server_params) as session:
+    # Use the session to interact with the database
+    result = await session.call_tool("execute_query", {"query": "SELECT 1"})
+```
+
+#### HTTP Transport
+```python
+from mcp import ClientSession, HttpServerParameters
+
+# Connect to running HTTP server
+server_params = HttpServerParameters(url="http://localhost:5000")
+
+async with ClientSession(server_params) as session:
+    result = await session.call_tool("list_tables", {})
+```
+
+### Configuration Templates
+
+#### Development Environment
+```json
+{
+  "mcpServers": {
+    "dev-postgres": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-dev-postgres",
+        "-p", "5000:5000",
+        "-e", "DB_HOST=localhost",
+        "-e", "DB_NAME=development",
+        "-e", "DB_USER=dev_user",
+        "-e", "DB_PASSWORD=dev_password",
+        "-e", "TOOLBOX_LOG_LEVEL=debug",
+        "@toolbox-images/postgres:latest"
+      ]
+    }
+  }
+}
+```
+
+#### Production Environment
+```json
+{
+  "mcpServers": {
+    "prod-postgres": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-prod-postgres",
+        "-p", "5000:5000",
+        "--env-file", "/secure/postgres-prod.env",
+        "--network", "production-network",
+        "@toolbox-images/postgres:latest"
+      ]
+    }
+  }
+}
+```
+
+### Troubleshooting Client Connections
+
+#### Common Issues
+
+**Server not starting:**
+```bash
+# Check Docker logs
+docker logs mcp-postgres
+
+# Verify environment variables
+docker inspect mcp-postgres | grep -A 20 '"Env"'
+```
+
+**Connection refused:**
+```bash
+# Check if port is accessible
+curl -f http://localhost:5000/health || echo "Server not responding"
+
+# Verify container is running
+docker ps | grep mcp-
+```
+
+**Tool not found:**
+```bash
+# List available tools via HTTP
+curl http://localhost:5000/tools
+
+# Test tool execution
+curl -X POST http://localhost:5000/call-tool \
+  -H "Content-Type: application/json" \
+  -d '{"name": "list_tables", "arguments": {}}'
+```
+
+#### Debug Configuration
+
+Add debug logging to your client configuration:
+
+```json
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-postgres",
+        "-p", "5000:5000", 
+        "-e", "TOOLBOX_LOG_LEVEL=debug",
+        "-e", "DB_HOST=your-host",
+        "# ... other env vars",
+        "@toolbox-images/postgres:latest"
+      ],
+      "disabled": false
+    }
+  },
+  "globalShortcut": "Ctrl+Shift+Space"
+}
+```
+
 ## 🚨 Troubleshooting
 
 ### Common Issues
