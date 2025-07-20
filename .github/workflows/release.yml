@@ -189,7 +189,7 @@ jobs:
           echo "docker pull ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/mcp-postgres:${{ needs.prepare-release.outputs.version }}" >> release_notes.md
           echo "" >> release_notes.md
           echo "# Run with your database credentials" >> release_notes.md
-          echo "docker run -d -p 5000:5000 \\" >> release_notes.md
+          echo "docker run --rm -d -p 5000:5000 \\" >> release_notes.md
           echo "  -e DB_HOST=your-db-host \\" >> release_notes.md
           echo "  -e DB_USER=your-username \\" >> release_notes.md
           echo "  -e DB_PASSWORD=your-password \\" >> release_notes.md
