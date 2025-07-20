@@ -1,5 +1,7 @@
 # MCP Database Server Docker Images
 
+[![CI/CD Pipeline](https://github.com/your-username/mcp-database-servers/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/mcp-database-servers/actions/workflows/ci.yml)
+[![Security Scan](https://github.com/your-username/mcp-database-servers/actions/workflows/security.yml/badge.svg)](https://github.com/your-username/mcp-database-servers/actions/workflows/security.yml)
 [![Docker Pulls](https://img.shields.io/docker/pulls/your-dockerhub-username/mcp-postgres)](https://hub.docker.com/r/your-dockerhub-username/mcp-postgres)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GitHub Release](https://img.shields.io/github/release/your-username/mcp-database-servers.svg)](https://github.com/your-username/mcp-database-servers/releases)
@@ -521,12 +523,50 @@ cd examples/docker-compose
 docker-compose -f docker-compose.all.yml up --abort-on-container-exit
 ```
 
+## 🔄 CI/CD Pipeline
+
+This project features a comprehensive CI/CD pipeline that automatically builds, tests, and deploys all 13 database Docker images.
+
+### 🚀 Automated Workflows
+
+- **Main CI/CD Pipeline** - Builds and tests all images on every push
+- **Security Scanning** - Daily vulnerability scans and dependency checks  
+- **Release Automation** - Automated versioning and GitHub releases
+- **Multi-Architecture Builds** - AMD64 and ARM64 support
+
+### 📊 Pipeline Features
+
+- ✅ **Automated Testing** - Comprehensive test suite for all databases
+- 🛡️ **Security Scanning** - Trivy vulnerability scanning and compliance checks
+- 🐳 **Multi-Platform Builds** - Docker images for AMD64 and ARM64
+- 📦 **Automated Releases** - Semantic versioning and release notes
+- 🔍 **Quality Gates** - Code quality and security compliance enforcement
+
+### 🏷️ Image Tags
+
+Images are automatically tagged and pushed to Docker Hub:
+
+- `latest` - Latest stable release
+- `v1.2.3` - Semantic version tags
+- `main-{sha}` - Development builds
+- `pr-{number}` - Pull request builds
+
+### 🔐 Security & Compliance
+
+- Daily security vulnerability scans
+- Automated dependency updates
+- Security policy compliance checks
+- SARIF integration with GitHub Security tab
+
 ### Release Process
 
-1. Update version in build scripts
-2. Update CHANGELOG.md
-3. Create a git tag: `git tag v1.0.0`
-4. Push the tag: `git push origin v1.0.0`
-5. GitHub Actions will automatically build and push images
+The release process is now fully automated:
+
+1. **Automatic Releases**: Push to main branch triggers builds
+2. **Manual Releases**: Use GitHub Actions "Release" workflow
+3. **Version Management**: Semantic versioning with automated tagging
+4. **Release Notes**: Auto-generated changelogs and Docker image lists
+
+For detailed CI/CD documentation, see [CI/CD Guide](.github/CICD_GUIDE.md).
 
 </details>
