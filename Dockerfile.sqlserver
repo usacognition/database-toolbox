@@ -46,12 +46,9 @@ RUN case ${TARGETPLATFORM} in \
     "linux/arm64") ARCH="linux/arm64" ;; \
     *) echo "Unsupported platform: ${TARGETPLATFORM}" && exit 1 ;; \
     esac && \
-    curl -L "https://github.com/googleapis/genai-toolbox/releases/download/v${TOOLBOX_VERSION}/genai-toolbox-${TOOLBOX_VERSION}-${ARCH}.tar.gz" \
-    -o toolbox.tar.gz && \
-    tar -xzf toolbox.tar.gz && \
-    chmod +x genai-toolbox && \
-    mv genai-toolbox /usr/local/bin/mcp-toolbox && \
-    rm toolbox.tar.gz
+    curl -L -o toolbox "https://storage.googleapis.com/genai-toolbox/v${TOOLBOX_VERSION}/${ARCH}/toolbox" && \
+    chmod +x toolbox && \
+    mv toolbox /usr/local/bin/mcp-toolbox
 
 # Copy scripts
 COPY scripts/entrypoint.sh /app/scripts/entrypoint.sh
