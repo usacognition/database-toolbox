@@ -161,7 +161,7 @@ jobs:
           
           # Test health endpoint directly
           echo "=== Testing health endpoint ==="
-          curl -v http://localhost:5000/health || echo "Health check failed"
+          curl -v http://localhost:5000/ || echo "Health check failed"
           
           # Wait a bit more if needed
           sleep 10
