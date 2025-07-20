@@ -19,6 +19,7 @@ RUN apk add --no-cache \
     python3-dev \
     py3-pip \
     gcc \
+    g++ \
     musl-dev \
     libffi-dev \
     && update-ca-certificates
@@ -32,7 +33,7 @@ WORKDIR /app
 
 # Create virtual environment and install Snowflake Python connector
 RUN python3 -m venv /opt/venv && \
-    /opt/venv/bin/pip install --no-cache-dir snowflake-connector-python[pandas]==3.6.0
+    /opt/venv/bin/pip install --no-cache-dir snowflake-connector-python[pandas]==3.5.0
 
 # Download and install MCP Toolbox
 ARG TOOLBOX_VERSION=0.9.0
