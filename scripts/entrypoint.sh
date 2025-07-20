@@ -114,7 +114,6 @@ sources:
     database: ${DB_NAME}
     user: ${DB_USER}
     password: ${DB_PASSWORD}
-    ssl_mode: ${DB_SSL_MODE:-prefer}
 
 tools:
   execute-sql:
@@ -137,7 +136,6 @@ tools:
       - name: parameters
         type: array
         description: Parameters for the SQL query
-        required: false
 
 toolsets:
   default:
@@ -179,7 +177,6 @@ tools:
       - name: parameters
         type: array
         description: Parameters for the SQL query
-        required: false
 
 toolsets:
   default:
@@ -250,7 +247,6 @@ tools:
       - name: parameters
         type: array
         description: Parameters for the SQL query
-        required: false
 
 toolsets:
   default:
@@ -328,7 +324,6 @@ tools:
       - name: parameters
         type: array
         description: Parameters for the SQL query
-        required: false
 
 toolsets:
   default:
@@ -367,7 +362,6 @@ tools:
       - name: parameters
         type: array
         description: Parameters for the SQL query
-        required: false
 
 toolsets:
   default:
@@ -484,7 +478,6 @@ tools:
       - name: parameters
         type: array
         description: Parameters for the SQL query
-        required: false
 
 toolsets:
   default:
@@ -512,7 +505,6 @@ tools:
       - name: limit
         type: number
         description: Maximum number of documents to return
-        required: false
   
   list-collections:
     kind: firestore-list-collections
@@ -536,7 +528,6 @@ sources:
     database: ${SUPABASE_DATABASE:-postgres}
     user: ${SUPABASE_USER:-postgres}
     password: ${SUPABASE_PASSWORD}
-    ssl_mode: ${SUPABASE_SSL_MODE:-require}
 
 tools:
   execute-sql:
@@ -559,7 +550,6 @@ tools:
       - name: parameters
         type: array
         description: Parameters for the SQL query
-        required: false
 
 toolsets:
   default:
@@ -597,7 +587,53 @@ main() {
     
     # Set default arguments if none provided
     if [[ $# -eq 0 ]]; then
-        set -- "--tools-file" "/app/config/tools.yaml"
+        case "${DB_TYPE}" in
+            "postgres"|"supabase")
+                # Set environment variables expected by prebuilt postgres configuration
+                export POSTGRES_USER="${DB_USER}"
+                export POSTGRES_HOST="${DB_HOST}"
+                export POSTGRES_PORT="${DB_PORT:-5432}"
+                export POSTGRES_DATABASE="${DB_NAME}"
+                export POSTGRES_PASSWORD="${DB_PASSWORD}"
+                set -- "--prebuilt" "postgres"
+                ;;
+            "mysql")
+                # Set environment variables expected by prebuilt mysql configuration
+                export MYSQL_USER="${DB_USER}"
+                export MYSQL_HOST="${DB_HOST}"
+                export MYSQL_PORT="${DB_PORT:-3306}"
+                export MYSQL_DATABASE="${DB_NAME}"
+                export MYSQL_PASSWORD="${DB_PASSWORD}"
+                set -- "--prebuilt" "cloud-sql-mysql"
+                ;;
+            "sqlserver")
+                # Set environment variables expected by prebuilt sqlserver configuration
+                export SQLSERVER_USER="${DB_USER}"
+                export SQLSERVER_HOST="${DB_HOST}"
+                export SQLSERVER_PORT="${DB_PORT:-1433}"
+                export SQLSERVER_DATABASE="${DB_NAME}"
+                export SQLSERVER_PASSWORD="${DB_PASSWORD}"
+                set -- "--prebuilt" "cloud-sql-mssql"
+                ;;
+            "bigquery")
+                set -- "--prebuilt" "bigquery"
+                ;;
+            "spanner")
+                set -- "--prebuilt" "spanner"
+                ;;
+            "alloydb")
+                # Set environment variables expected by prebuilt alloydb configuration
+                export POSTGRES_USER="${DB_USER}"
+                export POSTGRES_HOST="${DB_HOST}"
+                export POSTGRES_PORT="${DB_PORT:-5432}"
+                export POSTGRES_DATABASE="${DB_NAME}"
+                export POSTGRES_PASSWORD="${DB_PASSWORD}"
+                set -- "--prebuilt" "alloydb-postgres"
+                ;;
+            *)
+                set -- "--tools-file" "/app/config/tools.yaml"
+                ;;
+        esac
     fi
     
     # Add stdio flag if requested
