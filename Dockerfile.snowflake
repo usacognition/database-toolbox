@@ -33,7 +33,7 @@ WORKDIR /app
 
 # Create virtual environment and install Snowflake Python connector
 RUN python3 -m venv /opt/venv && \
-    /opt/venv/bin/pip install --no-cache-dir snowflake-connector-python[pandas]==3.5.0
+    /opt/venv/bin/pip install --no-cache-dir snowflake-connector-python[pandas]==3.7.0
 
 # Download and install MCP Toolbox
 ARG TOOLBOX_VERSION=0.9.0
