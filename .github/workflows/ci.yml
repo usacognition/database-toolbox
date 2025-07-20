@@ -138,7 +138,7 @@ jobs:
         run: |
           cd tests
           # Start MCP servers in background for testing
-          docker run -d --name mcp-postgres-test \
+          docker run --rm -d --name mcp-postgres-test \
             -p 5000:5000 \
             -e DB_TYPE=postgres \
             -e DB_HOST=localhost \

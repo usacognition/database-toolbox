@@ -238,7 +238,7 @@ This ensures compatibility across:
 1. **Choose your database** from the supported list above
 2. **Pull the image**: `docker pull your-registry/mcp-{database}`
 3. **Set environment variables** according to your database type
-4. **Run the container**: `docker run -d -p 5000:5000 [env-vars] your-registry/mcp-{database}`
+4. **Run the container**: `docker run --rm -d -p 5000:5000 [env-vars] your-registry/mcp-{database}` (use `--rm -it` for interactive testing)
 5. **Connect your AI application** to `http://localhost:5000`
 
 For detailed examples and configuration, see the main README.md file.

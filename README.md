@@ -51,8 +51,28 @@ Production-ready Docker images that provide instant access to database systems t
 
 Each image can be run with a simple `docker run` command. The containers expose the MCP server on port 5000 by default and accept database connection parameters via environment variables.
 
+**Docker Command Flags Explained:**
+- `--rm`: Automatically removes the container when it exits (recommended for cleanup)
+- `-d`: Runs in daemon mode (background) - use for production services
+- `-it`: Interactive mode with TTY - use for development/debugging
+- `-p 5000:5000`: Maps container port 5000 to host port 5000
+
 ```bash
-# Generic pattern
+# Production deployment (daemon mode with auto-cleanup)
+docker run --rm -d \
+  --name mcp-{database} \
+  -p 5000:5000 \
+  -e [DATABASE_PARAMETERS] \
+  @toolbox-images/{database}:latest
+
+# Interactive development/debugging
+docker run --rm -it \
+  --name mcp-{database} \
+  -p 5000:5000 \
+  -e [DATABASE_PARAMETERS] \
+  @toolbox-images/{database}:latest
+
+# Long-running production service (without --rm if you need to inspect after stop)
 docker run -d \
   --name mcp-{database} \
   -p 5000:5000 \
@@ -67,7 +87,7 @@ docker run -d \
 Connect to PostgreSQL databases (including compatible databases like CockroachDB).
 
 ```bash
-docker run -d \
+docker run --rm -d \
   --name mcp-postgres \
   -p 5000:5000 \
   -e DB_HOST=your-postgres-host.com \
@@ -98,7 +118,7 @@ docker run -d \
 Connect to MySQL and MariaDB databases.
 
 ```bash
-docker run -d \
+docker run --rm -d \
   --name mcp-mysql \
   -p 5000:5000 \
   -e DB_HOST=your-mysql-host.com \
@@ -128,7 +148,7 @@ docker run -d \
 Connect to Snowflake Data Cloud.
 
 ```bash
-docker run -d \
+docker run --rm -d \
   --name mcp-snowflake \
   -p 5000:5000 \
   -e SNOWFLAKE_ACCOUNT=your-account.snowflakecomputing.com \
@@ -161,7 +181,7 @@ docker run -d \
 Connect to Amazon Redshift data warehouse.
 
 ```bash
-docker run -d \
+docker run --rm -d \
   --name mcp-redshift \
   -p 5000:5000 \
   -e REDSHIFT_HOST=your-cluster.abc123.us-west-2.redshift.amazonaws.com \
@@ -192,7 +212,7 @@ docker run -d \
 Connect to Microsoft SQL Server databases.
 
 ```bash
-docker run -d \
+docker run --rm -d \
   --name mcp-sqlserver \
   -p 5000:5000 \
   -e SQLSERVER_HOST=your-sqlserver-host.com \
@@ -225,7 +245,7 @@ docker run -d \
 Connect to SQLite database files.
 
 ```bash
-docker run -d \
+docker run --rm -d \
   --name mcp-sqlite \
   -p 5000:5000 \
   -e SQLITE_DATABASE_PATH=/data/database.db \
@@ -248,7 +268,7 @@ docker run -d \
 Connect to Google BigQuery using service account credentials.
 
 ```bash
-docker run -d \
+docker run --rm -d \
   --name mcp-bigquery \
   -p 5000:5000 \
   -e BIGQUERY_PROJECT_ID=your-project-id \
@@ -275,7 +295,7 @@ docker run -d \
 Connect to Google AlloyDB instances.
 
 ```bash
-docker run -d \
+docker run --rm -d \
   --name mcp-alloydb \
   -p 5000:5000 \
   -e ALLOYDB_INSTANCE=projects/your-project/locations/region/clusters/cluster-id/instances/instance-id \
@@ -301,7 +321,7 @@ docker run -d \
 Connect to Google Cloud Spanner databases.
 
 ```bash
-docker run -d \
+docker run --rm -d \
   --name mcp-spanner \
   -p 5000:5000 \
   -e SPANNER_PROJECT_ID=your-project-id \
@@ -325,7 +345,7 @@ docker run -d \
 Connect to Google Firestore databases.
 
 ```bash
-docker run -d \
+docker run --rm -d \
   --name mcp-firestore \
   -p 5000:5000 \
   -e FIRESTORE_PROJECT_ID=your-project-id \
@@ -351,7 +371,7 @@ docker run -d \
 Connect to Supabase PostgreSQL databases.
 
 ```bash
-docker run -d \
+docker run --rm -d \
   --name mcp-supabase \
   -p 5000:5000 \
   -e SUPABASE_URL=https://your-project.supabase.co \
@@ -377,7 +397,7 @@ docker run -d \
 Connect to Neo4j graph databases.
 
 ```bash
-docker run -d \
+docker run --rm -d \
   --name mcp-neo4j \
   -p 5000:5000 \
   -e NEO4J_URI=bolt://your-neo4j-host.com:7687 \
@@ -406,7 +426,7 @@ docker run -d \
 Connect to Redis key-value stores.
 
 ```bash
-docker run -d \
+docker run --rm -d \
   --name mcp-redis \
   -p 5000:5000 \
   -e REDIS_HOST=your-redis-host.com \
@@ -441,6 +461,61 @@ All images support these common environment variables:
 | `ENABLE_STDIO` | Enable stdio mode | `false` | `true`, `false` |
 | `TOOLBOX_HEALTH_CHECK_TIMEOUT` | Health check timeout | `30s` | Duration string |
 
+## 📋 Docker Command Best Practices
+
+### When to Use Which Flags
+
+**For Development & Testing:**
+```bash
+# Interactive development with automatic cleanup
+docker run --rm -it \
+  --name mcp-postgres \
+  -p 5000:5000 \
+  -e [ENV_VARS] \
+  @toolbox-images/postgres:latest
+
+# One-off commands and testing
+docker run --rm \
+  -e [ENV_VARS] \
+  @toolbox-images/postgres:latest \
+  --help
+```
+
+**For Production Deployment:**
+```bash
+# Recommended: Auto-cleanup daemon mode
+docker run --rm -d \
+  --name mcp-postgres \
+  -p 5000:5000 \
+  -e [ENV_VARS] \
+  @toolbox-images/postgres:latest
+
+# Alternative: Long-running service (for debugging after stop)
+docker run -d \
+  --name mcp-postgres \
+  -p 5000:5000 \
+  -e [ENV_VARS] \
+  @toolbox-images/postgres:latest
+```
+
+**For Debugging & Troubleshooting:**
+```bash
+# Connect to running container
+docker exec -it mcp-postgres /bin/bash
+
+# Run diagnostic commands
+docker exec -it mcp-postgres /app/scripts/healthcheck.sh
+```
+
+### Flag Reference
+| Flag | Purpose | When to Use |
+|------|---------|-------------|
+| `--rm` | Auto-remove container on exit | Almost always (prevents container buildup) |
+| `-it` | Interactive terminal | Development, debugging, manual commands |
+| `-d` | Daemon (background) mode | Production services, long-running containers |
+| `-p` | Port mapping | When exposing services to host |
+| `--name` | Container name | For easy reference and management |
+
 ## 🛡️ Security Best Practices
 
 ### 1. Use Environment Files
@@ -457,7 +532,7 @@ DB_PASSWORD=your_secure_password
 EOF
 
 # Run with environment file
-docker run -d \
+docker run --rm -d \
   --name mcp-postgres \
   -p 5000:5000 \
   --env-file .env \
@@ -489,12 +564,12 @@ Run containers in isolated networks:
 docker network create mcp-network
 
 # Run database and MCP server in same network
-docker run -d \
+docker run --rm -d \
   --name postgres-db \
   --network mcp-network \
   postgres:15
 
-docker run -d \
+docker run --rm -d \
   --name mcp-postgres \
   --network mcp-network \
   -p 5000:5000 \
@@ -577,19 +652,19 @@ docker logs mcp-postgres
 **Cannot connect to database:**
 ```bash
 # Test database connectivity from container
-docker exec mcp-postgres ping your-database-host
+docker exec -it mcp-postgres ping your-database-host
 
 # Verify environment variables
-docker exec mcp-postgres printenv | grep DB_
+docker exec -it mcp-postgres printenv | grep DB_
 ```
 
 **Health check fails:**
 ```bash
 # Manual health check
-docker exec mcp-postgres /app/scripts/healthcheck.sh
+docker exec -it mcp-postgres /app/scripts/healthcheck.sh
 
 # Check if database is accessible
-docker exec mcp-postgres nc -zv your-database-host 5432
+docker exec -it mcp-postgres nc -zv your-database-host 5432
 ```
 
 ### Error Codes

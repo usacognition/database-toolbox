@@ -252,7 +252,7 @@ docker exec -it dev-mcp-postgres /bin/bash
 docker exec -it dev-postgres psql -U testuser -d testdb
 
 # Run test container interactively
-docker-compose -f examples/docker-compose/docker-compose.dev.yml run --rm mcp-tester bash
+docker-compose -f examples/docker-compose/docker-compose.dev.yml run --rm -it mcp-tester bash
 ```
 
 ### Manual Testing
@@ -265,8 +265,8 @@ curl -X POST http://localhost:5000/mcp \
   -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}'
 
 # Test database connectivity
-docker exec dev-postgres pg_isready -U testuser -d testdb
-docker exec dev-mysql mysqladmin ping -u testuser -ptestpass
+docker exec -it dev-postgres pg_isready -U testuser -d testdb
+docker exec -it dev-mysql mysqladmin ping -u testuser -ptestpass
 ```
 
 ## 📊 Performance Testing
