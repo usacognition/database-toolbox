@@ -622,8 +622,6 @@ cd mcp-database-servers
 **Development Services:**
 - **PostgreSQL MCP Server**: http://localhost:5000
 - **MySQL MCP Server**: http://localhost:5001  
-- **pgAdmin** (PostgreSQL UI): http://localhost:8080 (admin@mcp.dev / admin123)
-- **phpMyAdmin** (MySQL UI): http://localhost:8081
 - **Test Reports**: http://localhost:8082
 
 ### Running Tests
