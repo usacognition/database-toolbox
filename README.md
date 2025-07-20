@@ -70,7 +70,6 @@ Connect to PostgreSQL databases (including compatible databases like CockroachDB
 docker run -d \
   --name mcp-postgres \
   -p 5000:5000 \
-  -e DB_TYPE=postgres \
   -e DB_HOST=your-postgres-host.com \
   -e DB_PORT=5432 \
   -e DB_NAME=your_database \
@@ -83,7 +82,6 @@ docker run -d \
 #### Required Environment Variables
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DB_TYPE` | Database type | `postgres` |
 | `DB_HOST` | Database hostname | `localhost` or `db.example.com` |
 | `DB_NAME` | Database name | `myapp_production` |
 | `DB_USER` | Database username | `postgres` |
@@ -103,7 +101,6 @@ Connect to MySQL and MariaDB databases.
 docker run -d \
   --name mcp-mysql \
   -p 5000:5000 \
-  -e DB_TYPE=mysql \
   -e DB_HOST=your-mysql-host.com \
   -e DB_PORT=3306 \
   -e DB_NAME=your_database \
@@ -115,7 +112,6 @@ docker run -d \
 #### Required Environment Variables
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DB_TYPE` | Database type | `mysql` |
 | `DB_HOST` | Database hostname | `localhost` or `mysql.example.com` |
 | `DB_NAME` | Database name | `myapp_production` |
 | `DB_USER` | Database username | `root` or `app_user` |
@@ -135,7 +131,6 @@ Connect to Snowflake Data Cloud.
 docker run -d \
   --name mcp-snowflake \
   -p 5000:5000 \
-  -e DB_TYPE=snowflake \
   -e SNOWFLAKE_ACCOUNT=your-account.snowflakecomputing.com \
   -e SNOWFLAKE_USER=your_username \
   -e SNOWFLAKE_PASSWORD=your_password \
@@ -149,7 +144,6 @@ docker run -d \
 #### Required Environment Variables
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DB_TYPE` | Database type | `snowflake` |
 | `SNOWFLAKE_ACCOUNT` | Snowflake account URL | `abc12345.snowflakecomputing.com` |
 | `SNOWFLAKE_USER` | Snowflake username | `john.doe@company.com` |
 | `SNOWFLAKE_PASSWORD` | Snowflake password | `your_secure_password` |
@@ -170,7 +164,6 @@ Connect to Amazon Redshift data warehouse.
 docker run -d \
   --name mcp-redshift \
   -p 5000:5000 \
-  -e DB_TYPE=redshift \
   -e REDSHIFT_HOST=your-cluster.abc123.us-west-2.redshift.amazonaws.com \
   -e REDSHIFT_PORT=5439 \
   -e REDSHIFT_DATABASE=your_database \
@@ -183,7 +176,6 @@ docker run -d \
 #### Required Environment Variables
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DB_TYPE` | Database type | `redshift` |
 | `REDSHIFT_HOST` | Redshift cluster endpoint | `cluster.abc123.us-west-2.redshift.amazonaws.com` |
 | `REDSHIFT_DATABASE` | Database name | `analytics` |
 | `REDSHIFT_USER` | Database username | `admin` |
@@ -203,7 +195,6 @@ Connect to Microsoft SQL Server databases.
 docker run -d \
   --name mcp-sqlserver \
   -p 5000:5000 \
-  -e DB_TYPE=sqlserver \
   -e SQLSERVER_HOST=your-sqlserver-host.com \
   -e SQLSERVER_PORT=1433 \
   -e SQLSERVER_DATABASE=your_database \
@@ -217,7 +208,6 @@ docker run -d \
 #### Required Environment Variables
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DB_TYPE` | Database type | `sqlserver` |
 | `SQLSERVER_HOST` | SQL Server hostname | `localhost` or `sql.example.com` |
 | `SQLSERVER_DATABASE` | Database name | `myapp_production` |
 | `SQLSERVER_USER` | Database username | `sa` or `app_user` |
@@ -238,7 +228,6 @@ Connect to SQLite database files.
 docker run -d \
   --name mcp-sqlite \
   -p 5000:5000 \
-  -e DB_TYPE=sqlite \
   -e SQLITE_DATABASE_PATH=/data/database.db \
   -v /host/path/to/database:/data \
   @toolbox-images/sqlite:latest
@@ -247,7 +236,6 @@ docker run -d \
 #### Required Environment Variables
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DB_TYPE` | Database type | `sqlite` |
 | `SQLITE_DATABASE_PATH` | Path to SQLite database file | `/data/database.db` |
 
 #### Optional Environment Variables
@@ -263,7 +251,6 @@ Connect to Google BigQuery using service account credentials.
 docker run -d \
   --name mcp-bigquery \
   -p 5000:5000 \
-  -e DB_TYPE=bigquery \
   -e BIGQUERY_PROJECT_ID=your-project-id \
   -e BIGQUERY_DATASET_ID=your_dataset \
   -e GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json \
@@ -274,7 +261,6 @@ docker run -d \
 #### Required Environment Variables
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DB_TYPE` | Database type | `bigquery` |
 | `BIGQUERY_PROJECT_ID` | Google Cloud project ID | `my-analytics-project` |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Path to service account JSON | `/credentials/service-account.json` |
 
@@ -292,7 +278,6 @@ Connect to Google AlloyDB instances.
 docker run -d \
   --name mcp-alloydb \
   -p 5000:5000 \
-  -e DB_TYPE=alloydb \
   -e ALLOYDB_INSTANCE=projects/your-project/locations/region/clusters/cluster-id/instances/instance-id \
   -e DB_NAME=your_database \
   -e DB_USER=your_username \
@@ -305,7 +290,6 @@ docker run -d \
 #### Required Environment Variables
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DB_TYPE` | Database type | `alloydb` |
 | `ALLOYDB_INSTANCE` | AlloyDB instance path | `projects/my-project/locations/us-central1/clusters/my-cluster/instances/my-instance` |
 | `DB_NAME` | Database name | `myapp_production` |
 | `DB_USER` | Database username | `postgres` |
@@ -320,7 +304,6 @@ Connect to Google Cloud Spanner databases.
 docker run -d \
   --name mcp-spanner \
   -p 5000:5000 \
-  -e DB_TYPE=spanner \
   -e SPANNER_PROJECT_ID=your-project-id \
   -e SPANNER_INSTANCE_ID=your-instance-id \
   -e SPANNER_DATABASE_ID=your-database-id \
@@ -332,7 +315,6 @@ docker run -d \
 #### Required Environment Variables
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DB_TYPE` | Database type | `spanner` |
 | `SPANNER_PROJECT_ID` | Google Cloud project ID | `my-project` |
 | `SPANNER_INSTANCE_ID` | Spanner instance ID | `my-instance` |
 | `SPANNER_DATABASE_ID` | Spanner database ID | `my-database` |
@@ -346,7 +328,6 @@ Connect to Google Firestore databases.
 docker run -d \
   --name mcp-firestore \
   -p 5000:5000 \
-  -e DB_TYPE=firestore \
   -e FIRESTORE_PROJECT_ID=your-project-id \
   -e FIRESTORE_DATABASE_ID=(default) \
   -e GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json \
@@ -357,7 +338,6 @@ docker run -d \
 #### Required Environment Variables
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DB_TYPE` | Database type | `firestore` |
 | `FIRESTORE_PROJECT_ID` | Google Cloud project ID | `my-project` |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Path to service account JSON | `/credentials/service-account.json` |
 
@@ -374,7 +354,6 @@ Connect to Supabase PostgreSQL databases.
 docker run -d \
   --name mcp-supabase \
   -p 5000:5000 \
-  -e DB_TYPE=supabase \
   -e SUPABASE_URL=https://your-project.supabase.co \
   -e SUPABASE_SERVICE_ROLE_KEY=your_service_role_key \
   -e DB_NAME=postgres \
@@ -384,7 +363,6 @@ docker run -d \
 #### Required Environment Variables
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DB_TYPE` | Database type | `supabase` |
 | `SUPABASE_URL` | Supabase project URL | `https://abcd1234.supabase.co` |
 | `SUPABASE_SERVICE_ROLE_KEY` | Service role key | `eyJ...` |
 
@@ -402,7 +380,6 @@ Connect to Neo4j graph databases.
 docker run -d \
   --name mcp-neo4j \
   -p 5000:5000 \
-  -e DB_TYPE=neo4j \
   -e NEO4J_URI=bolt://your-neo4j-host.com:7687 \
   -e NEO4J_USER=neo4j \
   -e NEO4J_PASSWORD=your_password \
@@ -413,7 +390,6 @@ docker run -d \
 #### Required Environment Variables
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DB_TYPE` | Database type | `neo4j` |
 | `NEO4J_URI` | Neo4j connection URI | `bolt://localhost:7687` or `neo4j://localhost:7687` |
 | `NEO4J_USER` | Neo4j username | `neo4j` |
 | `NEO4J_PASSWORD` | Neo4j password | `your_secure_password` |
@@ -433,7 +409,6 @@ Connect to Redis key-value stores.
 docker run -d \
   --name mcp-redis \
   -p 5000:5000 \
-  -e DB_TYPE=redis \
   -e REDIS_HOST=your-redis-host.com \
   -e REDIS_PORT=6379 \
   -e REDIS_PASSWORD=your_password \
@@ -444,7 +419,6 @@ docker run -d \
 #### Required Environment Variables
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DB_TYPE` | Database type | `redis` |
 | `REDIS_HOST` | Redis hostname | `localhost` or `redis.example.com` |
 
 #### Optional Environment Variables
@@ -487,7 +461,6 @@ docker run -d \
   --name mcp-postgres \
   -p 5000:5000 \
   --env-file .env \
-  -e DB_TYPE=postgres \
   @toolbox-images/postgres:latest
 ```
 
@@ -526,7 +499,6 @@ docker run -d \
   --network mcp-network \
   -p 5000:5000 \
   -e DB_HOST=postgres-db \
-  -e DB_TYPE=postgres \
   # ... other variables
   @toolbox-images/postgres:latest
 ```
