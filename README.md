@@ -600,12 +600,6 @@ docker exec mcp-postgres nc -zv your-database-host 5432
 | 2 | Database connection failed | Verify host, port, and credentials |
 | 3 | Health check timeout | Check database performance and network |
 
-## 📞 Support
-
-- **Documentation**: [Full documentation](https://github.com/your-username/mcp-database-servers)
-- **Issues**: [GitHub Issues](https://github.com/your-username/mcp-database-servers/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-username/mcp-database-servers/discussions)
-
 ## 📄 License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
