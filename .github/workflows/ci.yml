@@ -130,6 +130,9 @@ jobs:
           docker build -f Dockerfile.redis -t mcp-redis:test .
 
       - name: Run basic setup tests
+        env:
+          POSTGRES_MCP_URL: http://localhost:5000
+          MYSQL_MCP_URL: http://localhost:5001
         run: |
           cd tests
           python -m pytest test_basic_setup.py -v
