@@ -6,11 +6,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GitHub Release](https://img.shields.io/github/release/your-username/mcp-database-servers.svg)](https://github.com/your-username/mcp-database-servers/releases)
 
-Production-ready Docker images that provide instant access to database systems through Google's **Model Context Protocol (MCP)**. These images enable AI agents and applications to seamlessly connect to **13 major database systems** including PostgreSQL, MySQL, Snowflake, BigQuery, AlloyDB, Spanner, Neo4j, SQLite, Redis, SQL Server, Firestore, Supabase, and Amazon Redshift with zero configuration overhead.
-
-## 🎯 What is MCP?
-
-The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) is an open standard that enables AI models to securely connect to external data sources and tools. These Docker images package Google's MCP Toolbox for Databases, providing a standardized interface for AI applications to interact with databases.
+Production-ready Docker images that provide instant access to database systems through the **Model Context Protocol (MCP)**. These images enable AI agents and applications to seamlessly connect to **13 major database systems** including PostgreSQL, MySQL, Snowflake, BigQuery, AlloyDB, Spanner, Neo4j, SQLite, Redis, SQL Server, Firestore, Supabase, and Amazon Redshift with zero configuration overhead.
 
 ## ✨ Features
 
