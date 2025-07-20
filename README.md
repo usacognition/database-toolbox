@@ -3,7 +3,7 @@
 [![CI/CD Pipeline](https://github.com/your-username/mcp-database-servers/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/mcp-database-servers/actions/workflows/ci.yml)
 [![Security Scan](https://github.com/your-username/mcp-database-servers/actions/workflows/security.yml/badge.svg)](https://github.com/your-username/mcp-database-servers/actions/workflows/security.yml)
 [![Docker Pulls](https://img.shields.io/docker/pulls/toolbox-images/postgres)](https://hub.docker.com/r/toolbox-images/postgres)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Release](https://img.shields.io/github/release/your-username/mcp-database-servers.svg)](https://github.com/your-username/mcp-database-servers/releases)
 
 Production-ready Docker images that provide instant access to database systems through the **Model Context Protocol (MCP)**. These images enable AI agents and applications to seamlessly connect to **13 major database systems** including PostgreSQL, MySQL, Snowflake, BigQuery, AlloyDB, Spanner, Neo4j, SQLite, Redis, SQL Server, Firestore, Supabase, and Amazon Redshift with zero configuration overhead.
@@ -602,7 +602,7 @@ docker exec mcp-postgres nc -zv your-database-host 5432
 
 ## 📄 License
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🧪 Testing and Development
 
