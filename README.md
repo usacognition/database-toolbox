@@ -113,6 +113,30 @@ docker run --rm -d \
 | `DB_PORT` | Database port | `5432` | Any valid port |
 | `DB_SSL_MODE` | SSL mode | `prefer` | `disable`, `allow`, `prefer`, `require`, `verify-ca`, `verify-full` |
 
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-postgres",
+        "-p", "5000:5000",
+        "-e", "DB_HOST=your-postgres-host.com",
+        "-e", "DB_NAME=your_database",
+        "-e", "DB_USER=your_username",
+        "-e", "DB_PASSWORD=your_password",
+        "@toolbox-images/postgres:latest"
+      ]
+    }
+  }
+}
+```
+
 ### MySQL
 
 Connect to MySQL and MariaDB databases.
@@ -142,6 +166,30 @@ docker run --rm -d \
 |----------|-------------|---------|
 | `DB_PORT` | Database port | `3306` |
 | `DB_CHARSET` | Connection charset | `utf8mb4` |
+
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "mysql": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-mysql",
+        "-p", "5000:5000",
+        "-e", "DB_HOST=your-mysql-host.com",
+        "-e", "DB_NAME=your_database",
+        "-e", "DB_USER=your_username",
+        "-e", "DB_PASSWORD=your_password",
+        "@toolbox-images/mysql:latest"
+      ]
+    }
+  }
+}
+```
 
 ### Snowflake
 
@@ -176,6 +224,31 @@ docker run --rm -d \
 | `SNOWFLAKE_SCHEMA` | Schema name | `PUBLIC` |
 | `SNOWFLAKE_ROLE` | User role | User's default role |
 
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "snowflake": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-snowflake",
+        "-p", "5000:5000",
+        "-e", "SNOWFLAKE_ACCOUNT=your-account.snowflakecomputing.com",
+        "-e", "SNOWFLAKE_USER=your_username",
+        "-e", "SNOWFLAKE_PASSWORD=your_password",
+        "-e", "SNOWFLAKE_DATABASE=your_database",
+        "-e", "SNOWFLAKE_WAREHOUSE=your_warehouse",
+        "@toolbox-images/snowflake:latest"
+      ]
+    }
+  }
+}
+```
+
 ### Amazon Redshift
 
 Connect to Amazon Redshift data warehouse.
@@ -206,6 +279,30 @@ docker run --rm -d \
 |----------|-------------|---------|
 | `REDSHIFT_PORT` | Database port | `5439` |
 | `REDSHIFT_SSL_MODE` | SSL mode | `require` |
+
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "redshift": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-redshift",
+        "-p", "5000:5000",
+        "-e", "REDSHIFT_HOST=your-cluster.region.redshift.amazonaws.com",
+        "-e", "REDSHIFT_DATABASE=your_database",
+        "-e", "REDSHIFT_USER=your_username",
+        "-e", "REDSHIFT_PASSWORD=your_password",
+        "@toolbox-images/redshift:latest"
+      ]
+    }
+  }
+}
+```
 
 ### Microsoft SQL Server
 
@@ -240,6 +337,30 @@ docker run --rm -d \
 | `SQLSERVER_ENCRYPT` | Enable encryption | `true` |
 | `SQLSERVER_TRUST_SERVER_CERTIFICATE` | Trust server certificate | `false` |
 
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "sqlserver": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-sqlserver",
+        "-p", "5000:5000",
+        "-e", "SQLSERVER_HOST=your-sqlserver-host.com",
+        "-e", "SQLSERVER_DATABASE=your_database",
+        "-e", "SQLSERVER_USER=your_username",
+        "-e", "SQLSERVER_PASSWORD=your_password",
+        "@toolbox-images/sqlserver:latest"
+      ]
+    }
+  }
+}
+```
+
 ### SQLite
 
 Connect to SQLite database files.
@@ -262,6 +383,28 @@ docker run --rm -d \
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `SQLITE_READ_ONLY` | Open database in read-only mode | `false` |
+
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "sqlite": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-sqlite",
+        "-p", "5000:5000",
+        "-e", "SQLITE_DATABASE_PATH=/data/database.db",
+        "-v", "/host/path/to/database:/data",
+        "@toolbox-images/sqlite:latest"
+      ]
+    }
+  }
+}
+```
 
 ### Google BigQuery
 
@@ -290,6 +433,29 @@ docker run --rm -d \
 | `BIGQUERY_DATASET_ID` | Default dataset ID | None |
 | `BIGQUERY_LOCATION` | BigQuery location | `US` |
 
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "bigquery": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-bigquery",
+        "-p", "5000:5000",
+        "-e", "BIGQUERY_PROJECT_ID=your-project-id",
+        "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
+        "-v", "/host/path/to/credentials:/credentials",
+        "@toolbox-images/bigquery:latest"
+      ]
+    }
+  }
+}
+```
+
 ### Google AlloyDB
 
 Connect to Google AlloyDB instances.
@@ -316,6 +482,32 @@ docker run --rm -d \
 | `DB_PASSWORD` | Database password | `your_secure_password` |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Path to service account JSON | `/credentials/service-account.json` |
 
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "alloydb": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-alloydb",
+        "-p", "5000:5000",
+        "-e", "ALLOYDB_INSTANCE=projects/your-project/locations/region/clusters/cluster-id/instances/instance-id",
+        "-e", "DB_NAME=your_database",
+        "-e", "DB_USER=your_username",
+        "-e", "DB_PASSWORD=your_password",
+        "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
+        "-v", "/host/path/to/credentials:/credentials",
+        "@toolbox-images/alloydb:latest"
+      ]
+    }
+  }
+}
+```
+
 ### Google Cloud Spanner
 
 Connect to Google Cloud Spanner databases.
@@ -339,6 +531,31 @@ docker run --rm -d \
 | `SPANNER_INSTANCE_ID` | Spanner instance ID | `my-instance` |
 | `SPANNER_DATABASE_ID` | Spanner database ID | `my-database` |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Path to service account JSON | `/credentials/service-account.json` |
+
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "spanner": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-spanner",
+        "-p", "5000:5000",
+        "-e", "SPANNER_PROJECT_ID=your-project-id",
+        "-e", "SPANNER_INSTANCE_ID=your-instance-id",
+        "-e", "SPANNER_DATABASE_ID=your-database-id",
+        "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
+        "-v", "/host/path/to/credentials:/credentials",
+        "@toolbox-images/spanner:latest"
+      ]
+    }
+  }
+}
+```
 
 ### Google Firestore
 
@@ -366,6 +583,29 @@ docker run --rm -d \
 |----------|-------------|---------|
 | `FIRESTORE_DATABASE_ID` | Firestore database ID | `(default)` |
 
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "firestore": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-firestore",
+        "-p", "5000:5000",
+        "-e", "FIRESTORE_PROJECT_ID=your-project-id",
+        "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
+        "-v", "/host/path/to/credentials:/credentials",
+        "@toolbox-images/firestore:latest"
+      ]
+    }
+  }
+}
+```
+
 ### Supabase
 
 Connect to Supabase PostgreSQL databases.
@@ -391,6 +631,28 @@ docker run --rm -d \
 |----------|-------------|---------|
 | `DB_NAME` | Database name | `postgres` |
 | `SUPABASE_SCHEMA` | Default schema | `public` |
+
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-supabase",
+        "-p", "5000:5000",
+        "-e", "SUPABASE_URL=https://your-project.supabase.co",
+        "-e", "SUPABASE_SERVICE_ROLE_KEY=your_service_role_key",
+        "@toolbox-images/supabase:latest"
+      ]
+    }
+  }
+}
+```
 
 ### Neo4j
 
@@ -421,6 +683,29 @@ docker run --rm -d \
 | `NEO4J_MAX_CONNECTION_LIFETIME` | Max connection lifetime | `3600` |
 | `NEO4J_MAX_CONNECTION_POOL_SIZE` | Max connection pool size | `100` |
 
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "neo4j": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-neo4j",
+        "-p", "5000:5000",
+        "-e", "NEO4J_URI=bolt://your-neo4j-host.com:7687",
+        "-e", "NEO4J_USER=neo4j",
+        "-e", "NEO4J_PASSWORD=your_password",
+        "@toolbox-images/neo4j:latest"
+      ]
+    }
+  }
+}
+```
+
 ### Redis
 
 Connect to Redis key-value stores.
@@ -449,6 +734,28 @@ docker run --rm -d \
 | `REDIS_DB` | Redis database number | `0` |
 | `REDIS_SSL` | Enable SSL connection | `false` |
 | `REDIS_USERNAME` | Redis username (Redis 6+) | None |
+
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "redis": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-redis",
+        "-p", "5000:5000",
+        "-e", "REDIS_HOST=your-redis-host.com",
+        "-e", "REDIS_PASSWORD=your_password",
+        "@toolbox-images/redis:latest"
+      ]
+    }
+  }
+}
+```
 
 ## 🔧 Common Configuration
 
@@ -634,290 +941,7 @@ Each database server provides a standardized set of MCP tools:
 - **`list_databases`** - List available databases (if supported)
 - **`get_connection_info`** - Get current connection details
 
-## 🔌 MCP Client Configuration
 
-To use these database servers with MCP clients, you need to configure the client to connect to the running server. Here are configurations for popular MCP clients:
-
-### Claude Desktop
-
-Add the following configuration to your Claude Desktop config file:
-
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
-**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-
-#### Basic Server Configuration
-
-```json
-{
-  "mcpServers": {
-    "postgres": {
-      "command": "docker",
-      "args": [
-        "run", "--rm", "-i",
-        "--name", "mcp-postgres",
-        "-p", "5000:5000",
-        "-e", "DB_HOST=your-postgres-host.com",
-        "-e", "DB_NAME=your_database",
-        "-e", "DB_USER=your_username",
-        "-e", "DB_PASSWORD=your_password",
-        "@toolbox-images/postgres:latest"
-      ]
-    }
-  }
-}
-```
-
-#### Multiple Database Servers
-
-```json
-{
-  "mcpServers": {
-    "postgres": {
-      "command": "docker",
-      "args": [
-        "run", "--rm", "-i",
-        "--name", "mcp-postgres",
-        "-p", "5000:5000",
-        "-e", "DB_HOST=postgres.example.com",
-        "-e", "DB_NAME=production_db",
-        "-e", "DB_USER=app_user",
-        "-e", "DB_PASSWORD=secure_password",
-        "@toolbox-images/postgres:latest"
-      ]
-    },
-    "mysql": {
-      "command": "docker",
-      "args": [
-        "run", "--rm", "-i",
-        "--name", "mcp-mysql", 
-        "-p", "5001:5000",
-        "-e", "DB_HOST=mysql.example.com",
-        "-e", "DB_NAME=analytics_db",
-        "-e", "DB_USER=analyst",
-        "-e", "DB_PASSWORD=mysql_password",
-        "@toolbox-images/mysql:latest"
-      ]
-    },
-    "snowflake": {
-      "command": "docker",
-      "args": [
-        "run", "--rm", "-i",
-        "--name", "mcp-snowflake",
-        "-p", "5002:5000",
-        "-e", "SNOWFLAKE_ACCOUNT=abc12345.snowflakecomputing.com",
-        "-e", "SNOWFLAKE_USER=john.doe@company.com",
-        "-e", "SNOWFLAKE_PASSWORD=snowflake_password",
-        "-e", "SNOWFLAKE_DATABASE=ANALYTICS_DB",
-        "-e", "SNOWFLAKE_WAREHOUSE=COMPUTE_WH",
-        "@toolbox-images/snowflake:latest"
-      ]
-    }
-  }
-}
-```
-
-#### Using Environment Files
-
-For better security, use environment files:
-
-```json
-{
-  "mcpServers": {
-    "postgres": {
-      "command": "docker",
-      "args": [
-        "run", "--rm", "-i",
-        "--name", "mcp-postgres",
-        "-p", "5000:5000",
-        "--env-file", "/path/to/postgres.env",
-        "@toolbox-images/postgres:latest"
-      ]
-    }
-  }
-}
-```
-
-Create `/path/to/postgres.env`:
-```env
-DB_HOST=your-postgres-host.com
-DB_NAME=your_database
-DB_USER=your_username
-DB_PASSWORD=your_password
-DB_SSL_MODE=prefer
-```
-
-### HTTP-based MCP Clients
-
-For clients that connect via HTTP, you'll need to run the servers in daemon mode and connect to their endpoints:
-
-#### Server URLs
-```
-PostgreSQL:    http://localhost:5000
-MySQL:         http://localhost:5001
-Snowflake:     http://localhost:5002
-BigQuery:      http://localhost:5003
-# ... etc for other databases
-```
-
-#### Generic HTTP Client Configuration
-
-```json
-{
-  "servers": [
-    {
-      "name": "postgres",
-      "url": "http://localhost:5000",
-      "type": "http"
-    },
-    {
-      "name": "mysql", 
-      "url": "http://localhost:5001",
-      "type": "http"
-    }
-  ]
-}
-```
-
-### Custom MCP Clients
-
-For custom MCP client implementations, connect to the servers using:
-
-#### Stdio Transport
-```python
-import subprocess
-from mcp import ClientSession, StdioServerParameters
-
-# Start the Docker container with stdio transport
-server_params = StdioServerParameters(
-    command="docker",
-    args=[
-        "run", "--rm", "-i",
-        "--name", "mcp-postgres",
-        "-e", "DB_HOST=your-host",
-        "-e", "DB_NAME=your_db",
-        "-e", "DB_USER=your_user", 
-        "-e", "DB_PASSWORD=your_password",
-        "-e", "ENABLE_STDIO=true",
-        "@toolbox-images/postgres:latest"
-    ]
-)
-
-async with ClientSession(server_params) as session:
-    # Use the session to interact with the database
-    result = await session.call_tool("execute_query", {"query": "SELECT 1"})
-```
-
-#### HTTP Transport
-```python
-from mcp import ClientSession, HttpServerParameters
-
-# Connect to running HTTP server
-server_params = HttpServerParameters(url="http://localhost:5000")
-
-async with ClientSession(server_params) as session:
-    result = await session.call_tool("list_tables", {})
-```
-
-### Configuration Templates
-
-#### Development Environment
-```json
-{
-  "mcpServers": {
-    "dev-postgres": {
-      "command": "docker",
-      "args": [
-        "run", "--rm", "-i",
-        "--name", "mcp-dev-postgres",
-        "-p", "5000:5000",
-        "-e", "DB_HOST=localhost",
-        "-e", "DB_NAME=development",
-        "-e", "DB_USER=dev_user",
-        "-e", "DB_PASSWORD=dev_password",
-        "-e", "TOOLBOX_LOG_LEVEL=debug",
-        "@toolbox-images/postgres:latest"
-      ]
-    }
-  }
-}
-```
-
-#### Production Environment
-```json
-{
-  "mcpServers": {
-    "prod-postgres": {
-      "command": "docker",
-      "args": [
-        "run", "--rm", "-i",
-        "--name", "mcp-prod-postgres",
-        "-p", "5000:5000",
-        "--env-file", "/secure/postgres-prod.env",
-        "--network", "production-network",
-        "@toolbox-images/postgres:latest"
-      ]
-    }
-  }
-}
-```
-
-### Troubleshooting Client Connections
-
-#### Common Issues
-
-**Server not starting:**
-```bash
-# Check Docker logs
-docker logs mcp-postgres
-
-# Verify environment variables
-docker inspect mcp-postgres | grep -A 20 '"Env"'
-```
-
-**Connection refused:**
-```bash
-# Check if port is accessible
-curl -f http://localhost:5000/health || echo "Server not responding"
-
-# Verify container is running
-docker ps | grep mcp-
-```
-
-**Tool not found:**
-```bash
-# List available tools via HTTP
-curl http://localhost:5000/tools
-
-# Test tool execution
-curl -X POST http://localhost:5000/call-tool \
-  -H "Content-Type: application/json" \
-  -d '{"name": "list_tables", "arguments": {}}'
-```
-
-#### Debug Configuration
-
-Add debug logging to your client configuration:
-
-```json
-{
-  "mcpServers": {
-    "postgres": {
-      "command": "docker",
-      "args": [
-        "run", "--rm", "-i",
-        "--name", "mcp-postgres",
-        "-p", "5000:5000", 
-        "-e", "TOOLBOX_LOG_LEVEL=debug",
-        "-e", "DB_HOST=your-host",
-        "# ... other env vars",
-        "@toolbox-images/postgres:latest"
-      ],
-      "disabled": false
-    }
-  },
-  "globalShortcut": "Ctrl+Shift+Space"
-}
-```
 
 ## 🚨 Troubleshooting
 
