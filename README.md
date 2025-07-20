@@ -2,7 +2,7 @@
 
 [![CI/CD Pipeline](https://github.com/your-username/mcp-database-servers/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/mcp-database-servers/actions/workflows/ci.yml)
 [![Security Scan](https://github.com/your-username/mcp-database-servers/actions/workflows/security.yml/badge.svg)](https://github.com/your-username/mcp-database-servers/actions/workflows/security.yml)
-[![Docker Pulls](https://img.shields.io/docker/pulls/your-dockerhub-username/mcp-postgres)](https://hub.docker.com/r/your-dockerhub-username/mcp-postgres)
+[![Docker Pulls](https://img.shields.io/docker/pulls/toolbox-images/postgres)](https://hub.docker.com/r/toolbox-images/postgres)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GitHub Release](https://img.shields.io/github/release/your-username/mcp-database-servers.svg)](https://github.com/your-username/mcp-database-servers/releases)
 
@@ -23,21 +23,21 @@ Production-ready Docker images that provide instant access to database systems t
 | Database | Image Name | Default Port | Type | Status |
 |----------|------------|--------------|------|--------|
 | **Relational Databases** | | | | |
-| PostgreSQL | `your-dockerhub-username/mcp-postgres` | 5000 | SQL | ✅ Ready |
-| MySQL | `your-dockerhub-username/mcp-mysql` | 5000 | SQL | ✅ Ready |
-| Microsoft SQL Server | `your-dockerhub-username/mcp-sqlserver` | 5000 | SQL | ✅ Ready |
-| SQLite | `your-dockerhub-username/mcp-sqlite` | 5000 | SQL | ✅ Ready |
+| PostgreSQL | `@toolbox-images/postgres` | 5000 | SQL | ✅ Ready |
+| MySQL | `@toolbox-images/mysql` | 5000 | SQL | ✅ Ready |
+| Microsoft SQL Server | `@toolbox-images/sqlserver` | 5000 | SQL | ✅ Ready |
+| SQLite | `@toolbox-images/sqlite` | 5000 | SQL | ✅ Ready |
 | **Cloud Databases** | | | | |
-| Google BigQuery | `your-dockerhub-username/mcp-bigquery` | 5000 | Analytics | ✅ Ready |
-| Google AlloyDB | `your-dockerhub-username/mcp-alloydb` | 5000 | SQL | ✅ Ready |
-| Google Cloud Spanner | `your-dockerhub-username/mcp-spanner` | 5000 | SQL | ✅ Ready |
-| Google Firestore | `your-dockerhub-username/mcp-firestore` | 5000 | NoSQL | ✅ Ready |
-| Snowflake | `your-dockerhub-username/mcp-snowflake` | 5000 | Analytics | ✅ Ready |
-| Amazon Redshift | `your-dockerhub-username/mcp-redshift` | 5000 | Analytics | ✅ Ready |
-| Supabase | `your-dockerhub-username/mcp-supabase` | 5000 | SQL | ✅ Ready |
+| Google BigQuery | `@toolbox-images/bigquery` | 5000 | Analytics | ✅ Ready |
+| Google AlloyDB | `@toolbox-images/alloydb` | 5000 | SQL | ✅ Ready |
+| Google Cloud Spanner | `@toolbox-images/spanner` | 5000 | SQL | ✅ Ready |
+| Google Firestore | `@toolbox-images/firestore` | 5000 | NoSQL | ✅ Ready |
+| Snowflake | `@toolbox-images/snowflake` | 5000 | Analytics | ✅ Ready |
+| Amazon Redshift | `@toolbox-images/redshift` | 5000 | Analytics | ✅ Ready |
+| Supabase | `@toolbox-images/supabase` | 5000 | SQL | ✅ Ready |
 | **NoSQL & Graph** | | | | |
-| Neo4j | `your-dockerhub-username/mcp-neo4j` | 5000 | Graph | ✅ Ready |
-| Redis | `your-dockerhub-username/mcp-redis` | 5000 | Cache/NoSQL | ✅ Ready |
+| Neo4j | `@toolbox-images/neo4j` | 5000 | Graph | ✅ Ready |
+| Redis | `@toolbox-images/redis` | 5000 | Cache/NoSQL | ✅ Ready |
 
 ## 🚀 Quick Start
 
@@ -57,7 +57,7 @@ docker run -d \
   --name mcp-{database} \
   -p 5000:5000 \
   -e [DATABASE_PARAMETERS] \
-  your-dockerhub-username/mcp-{database}:latest
+  @toolbox-images/{database}:latest
 ```
 
 ## 🗄️ Database-Specific Configuration
