@@ -1,0 +1,263 @@
+name: Security & Dependencies
+
+on:
+  schedule:
+    # Run daily security scans
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - 'Dockerfile.*'
+      - 'requirements.txt'
+      - 'tests/requirements.txt'
+      - '.github/workflows/security.yml'
+
+env:
+  REGISTRY: docker.io
+  NAMESPACE: ${{ secrets.DOCKER_USERNAME || 'mcp-database-servers' }}
+
+jobs:
+  # Scan for dependency vulnerabilities
+  dependency-scan:
+    name: Dependency Vulnerability Scan
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        database: [postgres, mysql, snowflake, redshift, bigquery, alloydb, spanner, neo4j, sqlite, redis, sqlserver, firestore, supabase]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build image for scanning
+        run: |
+          docker build -f Dockerfile.${{ matrix.database }} -t scan-${{ matrix.database }}:latest .
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'scan-${{ matrix.database }}:latest'
+          format: 'json'
+          output: 'trivy-results-${{ matrix.database }}.json'
+
+      - name: Check for high/critical vulnerabilities
+        run: |
+          # Check if there are HIGH or CRITICAL vulnerabilities
+          HIGH_VULN=$(jq '.Results[]?.Vulnerabilities[]? | select(.Severity == "HIGH") | .VulnerabilityID' trivy-results-${{ matrix.database }}.json | wc -l)
+          CRITICAL_VULN=$(jq '.Results[]?.Vulnerabilities[]? | select(.Severity == "CRITICAL") | .VulnerabilityID' trivy-results-${{ matrix.database }}.json | wc -l)
+          
+          echo "Found $HIGH_VULN HIGH and $CRITICAL_VULN CRITICAL vulnerabilities in ${{ matrix.database }}"
+          
+          if [ $CRITICAL_VULN -gt 0 ]; then
+            echo "❌ CRITICAL vulnerabilities found in ${{ matrix.database }}!"
+            jq '.Results[]?.Vulnerabilities[]? | select(.Severity == "CRITICAL")' trivy-results-${{ matrix.database }}.json
+            exit 1
+          elif [ $HIGH_VULN -gt 5 ]; then
+            echo "⚠️  Too many HIGH vulnerabilities found in ${{ matrix.database }} ($HIGH_VULN > 5)"
+            exit 1
+          else
+            echo "✅ Security scan passed for ${{ matrix.database }}"
+          fi
+
+      - name: Upload scan results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: trivy-results-${{ matrix.database }}
+          path: trivy-results-${{ matrix.database }}.json
+
+  # Check for base image updates
+  base-image-check:
+    name: Check Base Image Updates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check Alpine base image
+        run: |
+          CURRENT_VERSION="3.19"
+          LATEST_VERSION=$(curl -s https://registry.hub.docker.com/v2/repositories/library/alpine/tags/ | jq -r '.results[].name' | grep -E '^[0-9]+\.[0-9]+$' | sort -V | tail -1)
+          
+          echo "Current Alpine version: $CURRENT_VERSION"
+          echo "Latest Alpine version: $LATEST_VERSION"
+          
+          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+            echo "⚠️  Alpine base image update available: $CURRENT_VERSION -> $LATEST_VERSION"
+            echo "Consider updating Dockerfiles to use alpine:$LATEST_VERSION"
+          else
+            echo "✅ Alpine base image is up to date"
+          fi
+
+  # Monitor MCP Toolbox updates
+  toolbox-update-check:
+    name: Check MCP Toolbox Updates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check for new MCP Toolbox releases
+        run: |
+          CURRENT_VERSION="0.9.0"
+          LATEST_VERSION=$(curl -s https://api.github.com/repos/googleapis/genai-toolbox/releases/latest | jq -r '.tag_name' | sed 's/^v//')
+          
+          echo "Current MCP Toolbox version: $CURRENT_VERSION"
+          echo "Latest MCP Toolbox version: $LATEST_VERSION"
+          
+          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+            echo "⚠️  MCP Toolbox update available: $CURRENT_VERSION -> $LATEST_VERSION"
+            echo "Consider updating TOOLBOX_VERSION in Dockerfiles and build scripts"
+            
+            # Create issue if update is available
+            if [ "${{ github.event_name }}" = "schedule" ]; then
+              echo "Would create GitHub issue for MCP Toolbox update"
+              # In a real setup, you could use GitHub CLI to create an issue here
+            fi
+          else
+            echo "✅ MCP Toolbox is up to date"
+          fi
+
+  # Check Python dependencies
+  python-deps-check:
+    name: Check Python Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install pip-audit
+        run: pip install pip-audit
+
+      - name: Audit test requirements
+        run: |
+          cd tests
+          echo "Auditing test requirements for vulnerabilities..."
+          pip-audit -r requirements.txt --format=json --output=audit-results.json || true
+          
+          # Check for vulnerabilities
+          VULN_COUNT=$(jq '.vulnerabilities | length' audit-results.json 2>/dev/null || echo "0")
+          
+          if [ "$VULN_COUNT" -gt 0 ]; then
+            echo "⚠️  Found $VULN_COUNT vulnerabilities in Python dependencies"
+            jq '.vulnerabilities' audit-results.json
+          else
+            echo "✅ No vulnerabilities found in Python dependencies"
+          fi
+
+      - name: Check for outdated packages
+        run: |
+          cd tests
+          pip install -r requirements.txt
+          pip list --outdated --format=json > outdated.json
+          
+          OUTDATED_COUNT=$(jq '. | length' outdated.json)
+          
+          if [ "$OUTDATED_COUNT" -gt 0 ]; then
+            echo "📦 Found $OUTDATED_COUNT outdated Python packages:"
+            jq -r '.[] | "\(.name): \(.version) -> \(.latest_version)"' outdated.json
+          else
+            echo "✅ All Python packages are up to date"
+          fi
+
+  # Security policy compliance check
+  security-policy-check:
+    name: Security Policy Compliance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check Dockerfile security practices
+        run: |
+          echo "🔒 Checking Dockerfile security practices..."
+          
+          ISSUES=0
+          
+          for dockerfile in Dockerfile.*; do
+            echo "Checking $dockerfile..."
+            
+            # Check for non-root user
+            if ! grep -q "USER mcp" "$dockerfile"; then
+              echo "❌ $dockerfile: Missing non-root user"
+              ISSUES=$((ISSUES + 1))
+            fi
+            
+            # Check for health check
+            if ! grep -q "HEALTHCHECK" "$dockerfile"; then
+              echo "⚠️  $dockerfile: Missing health check"
+            fi
+            
+            # Check for minimal base image
+            if ! grep -q "FROM alpine" "$dockerfile"; then
+              echo "⚠️  $dockerfile: Not using minimal Alpine base image"
+            fi
+            
+            # Check for package manager cache cleanup
+            if grep -q "apk add" "$dockerfile" && ! grep -q "rm -rf /var/cache/apk" "$dockerfile"; then
+              echo "⚠️  $dockerfile: Package manager cache not cleaned"
+            fi
+          done
+          
+          if [ $ISSUES -gt 0 ]; then
+            echo "❌ Found $ISSUES security compliance issues"
+            exit 1
+          else
+            echo "✅ All Dockerfiles comply with security policies"
+          fi
+
+  # Create security report
+  security-report:
+    name: Generate Security Report
+    runs-on: ubuntu-latest
+    needs: [dependency-scan, base-image-check, toolbox-update-check, python-deps-check, security-policy-check]
+    if: always()
+    steps:
+      - name: Generate security summary
+        run: |
+          echo "# Security Report - $(date)" > security-report.md
+          echo "" >> security-report.md
+          
+          echo "## Job Results" >> security-report.md
+          echo "- Dependency Scan: ${{ needs.dependency-scan.result }}" >> security-report.md
+          echo "- Base Image Check: ${{ needs.base-image-check.result }}" >> security-report.md
+          echo "- Toolbox Update Check: ${{ needs.toolbox-update-check.result }}" >> security-report.md
+          echo "- Python Dependencies Check: ${{ needs.python-deps-check.result }}" >> security-report.md
+          echo "- Security Policy Check: ${{ needs.security-policy-check.result }}" >> security-report.md
+          echo "" >> security-report.md
+          
+          if [ "${{ needs.dependency-scan.result }}" = "failure" ] || [ "${{ needs.security-policy-check.result }}" = "failure" ]; then
+            echo "## ⚠️  Security Issues Detected" >> security-report.md
+            echo "Critical security issues were found that require immediate attention." >> security-report.md
+          else
+            echo "## ✅ Security Status: Good" >> security-report.md
+            echo "No critical security issues detected." >> security-report.md
+          fi
+
+      - name: Upload security report
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-report
+          path: security-report.md
+
+  # Notify on security issues
+  notify-security-issues:
+    name: Notify Security Issues
+    runs-on: ubuntu-latest
+    needs: [dependency-scan, security-policy-check]
+    if: failure() && github.event_name == 'schedule'
+    steps:
+      - name: Notify on critical security issues
+        run: |
+          echo "🚨 SECURITY ALERT: Critical vulnerabilities detected!"
+          echo "Immediate action required:"
+          echo "1. Review failed security scans"
+          echo "2. Update vulnerable dependencies"
+          echo "3. Rebuild and redeploy affected images"
+          echo ""
+          echo "Check the Actions tab for detailed scan results."
