@@ -31,8 +31,9 @@ RUN addgroup -g 1001 mcp && \
 # Set up application directory
 WORKDIR /app
 
-# Install PostgreSQL driver and Supabase client
-RUN pip3 install --no-cache-dir psycopg2-binary==2.9.9 supabase>=2.0.0
+# Create virtual environment and install PostgreSQL driver and Supabase client
+RUN python3 -m venv /opt/venv && \
+    /opt/venv/bin/pip install --no-cache-dir psycopg2-binary==2.9.9 supabase>=2.0.0
 
 # Download and install MCP Toolbox
 ARG TOOLBOX_VERSION=0.9.0
@@ -42,12 +43,9 @@ RUN case ${TARGETPLATFORM} in \
     "linux/arm64") ARCH="linux/arm64" ;; \
     *) echo "Unsupported platform: ${TARGETPLATFORM}" && exit 1 ;; \
     esac && \
-    curl -L "https://github.com/googleapis/genai-toolbox/releases/download/v${TOOLBOX_VERSION}/genai-toolbox-${TOOLBOX_VERSION}-${ARCH}.tar.gz" \
-    -o toolbox.tar.gz && \
-    tar -xzf toolbox.tar.gz && \
-    chmod +x genai-toolbox && \
-    mv genai-toolbox /usr/local/bin/mcp-toolbox && \
-    rm toolbox.tar.gz
+    curl -L -o toolbox "https://storage.googleapis.com/genai-toolbox/v${TOOLBOX_VERSION}/${ARCH}/toolbox" && \
+    chmod +x toolbox && \
+    mv toolbox /usr/local/bin/mcp-toolbox
 
 # Copy scripts
 COPY scripts/entrypoint.sh /app/scripts/entrypoint.sh
@@ -73,6 +71,7 @@ EXPOSE 5000
 ENV DB_TYPE=supabase
 ENV TOOLBOX_PORT=5000
 ENV TOOLBOX_LOG_LEVEL=info
+ENV PATH="/opt/venv/bin:$PATH"
 
 # Use tini as init system
 ENTRYPOINT ["/sbin/tini", "--"]

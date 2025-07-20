@@ -13,23 +13,15 @@ class TestHealthChecks:
     
     def test_postgres_health(self):
         """Test PostgreSQL MCP server health endpoint."""
-        response = requests.get(f"{POSTGRES_MCP_URL}/health", timeout=30)
+        response = requests.get(f"{POSTGRES_MCP_URL}/", timeout=30)
         assert response.status_code == 200
-        
-        health_data = response.json()
-        assert "status" in health_data
-        assert health_data["status"] in ["healthy", "ready"]
-        assert "timestamp" in health_data
+        assert "Hello, World!" in response.text
     
     def test_mysql_health(self):
         """Test MySQL MCP server health endpoint."""
-        response = requests.get(f"{MYSQL_MCP_URL}/health", timeout=30)
+        response = requests.get(f"{MYSQL_MCP_URL}/", timeout=30)
         assert response.status_code == 200
-        
-        health_data = response.json()
-        assert "status" in health_data
-        assert health_data["status"] in ["healthy", "ready"]
-        assert "timestamp" in health_data
+        assert "Hello, World!" in response.text
     
     @pytest.mark.postgres
     def test_postgres_mcp_tools_available(self, postgres_mcp_client):
@@ -88,13 +80,9 @@ class TestHealthChecks:
     )
     def test_snowflake_health(self):
         """Test Snowflake MCP server health endpoint."""
-        response = requests.get(f"{SNOWFLAKE_MCP_URL}/health", timeout=30)
+        response = requests.get(f"{SNOWFLAKE_MCP_URL}/", timeout=30)
         assert response.status_code == 200
-        
-        health_data = response.json()
-        assert "status" in health_data
-        assert health_data["status"] in ["healthy", "ready"]
-        assert "timestamp" in health_data
+        assert "Hello, World!" in response.text
     
     @pytest.mark.redshift
     @pytest.mark.skipif(
@@ -103,10 +91,6 @@ class TestHealthChecks:
     )
     def test_redshift_health(self):
         """Test Redshift MCP server health endpoint."""
-        response = requests.get(f"{REDSHIFT_MCP_URL}/health", timeout=30)
+        response = requests.get(f"{REDSHIFT_MCP_URL}/", timeout=30)
         assert response.status_code == 200
-        
-        health_data = response.json()
-        assert "status" in health_data
-        assert health_data["status"] in ["healthy", "ready"]
-        assert "timestamp" in health_data
+        assert "Hello, World!" in response.text

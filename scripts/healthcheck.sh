@@ -4,7 +4,7 @@ set -e
 # Health check script for MCP Toolbox
 # This script verifies that the MCP server is healthy and responsive
 
-HEALTH_CHECK_URL="http://localhost:${TOOLBOX_PORT:-5000}/health"
+HEALTH_CHECK_URL="http://localhost:${TOOLBOX_PORT:-5000}/"
 TIMEOUT="${TOOLBOX_HEALTH_CHECK_TIMEOUT:-30s}"
 
 # Function to log messages
