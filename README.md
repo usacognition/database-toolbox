@@ -113,6 +113,29 @@ docker run --rm -d \
 | `DB_PORT` | Database port | `5432` | Any valid port |
 | `DB_SSL_MODE` | SSL mode | `prefer` | `disable`, `allow`, `prefer`, `require`, `verify-ca`, `verify-full` |
 
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-postgres",
+        "-e", "DB_HOST=your-postgres-host.com",
+        "-e", "DB_NAME=your_database",
+        "-e", "DB_USER=your_username",
+        "-e", "DB_PASSWORD=your_password",
+        "@toolbox-images/postgres"
+      ]
+    }
+  }
+}
+```
+
 ### MySQL
 
 Connect to MySQL and MariaDB databases.
@@ -142,6 +165,29 @@ docker run --rm -d \
 |----------|-------------|---------|
 | `DB_PORT` | Database port | `3306` |
 | `DB_CHARSET` | Connection charset | `utf8mb4` |
+
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "mysql": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-mysql",
+        "-e", "DB_HOST=your-mysql-host.com",
+        "-e", "DB_NAME=your_database",
+        "-e", "DB_USER=your_username",
+        "-e", "DB_PASSWORD=your_password",
+        "@toolbox-images/mysql"
+      ]
+    }
+  }
+}
+```
 
 ### Snowflake
 
@@ -176,6 +222,30 @@ docker run --rm -d \
 | `SNOWFLAKE_SCHEMA` | Schema name | `PUBLIC` |
 | `SNOWFLAKE_ROLE` | User role | User's default role |
 
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "snowflake": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-snowflake",
+        "-e", "SNOWFLAKE_ACCOUNT=your-account.snowflakecomputing.com",
+        "-e", "SNOWFLAKE_USER=your_username",
+        "-e", "SNOWFLAKE_PASSWORD=your_password",
+        "-e", "SNOWFLAKE_DATABASE=your_database",
+        "-e", "SNOWFLAKE_WAREHOUSE=your_warehouse",
+        "@toolbox-images/snowflake"
+      ]
+    }
+  }
+}
+```
+
 ### Amazon Redshift
 
 Connect to Amazon Redshift data warehouse.
@@ -206,6 +276,29 @@ docker run --rm -d \
 |----------|-------------|---------|
 | `REDSHIFT_PORT` | Database port | `5439` |
 | `REDSHIFT_SSL_MODE` | SSL mode | `require` |
+
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "redshift": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-redshift",
+        "-e", "REDSHIFT_HOST=your-cluster.region.redshift.amazonaws.com",
+        "-e", "REDSHIFT_DATABASE=your_database",
+        "-e", "REDSHIFT_USER=your_username",
+        "-e", "REDSHIFT_PASSWORD=your_password",
+        "@toolbox-images/redshift"
+      ]
+    }
+  }
+}
+```
 
 ### Microsoft SQL Server
 
@@ -240,6 +333,29 @@ docker run --rm -d \
 | `SQLSERVER_ENCRYPT` | Enable encryption | `true` |
 | `SQLSERVER_TRUST_SERVER_CERTIFICATE` | Trust server certificate | `false` |
 
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "sqlserver": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-sqlserver",
+        "-e", "SQLSERVER_HOST=your-sqlserver-host.com",
+        "-e", "SQLSERVER_DATABASE=your_database",
+        "-e", "SQLSERVER_USER=your_username",
+        "-e", "SQLSERVER_PASSWORD=your_password",
+        "@toolbox-images/sqlserver"
+      ]
+    }
+  }
+}
+```
+
 ### SQLite
 
 Connect to SQLite database files.
@@ -262,6 +378,27 @@ docker run --rm -d \
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `SQLITE_READ_ONLY` | Open database in read-only mode | `false` |
+
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "sqlite": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-sqlite",
+        "-e", "SQLITE_DATABASE_PATH=/data/database.db",
+        "-v", "/host/path/to/database:/data",
+        "@toolbox-images/sqlite"
+      ]
+    }
+  }
+}
+```
 
 ### Google BigQuery
 
@@ -290,6 +427,28 @@ docker run --rm -d \
 | `BIGQUERY_DATASET_ID` | Default dataset ID | None |
 | `BIGQUERY_LOCATION` | BigQuery location | `US` |
 
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "bigquery": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-bigquery",
+        "-e", "BIGQUERY_PROJECT_ID=your-project-id",
+        "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
+        "-v", "/host/path/to/credentials:/credentials",
+        "@toolbox-images/bigquery"
+      ]
+    }
+  }
+}
+```
+
 ### Google AlloyDB
 
 Connect to Google AlloyDB instances.
@@ -316,6 +475,31 @@ docker run --rm -d \
 | `DB_PASSWORD` | Database password | `your_secure_password` |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Path to service account JSON | `/credentials/service-account.json` |
 
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "alloydb": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-alloydb",
+        "-e", "ALLOYDB_INSTANCE=projects/your-project/locations/region/clusters/cluster-id/instances/instance-id",
+        "-e", "DB_NAME=your_database",
+        "-e", "DB_USER=your_username",
+        "-e", "DB_PASSWORD=your_password",
+        "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
+        "-v", "/host/path/to/credentials:/credentials",
+        "@toolbox-images/alloydb"
+      ]
+    }
+  }
+}
+```
+
 ### Google Cloud Spanner
 
 Connect to Google Cloud Spanner databases.
@@ -339,6 +523,30 @@ docker run --rm -d \
 | `SPANNER_INSTANCE_ID` | Spanner instance ID | `my-instance` |
 | `SPANNER_DATABASE_ID` | Spanner database ID | `my-database` |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Path to service account JSON | `/credentials/service-account.json` |
+
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "spanner": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-spanner",
+        "-e", "SPANNER_PROJECT_ID=your-project-id",
+        "-e", "SPANNER_INSTANCE_ID=your-instance-id",
+        "-e", "SPANNER_DATABASE_ID=your-database-id",
+        "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
+        "-v", "/host/path/to/credentials:/credentials",
+        "@toolbox-images/spanner"
+      ]
+    }
+  }
+}
+```
 
 ### Google Firestore
 
@@ -366,6 +574,28 @@ docker run --rm -d \
 |----------|-------------|---------|
 | `FIRESTORE_DATABASE_ID` | Firestore database ID | `(default)` |
 
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "firestore": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-firestore",
+        "-e", "FIRESTORE_PROJECT_ID=your-project-id",
+        "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
+        "-v", "/host/path/to/credentials:/credentials",
+        "@toolbox-images/firestore"
+      ]
+    }
+  }
+}
+```
+
 ### Supabase
 
 Connect to Supabase PostgreSQL databases.
@@ -391,6 +621,27 @@ docker run --rm -d \
 |----------|-------------|---------|
 | `DB_NAME` | Database name | `postgres` |
 | `SUPABASE_SCHEMA` | Default schema | `public` |
+
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-supabase",
+        "-e", "SUPABASE_URL=https://your-project.supabase.co",
+        "-e", "SUPABASE_SERVICE_ROLE_KEY=your_service_role_key",
+        "@toolbox-images/supabase"
+      ]
+    }
+  }
+}
+```
 
 ### Neo4j
 
@@ -421,6 +672,28 @@ docker run --rm -d \
 | `NEO4J_MAX_CONNECTION_LIFETIME` | Max connection lifetime | `3600` |
 | `NEO4J_MAX_CONNECTION_POOL_SIZE` | Max connection pool size | `100` |
 
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "neo4j": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-neo4j",
+        "-e", "NEO4J_URI=bolt://your-neo4j-host.com:7687",
+        "-e", "NEO4J_USER=neo4j",
+        "-e", "NEO4J_PASSWORD=your_password",
+        "@toolbox-images/neo4j"
+      ]
+    }
+  }
+}
+```
+
 ### Redis
 
 Connect to Redis key-value stores.
@@ -449,6 +722,27 @@ docker run --rm -d \
 | `REDIS_DB` | Redis database number | `0` |
 | `REDIS_SSL` | Enable SSL connection | `false` |
 | `REDIS_USERNAME` | Redis username (Redis 6+) | None |
+
+#### MCP Client Configuration
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "redis": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-redis",
+        "-e", "REDIS_HOST=your-redis-host.com",
+        "-e", "REDIS_PASSWORD=your_password",
+        "@toolbox-images/redis"
+      ]
+    }
+  }
+}
+```
 
 ## 🔧 Common Configuration
 
@@ -633,6 +927,8 @@ Each database server provides a standardized set of MCP tools:
 - **`get_schema`** - Get complete database schema
 - **`list_databases`** - List available databases (if supported)
 - **`get_connection_info`** - Get current connection details
+
+
 
 ## 🚨 Troubleshooting
 
