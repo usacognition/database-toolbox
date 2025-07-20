@@ -125,7 +125,6 @@ Add to your MCP client config:
       "args": [
         "run", "--rm", "-i",
         "--name", "mcp-postgres",
-        "-p", "5000:5000",
         "-e", "DB_HOST=your-postgres-host.com",
         "-e", "DB_NAME=your_database",
         "-e", "DB_USER=your_username",
@@ -179,7 +178,6 @@ Add to your MCP client config:
       "args": [
         "run", "--rm", "-i",
         "--name", "mcp-mysql",
-        "-p", "5000:5000",
         "-e", "DB_HOST=your-mysql-host.com",
         "-e", "DB_NAME=your_database",
         "-e", "DB_USER=your_username",
@@ -236,7 +234,6 @@ Add to your MCP client config:
       "args": [
         "run", "--rm", "-i",
         "--name", "mcp-snowflake",
-        "-p", "5000:5000",
         "-e", "SNOWFLAKE_ACCOUNT=your-account.snowflakecomputing.com",
         "-e", "SNOWFLAKE_USER=your_username",
         "-e", "SNOWFLAKE_PASSWORD=your_password",
@@ -292,7 +289,6 @@ Add to your MCP client config:
       "args": [
         "run", "--rm", "-i",
         "--name", "mcp-redshift",
-        "-p", "5000:5000",
         "-e", "REDSHIFT_HOST=your-cluster.region.redshift.amazonaws.com",
         "-e", "REDSHIFT_DATABASE=your_database",
         "-e", "REDSHIFT_USER=your_username",
@@ -349,7 +345,6 @@ Add to your MCP client config:
       "args": [
         "run", "--rm", "-i",
         "--name", "mcp-sqlserver",
-        "-p", "5000:5000",
         "-e", "SQLSERVER_HOST=your-sqlserver-host.com",
         "-e", "SQLSERVER_DATABASE=your_database",
         "-e", "SQLSERVER_USER=your_username",
@@ -396,7 +391,6 @@ Add to your MCP client config:
       "args": [
         "run", "--rm", "-i",
         "--name", "mcp-sqlite",
-        "-p", "5000:5000",
         "-e", "SQLITE_DATABASE_PATH=/data/database.db",
         "-v", "/host/path/to/database:/data",
         "@toolbox-images/sqlite"
@@ -445,7 +439,6 @@ Add to your MCP client config:
       "args": [
         "run", "--rm", "-i",
         "--name", "mcp-bigquery",
-        "-p", "5000:5000",
         "-e", "BIGQUERY_PROJECT_ID=your-project-id",
         "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
         "-v", "/host/path/to/credentials:/credentials",
@@ -494,7 +487,6 @@ Add to your MCP client config:
       "args": [
         "run", "--rm", "-i",
         "--name", "mcp-alloydb",
-        "-p", "5000:5000",
         "-e", "ALLOYDB_INSTANCE=projects/your-project/locations/region/clusters/cluster-id/instances/instance-id",
         "-e", "DB_NAME=your_database",
         "-e", "DB_USER=your_username",
@@ -544,7 +536,6 @@ Add to your MCP client config:
       "args": [
         "run", "--rm", "-i",
         "--name", "mcp-spanner",
-        "-p", "5000:5000",
         "-e", "SPANNER_PROJECT_ID=your-project-id",
         "-e", "SPANNER_INSTANCE_ID=your-instance-id",
         "-e", "SPANNER_DATABASE_ID=your-database-id",
@@ -595,7 +586,6 @@ Add to your MCP client config:
       "args": [
         "run", "--rm", "-i",
         "--name", "mcp-firestore",
-        "-p", "5000:5000",
         "-e", "FIRESTORE_PROJECT_ID=your-project-id",
         "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
         "-v", "/host/path/to/credentials:/credentials",
@@ -644,7 +634,6 @@ Add to your MCP client config:
       "args": [
         "run", "--rm", "-i",
         "--name", "mcp-supabase",
-        "-p", "5000:5000",
         "-e", "SUPABASE_URL=https://your-project.supabase.co",
         "-e", "SUPABASE_SERVICE_ROLE_KEY=your_service_role_key",
         "@toolbox-images/supabase"
@@ -695,7 +684,6 @@ Add to your MCP client config:
       "args": [
         "run", "--rm", "-i",
         "--name", "mcp-neo4j",
-        "-p", "5000:5000",
         "-e", "NEO4J_URI=bolt://your-neo4j-host.com:7687",
         "-e", "NEO4J_USER=neo4j",
         "-e", "NEO4J_PASSWORD=your_password",
@@ -747,7 +735,6 @@ Add to your MCP client config:
       "args": [
         "run", "--rm", "-i",
         "--name", "mcp-redis",
-        "-p", "5000:5000",
         "-e", "REDIS_HOST=your-redis-host.com",
         "-e", "REDIS_PASSWORD=your_password",
         "@toolbox-images/redis"
