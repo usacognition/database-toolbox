@@ -367,6 +367,52 @@ docker exec mcp-postgres nc -zv your-database-host 5432
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
+## 🧪 Testing and Development
+
+### Development Environment
+
+For developers who want to contribute or test the MCP servers, we provide a comprehensive development environment with integrated testing.
+
+```bash
+# Clone and set up development environment
+git clone https://github.com/your-username/mcp-database-servers.git
+cd mcp-database-servers
+
+# Start development environment with databases, MCP servers, and web interfaces
+./tests/run_tests.sh setup
+```
+
+**Development Services:**
+- **PostgreSQL MCP Server**: http://localhost:5000
+- **MySQL MCP Server**: http://localhost:5001  
+- **pgAdmin** (PostgreSQL UI): http://localhost:8080 (admin@mcp.dev / admin123)
+- **phpMyAdmin** (MySQL UI): http://localhost:8081
+- **Test Reports**: http://localhost:8082
+
+### Running Tests
+
+```bash
+# Run all tests
+./tests/run_tests.sh test
+
+# Run PostgreSQL tests only
+./tests/run_tests.sh test-db -d postgres
+
+# Run with HTML test report
+./tests/run_tests.sh test --html-report
+
+# Keep environment running for development
+./tests/run_tests.sh test --keep-running
+```
+
+**Test Categories:**
+- ✅ **Health Checks**: Verify all services are running correctly
+- ✅ **Database-Specific Tests**: PostgreSQL and MySQL functionality tests  
+- ✅ **Integration Tests**: Cross-database operations and MCP protocol compliance
+- ✅ **Performance Tests**: Load testing and stress testing
+
+For detailed development instructions, see [DEVELOPMENT.md](DEVELOPMENT.md).
+
 ---
 
 ## 👨‍💻 For Contributors
