@@ -21,7 +21,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Database types
-DATABASES=("postgres" "mysql" "snowflake" "redshift")
+DATABASES=("postgres" "mysql" "snowflake" "redshift" "bigquery" "alloydb" "spanner" "neo4j" "sqlite" "redis" "sqlserver" "firestore" "supabase")
 
 # Functions
 log() {

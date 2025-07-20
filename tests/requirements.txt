@@ -23,6 +23,14 @@ tenacity>=8.2.0
 psycopg2-binary>=2.9.7
 pymysql>=1.1.0
 snowflake-connector-python>=3.6.0
+google-cloud-bigquery>=3.13.0
+google-cloud-alloydb-connector>=0.2.0
+google-cloud-spanner>=3.40.0
+google-cloud-firestore>=2.13.0
+neo4j>=5.14.0
+redis>=5.0.0
+pymssql>=2.2.8
+supabase>=2.0.0
 
 # Utilities
 pyyaml>=6.0.1

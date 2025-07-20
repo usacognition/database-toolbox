@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GitHub Release](https://img.shields.io/github/release/your-username/mcp-database-servers.svg)](https://github.com/your-username/mcp-database-servers/releases)
 
-Production-ready Docker images that provide instant access to database systems through Google's **Model Context Protocol (MCP)**. These images enable AI agents and applications to seamlessly connect to PostgreSQL, MySQL, Snowflake, and Amazon Redshift databases with zero configuration overhead.
+Production-ready Docker images that provide instant access to database systems through Google's **Model Context Protocol (MCP)**. These images enable AI agents and applications to seamlessly connect to **13 major database systems** including PostgreSQL, MySQL, Snowflake, BigQuery, AlloyDB, Spanner, Neo4j, SQLite, Redis, SQL Server, Firestore, Supabase, and Amazon Redshift with zero configuration overhead.
 
 ## 🎯 What is MCP?
 
@@ -22,12 +22,24 @@ The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) is an open 
 
 ## 📋 Supported Databases
 
-| Database | Image Name | Default Port | Status |
-|----------|------------|--------------|--------|
-| PostgreSQL | `your-dockerhub-username/mcp-postgres` | 5000 | ✅ Ready |
-| MySQL | `your-dockerhub-username/mcp-mysql` | 5000 | ✅ Ready |
-| Snowflake | `your-dockerhub-username/mcp-snowflake` | 5000 | ✅ Ready |
-| Amazon Redshift | `your-dockerhub-username/mcp-redshift` | 5000 | ✅ Ready |
+| Database | Image Name | Default Port | Type | Status |
+|----------|------------|--------------|------|--------|
+| **Relational Databases** | | | | |
+| PostgreSQL | `your-dockerhub-username/mcp-postgres` | 5000 | SQL | ✅ Ready |
+| MySQL | `your-dockerhub-username/mcp-mysql` | 5000 | SQL | ✅ Ready |
+| Microsoft SQL Server | `your-dockerhub-username/mcp-sqlserver` | 5000 | SQL | ✅ Ready |
+| SQLite | `your-dockerhub-username/mcp-sqlite` | 5000 | SQL | ✅ Ready |
+| **Cloud Databases** | | | | |
+| Google BigQuery | `your-dockerhub-username/mcp-bigquery` | 5000 | Analytics | ✅ Ready |
+| Google AlloyDB | `your-dockerhub-username/mcp-alloydb` | 5000 | SQL | ✅ Ready |
+| Google Cloud Spanner | `your-dockerhub-username/mcp-spanner` | 5000 | SQL | ✅ Ready |
+| Google Firestore | `your-dockerhub-username/mcp-firestore` | 5000 | NoSQL | ✅ Ready |
+| Snowflake | `your-dockerhub-username/mcp-snowflake` | 5000 | Analytics | ✅ Ready |
+| Amazon Redshift | `your-dockerhub-username/mcp-redshift` | 5000 | Analytics | ✅ Ready |
+| Supabase | `your-dockerhub-username/mcp-supabase` | 5000 | SQL | ✅ Ready |
+| **NoSQL & Graph** | | | | |
+| Neo4j | `your-dockerhub-username/mcp-neo4j` | 5000 | Graph | ✅ Ready |
+| Redis | `your-dockerhub-username/mcp-redis` | 5000 | Cache/NoSQL | ✅ Ready |
 
 ## 🚀 Quick Start
 
