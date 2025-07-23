@@ -23,3 +23,8 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+
+# Personal config files that shouldn't be in repo
+~/
+~/.claude*
+.claude*
