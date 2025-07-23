@@ -31,26 +31,21 @@ Docker images that provide database connectivity through the **Model Context Pro
 
 ## 📋 Database Support Status
 
-### 🟢 Production Ready (Fully Tested)
-| Database | Image Name | CI Tested |
-|----------|------------|-----------|
-| PostgreSQL | `toolbox-images/postgres` | ✅ |
-| MySQL | `toolbox-images/mysql` | ✅ |
-| Redis | `toolbox-images/redis` | ✅ |
-| SQLite | `toolbox-images/sqlite` | ✅ |
-
-### 🟡 Available (Community Maintained)
-| Database | Image Name | Type |
-|----------|------------|------|
-| Amazon Redshift | `toolbox-images/redshift` | Analytics |
-| Snowflake | `toolbox-images/snowflake` | Analytics |
-| Google BigQuery | `toolbox-images/bigquery` | Analytics |
-| Google AlloyDB | `toolbox-images/alloydb` | SQL |
-| Google Cloud Spanner | `toolbox-images/spanner` | SQL |
-| Google Firestore | `toolbox-images/firestore` | NoSQL |
-| Microsoft SQL Server | `toolbox-images/sqlserver` | SQL |
-| Neo4j | `toolbox-images/neo4j` | Graph |
-| Supabase | `toolbox-images/supabase` | SQL |
+| Database | Image Name | Type | Status |
+|----------|------------|------|--------|
+| PostgreSQL | `toolbox-images/postgres` | SQL | 🟢 Production Ready |
+| MySQL | `toolbox-images/mysql` | SQL | 🟢 Production Ready |
+| Redis | `toolbox-images/redis` | Cache/NoSQL | 🟢 Production Ready |
+| SQLite | `toolbox-images/sqlite` | SQL | 🟢 Production Ready |
+| Amazon Redshift | `toolbox-images/redshift` | Analytics | 🟡 Community Maintained |
+| Snowflake | `toolbox-images/snowflake` | Analytics | 🟡 Community Maintained |
+| Google BigQuery | `toolbox-images/bigquery` | Analytics | 🟡 Community Maintained |
+| Google AlloyDB | `toolbox-images/alloydb` | SQL | 🟡 Community Maintained |
+| Google Cloud Spanner | `toolbox-images/spanner` | SQL | 🟡 Community Maintained |
+| Google Firestore | `toolbox-images/firestore` | NoSQL | 🟡 Community Maintained |
+| Microsoft SQL Server | `toolbox-images/sqlserver` | SQL | 🟡 Community Maintained |
+| Neo4j | `toolbox-images/neo4j` | Graph | 🟡 Community Maintained |
+| Supabase | `toolbox-images/supabase` | SQL | 🟡 Community Maintained |
 
 ## 🗄️ Database Configurations
 
