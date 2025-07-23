@@ -61,7 +61,7 @@ Docker images that provide database connectivity through the **Model Context Pro
 Connect to PostgreSQL databases, including compatible databases like CockroachDB.
 
 ### Docker Command
-```bash
+```shell
 docker run --rm -d \
   --name mcp-postgres \
   -p 5000:5000 \
@@ -121,7 +121,7 @@ docker run --rm -d \
 Connect to MySQL and MariaDB databases.
 
 ### Docker Command
-```bash
+```shell
 docker run --rm -d \
   --name mcp-mysql \
   -p 5000:5000 \
@@ -181,7 +181,7 @@ docker run --rm -d \
 Connect to Redis key-value stores and caching systems.
 
 ### Docker Command
-```bash
+```shell
 docker run --rm -d \
   --name mcp-redis \
   -p 5000:5000 \
@@ -239,7 +239,7 @@ docker run --rm -d \
 Connect to SQLite database files for local development and testing.
 
 ### Docker Command
-```bash
+```shell
 docker run --rm -d \
   --name mcp-sqlite \
   -p 5000:5000 \
@@ -292,7 +292,7 @@ docker run --rm -d \
 Connect to Amazon Redshift data warehouse clusters.
 
 ### Docker Command
-```bash
+```shell
 docker run --rm -d \
   --name mcp-redshift \
   -p 5000:5000 \
@@ -351,7 +351,7 @@ docker run --rm -d \
 Connect to Snowflake Data Cloud for analytics and data warehousing.
 
 ### Docker Command
-```bash
+```shell
 docker run --rm -d \
   --name mcp-snowflake \
   -p 5000:5000 \
@@ -413,7 +413,7 @@ docker run --rm -d \
 Connect to Google BigQuery for analytics and data processing.
 
 ### Docker Command
-```bash
+```shell
 docker run --rm -d \
   --name mcp-bigquery \
   -p 5000:5000 \
@@ -471,7 +471,7 @@ docker run --rm -d \
 Connect to Google AlloyDB instances for PostgreSQL-compatible cloud databases.
 
 ### Docker Command
-```bash
+```shell
 docker run --rm -d \
   --name mcp-alloydb \
   -p 5000:5000 \
@@ -532,7 +532,7 @@ docker run --rm -d \
 Connect to Google Cloud Spanner for globally distributed, strongly consistent databases.
 
 ### Docker Command
-```bash
+```shell
 docker run --rm -d \
   --name mcp-spanner \
   -p 5000:5000 \
@@ -589,7 +589,7 @@ docker run --rm -d \
 Connect to Google Firestore NoSQL document databases.
 
 ### Docker Command
-```bash
+```shell
 docker run --rm -d \
   --name mcp-firestore \
   -p 5000:5000 \
@@ -644,7 +644,7 @@ docker run --rm -d \
 Connect to Microsoft SQL Server databases.
 
 ### Docker Command
-```bash
+```shell
 docker run --rm -d \
   --name mcp-sqlserver \
   -p 5000:5000 \
@@ -706,7 +706,7 @@ docker run --rm -d \
 Connect to Neo4j graph databases for relationship-based data modeling.
 
 ### Docker Command
-```bash
+```shell
 docker run --rm -d \
   --name mcp-neo4j \
   -p 5000:5000 \
@@ -762,7 +762,7 @@ docker run --rm -d \
 Connect to Supabase PostgreSQL databases with additional Supabase-specific features.
 
 ### Docker Command
-```bash
+```shell
 docker run --rm -d \
   --name mcp-supabase \
   -p 5000:5000 \
@@ -813,7 +813,7 @@ docker run --rm -d \
 ## 🛡️ Security Best Practices
 
 ### Use Environment Files
-```bash
+```shell
 # Create .env file
 cat > .env << EOF
 DB_HOST=your-database-host.com
@@ -841,7 +841,7 @@ docker run --rm -d \
 
 ### Building Images
 
-```bash
+```shell
 # Build all images
 ./build.sh build
 
@@ -857,7 +857,7 @@ docker run --rm -d \
 
 ### Build Script Options
 
-```bash
+```shell
 ./build.sh [COMMAND] [OPTIONS]
 
 Commands:
@@ -895,25 +895,25 @@ Options:
 ### Local Development
 
 1. **Clone the repository:**
-   ```bash
+   ```shell
    git clone https://github.com/marcosfede/toolbox-db-images.git
    cd toolbox-db-images
    ```
 
 2. **Build and test a specific image:**
-   ```bash
+   ```shell
    ./build.sh build-db -d postgres --test
    ```
 
 3. **Test with Docker Compose:**
-   ```bash
+   ```shell
    cd examples/docker-compose
    docker-compose -f docker-compose.postgres.yml up
    ```
 
 ### Running Tests
 
-```bash
+```shell
 # Run all tests
 ./tests/run_tests.sh test
 
