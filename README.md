@@ -5,9 +5,16 @@
 
 Docker images that provide database connectivity through the **Model Context Protocol (MCP)**. These images enable AI agents and applications to connect to database systems with minimal configuration.
 
+## ✨ Features
+
+- 🚀 **Ready-to-Use**: Pre-built Docker images
+- 🔗 **Universal Interface**: Consistent API across database types
+- 🔐 **Secure**: Environment-based credential management
+- 📊 **Database Tools**: Query execution and schema inspection
+- 🐳 **Container Native**: Optimized for containerized environments
+
 ## 📑 Table of Contents
 
-- [Features](#-features)
 - [Supported Databases](#-supported-databases)
 - [Database Configurations](#-database-configurations)
   - [PostgreSQL](#postgresql)
@@ -26,14 +33,6 @@ Docker images that provide database connectivity through the **Model Context Pro
 - [Security Best Practices](#-security-best-practices)
 - [Development](#-development)
 - [License](#-license)
-
-## ✨ Features
-
-- 🚀 **Ready-to-Use**: Pre-built Docker images
-- 🔗 **Universal Interface**: Consistent API across database types
-- 🔐 **Secure**: Environment-based credential management
-- 📊 **Database Tools**: Query execution and schema inspection
-- 🐳 **Container Native**: Optimized for containerized environments
 
 ## 📋 Supported Databases
 
