@@ -39,19 +39,19 @@ Docker images that provide database connectivity through the **Model Context Pro
 
 | Database | Image Name | Type |
 |----------|------------|------|
-| PostgreSQL | `toolbox-images/postgres` | SQL |
-| MySQL | `toolbox-images/mysql` | SQL |
-| Redis | `toolbox-images/redis` | Cache/NoSQL |
-| SQLite | `toolbox-images/sqlite` | SQL |
-| Amazon Redshift | `toolbox-images/redshift` | Analytics |
-| Snowflake | `toolbox-images/snowflake` | Analytics |
-| Google BigQuery | `toolbox-images/bigquery` | Analytics |
-| Google AlloyDB | `toolbox-images/alloydb` | SQL |
-| Google Cloud Spanner | `toolbox-images/spanner` | SQL |
-| Google Firestore | `toolbox-images/firestore` | NoSQL |
-| Microsoft SQL Server | `toolbox-images/sqlserver` | SQL |
-| Neo4j | `toolbox-images/neo4j` | Graph |
-| Supabase | `toolbox-images/supabase` | SQL |
+| [PostgreSQL](#postgresql) | `toolbox-images/postgres` | SQL |
+| [MySQL](#mysql) | `toolbox-images/mysql` | SQL |
+| [Redis](#redis) | `toolbox-images/redis` | Cache/NoSQL |
+| [SQLite](#sqlite) | `toolbox-images/sqlite` | SQL |
+| [Amazon Redshift](#amazon-redshift) | `toolbox-images/redshift` | Analytics |
+| [Snowflake](#snowflake) | `toolbox-images/snowflake` | Analytics |
+| [Google BigQuery](#google-bigquery) | `toolbox-images/bigquery` | Analytics |
+| [Google AlloyDB](#google-alloydb) | `toolbox-images/alloydb` | SQL |
+| [Google Cloud Spanner](#google-cloud-spanner) | `toolbox-images/spanner` | SQL |
+| [Google Firestore](#google-firestore) | `toolbox-images/firestore` | NoSQL |
+| [Microsoft SQL Server](#microsoft-sql-server) | `toolbox-images/sqlserver` | SQL |
+| [Neo4j](#neo4j) | `toolbox-images/neo4j` | Graph |
+| [Supabase](#supabase) | `toolbox-images/supabase` | SQL |
 
 ## 🗄️ Database Configurations
 
