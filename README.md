@@ -8,7 +8,7 @@ Docker images that provide database connectivity through the **Model Context Pro
 ## 📑 Table of Contents
 
 - [Features](#-features)
-- [Database Support Status](#-database-support-status)
+- [Supported Databases](#-supported-databases)
 - [Database Configurations](#-database-configurations)
   - [PostgreSQL](#postgresql)
   - [MySQL](#mysql)
@@ -35,23 +35,23 @@ Docker images that provide database connectivity through the **Model Context Pro
 - 📊 **Database Tools**: Query execution and schema inspection
 - 🐳 **Container Native**: Optimized for containerized environments
 
-## 📋 Database Support Status
+## 📋 Supported Databases
 
-| Database | Image Name | Type | Status |
-|----------|------------|------|--------|
-| PostgreSQL | `toolbox-images/postgres` | SQL | 🟢 Production Ready |
-| MySQL | `toolbox-images/mysql` | SQL | 🟢 Production Ready |
-| Redis | `toolbox-images/redis` | Cache/NoSQL | 🟢 Production Ready |
-| SQLite | `toolbox-images/sqlite` | SQL | 🟢 Production Ready |
-| Amazon Redshift | `toolbox-images/redshift` | Analytics | 🟡 Community Maintained |
-| Snowflake | `toolbox-images/snowflake` | Analytics | 🟡 Community Maintained |
-| Google BigQuery | `toolbox-images/bigquery` | Analytics | 🟡 Community Maintained |
-| Google AlloyDB | `toolbox-images/alloydb` | SQL | 🟡 Community Maintained |
-| Google Cloud Spanner | `toolbox-images/spanner` | SQL | 🟡 Community Maintained |
-| Google Firestore | `toolbox-images/firestore` | NoSQL | 🟡 Community Maintained |
-| Microsoft SQL Server | `toolbox-images/sqlserver` | SQL | 🟡 Community Maintained |
-| Neo4j | `toolbox-images/neo4j` | Graph | 🟡 Community Maintained |
-| Supabase | `toolbox-images/supabase` | SQL | 🟡 Community Maintained |
+| Database | Image Name | Type |
+|----------|------------|------|
+| PostgreSQL | `toolbox-images/postgres` | SQL |
+| MySQL | `toolbox-images/mysql` | SQL |
+| Redis | `toolbox-images/redis` | Cache/NoSQL |
+| SQLite | `toolbox-images/sqlite` | SQL |
+| Amazon Redshift | `toolbox-images/redshift` | Analytics |
+| Snowflake | `toolbox-images/snowflake` | Analytics |
+| Google BigQuery | `toolbox-images/bigquery` | Analytics |
+| Google AlloyDB | `toolbox-images/alloydb` | SQL |
+| Google Cloud Spanner | `toolbox-images/spanner` | SQL |
+| Google Firestore | `toolbox-images/firestore` | NoSQL |
+| Microsoft SQL Server | `toolbox-images/sqlserver` | SQL |
+| Neo4j | `toolbox-images/neo4j` | Graph |
+| Supabase | `toolbox-images/supabase` | SQL |
 
 ## 🗄️ Database Configurations
 
@@ -73,6 +73,28 @@ docker run --rm -d \
   -e DB_PORT=5432 \
   -e DB_SSL_MODE=prefer \
   toolbox-images/postgres:latest
+```
+
+### MCP Client Configuration
+```json
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-postgres",
+        "-e", "DB_HOST=your-postgres-host.com",
+        "-e", "DB_NAME=your_database",
+        "-e", "DB_USER=your_username",
+        "-e", "DB_PASSWORD=your_password",
+        "-e", "DB_PORT=5432",
+        "-e", "DB_SSL_MODE=prefer",
+        "toolbox-images/postgres"
+      ]
+    }
+  }
+}
 ```
 
 ### Environment Variables
@@ -113,6 +135,28 @@ docker run --rm -d \
   toolbox-images/mysql:latest
 ```
 
+### MCP Client Configuration
+```json
+{
+  "mcpServers": {
+    "mysql": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-mysql",
+        "-e", "DB_HOST=your-mysql-host.com",
+        "-e", "DB_NAME=your_database",
+        "-e", "DB_USER=your_username",
+        "-e", "DB_PASSWORD=your_password",
+        "-e", "DB_PORT=3306",
+        "-e", "DB_CHARSET=utf8mb4",
+        "toolbox-images/mysql"
+      ]
+    }
+  }
+}
+```
+
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
@@ -150,6 +194,27 @@ docker run --rm -d \
   toolbox-images/redis:latest
 ```
 
+### MCP Client Configuration
+```json
+{
+  "mcpServers": {
+    "redis": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-redis",
+        "-e", "REDIS_HOST=your-redis-host.com",
+        "-e", "REDIS_PORT=6379",
+        "-e", "REDIS_PASSWORD=your_password",
+        "-e", "REDIS_DB=0",
+        "-e", "REDIS_SSL=false",
+        "toolbox-images/redis"
+      ]
+    }
+  }
+}
+```
+
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
@@ -183,6 +248,25 @@ docker run --rm -d \
   -e SQLITE_READ_ONLY=false \
   -v /host/path/to/database:/data \
   toolbox-images/sqlite:latest
+```
+
+### MCP Client Configuration
+```json
+{
+  "mcpServers": {
+    "sqlite": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-sqlite",
+        "-e", "SQLITE_DATABASE_PATH=/data/database.db",
+        "-e", "SQLITE_READ_ONLY=false",
+        "-v", "/host/path/to/database:/data",
+        "toolbox-images/sqlite"
+      ]
+    }
+  }
+}
 ```
 
 ### Environment Variables
@@ -220,6 +304,28 @@ docker run --rm -d \
   -e REDSHIFT_PASSWORD=your_password \
   -e REDSHIFT_SSL_MODE=require \
   toolbox-images/redshift:latest
+```
+
+### MCP Client Configuration
+```json
+{
+  "mcpServers": {
+    "redshift": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-redshift",
+        "-e", "REDSHIFT_HOST=your-cluster.abc123.us-west-2.redshift.amazonaws.com",
+        "-e", "REDSHIFT_PORT=5439",
+        "-e", "REDSHIFT_DATABASE=your_database",
+        "-e", "REDSHIFT_USER=your_username",
+        "-e", "REDSHIFT_PASSWORD=your_password",
+        "-e", "REDSHIFT_SSL_MODE=require",
+        "toolbox-images/redshift"
+      ]
+    }
+  }
+}
 ```
 
 ### Environment Variables
@@ -260,6 +366,29 @@ docker run --rm -d \
   toolbox-images/snowflake:latest
 ```
 
+### MCP Client Configuration
+```json
+{
+  "mcpServers": {
+    "snowflake": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-snowflake",
+        "-e", "SNOWFLAKE_ACCOUNT=your-account.snowflakecomputing.com",
+        "-e", "SNOWFLAKE_USER=your_username",
+        "-e", "SNOWFLAKE_PASSWORD=your_password",
+        "-e", "SNOWFLAKE_DATABASE=your_database",
+        "-e", "SNOWFLAKE_SCHEMA=PUBLIC",
+        "-e", "SNOWFLAKE_WAREHOUSE=your_warehouse",
+        "-e", "SNOWFLAKE_ROLE=your_role",
+        "toolbox-images/snowflake"
+      ]
+    }
+  }
+}
+```
+
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
@@ -295,6 +424,27 @@ docker run --rm -d \
   -e GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json \
   -v /host/path/to/credentials:/credentials \
   toolbox-images/bigquery:latest
+```
+
+### MCP Client Configuration
+```json
+{
+  "mcpServers": {
+    "bigquery": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-bigquery",
+        "-e", "BIGQUERY_PROJECT_ID=your-project-id",
+        "-e", "BIGQUERY_DATASET_ID=your_dataset",
+        "-e", "BIGQUERY_LOCATION=US",
+        "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
+        "-v", "/host/path/to/credentials:/credentials",
+        "toolbox-images/bigquery"
+      ]
+    }
+  }
+}
 ```
 
 ### Environment Variables
@@ -335,6 +485,28 @@ docker run --rm -d \
   toolbox-images/alloydb:latest
 ```
 
+### MCP Client Configuration
+```json
+{
+  "mcpServers": {
+    "alloydb": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-alloydb",
+        "-e", "ALLOYDB_INSTANCE=projects/your-project/locations/region/clusters/cluster-id/instances/instance-id",
+        "-e", "DB_NAME=your_database",
+        "-e", "DB_USER=your_username",
+        "-e", "DB_PASSWORD=your_password",
+        "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
+        "-v", "/host/path/to/credentials:/credentials",
+        "toolbox-images/alloydb"
+      ]
+    }
+  }
+}
+```
+
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
@@ -373,6 +545,27 @@ docker run --rm -d \
   toolbox-images/spanner:latest
 ```
 
+### MCP Client Configuration
+```json
+{
+  "mcpServers": {
+    "spanner": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-spanner",
+        "-e", "SPANNER_PROJECT_ID=your-project-id",
+        "-e", "SPANNER_INSTANCE_ID=your-instance-id",
+        "-e", "SPANNER_DATABASE_ID=your-database-id",
+        "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
+        "-v", "/host/path/to/credentials:/credentials",
+        "toolbox-images/spanner"
+      ]
+    }
+  }
+}
+```
+
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
@@ -406,6 +599,26 @@ docker run --rm -d \
   -e GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json \
   -v /host/path/to/credentials:/credentials \
   toolbox-images/firestore:latest
+```
+
+### MCP Client Configuration
+```json
+{
+  "mcpServers": {
+    "firestore": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-firestore",
+        "-e", "FIRESTORE_PROJECT_ID=your-project-id",
+        "-e", "FIRESTORE_DATABASE_ID=(default)",
+        "-e", "GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json",
+        "-v", "/host/path/to/credentials:/credentials",
+        "toolbox-images/firestore"
+      ]
+    }
+  }
+}
 ```
 
 ### Environment Variables
@@ -446,6 +659,29 @@ docker run --rm -d \
   toolbox-images/sqlserver:latest
 ```
 
+### MCP Client Configuration
+```json
+{
+  "mcpServers": {
+    "sqlserver": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-sqlserver",
+        "-e", "SQLSERVER_HOST=your-sqlserver-host.com",
+        "-e", "SQLSERVER_PORT=1433",
+        "-e", "SQLSERVER_DATABASE=your_database",
+        "-e", "SQLSERVER_USER=your_username",
+        "-e", "SQLSERVER_PASSWORD=your_password",
+        "-e", "SQLSERVER_ENCRYPT=true",
+        "-e", "SQLSERVER_TRUST_SERVER_CERTIFICATE=false",
+        "toolbox-images/sqlserver"
+      ]
+    }
+  }
+}
+```
+
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
@@ -482,6 +718,26 @@ docker run --rm -d \
   toolbox-images/neo4j:latest
 ```
 
+### MCP Client Configuration
+```json
+{
+  "mcpServers": {
+    "neo4j": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-neo4j",
+        "-e", "NEO4J_URI=bolt://your-neo4j-host.com:7687",
+        "-e", "NEO4J_USER=neo4j",
+        "-e", "NEO4J_PASSWORD=your_password",
+        "-e", "NEO4J_DATABASE=neo4j",
+        "toolbox-images/neo4j"
+      ]
+    }
+  }
+}
+```
+
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
@@ -515,6 +771,25 @@ docker run --rm -d \
   -e SUPABASE_SERVICE_ROLE_KEY=your_service_role_key \
   -e DB_NAME=postgres \
   toolbox-images/supabase:latest
+```
+
+### MCP Client Configuration
+```json
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "--name", "mcp-supabase",
+        "-e", "SUPABASE_URL=https://your-project.supabase.co",
+        "-e", "SUPABASE_SERVICE_ROLE_KEY=your_service_role_key",
+        "-e", "DB_NAME=postgres",
+        "toolbox-images/supabase"
+      ]
+    }
+  }
+}
 ```
 
 ### Environment Variables
