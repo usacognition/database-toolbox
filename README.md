@@ -5,6 +5,22 @@
 
 Docker images that provide database connectivity through the **Model Context Protocol (MCP)**. These images enable AI agents and applications to connect to database systems with minimal configuration.
 
+## 📑 Table of Contents
+
+- [Features](#-features)
+- [Database Support Status](#-database-support-status)
+- [Database Configurations](#-database-configurations)
+  - [PostgreSQL](#postgresql)
+  - [MySQL](#mysql)
+  - [Redis](#redis)
+  - [SQLite](#sqlite)
+  - [Amazon Redshift](#amazon-redshift)
+  - [Snowflake](#snowflake)
+  - [Google BigQuery](#google-bigquery)
+- [Security Best Practices](#-security-best-practices)
+- [Development](#-development)
+- [License](#-license)
+
 ## ✨ Features
 
 - 🚀 **Ready-to-Use**: Pre-built Docker images
