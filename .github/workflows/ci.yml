@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        database: [postgres, mysql, redis, sqlite]
+        database: [postgres, mysql, redis, sqlite, alloydb, bigquery, firestore, neo4j, redshift, snowflake, spanner, sqlserver, supabase]
     steps:
       - name: Checkout
         uses: actions/checkout@v4

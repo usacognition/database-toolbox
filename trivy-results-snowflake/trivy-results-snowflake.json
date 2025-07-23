@@ -1,0 +1,983 @@
+{
+  "SchemaVersion": 2,
+  "CreatedAt": "2025-07-23T06:16:34.523526046Z",
+  "ArtifactName": "scan-snowflake:latest",
+  "ArtifactType": "container_image",
+  "Metadata": {
+    "Size": 874201088,
+    "OS": {
+      "Family": "alpine",
+      "Name": "3.19.8"
+    },
+    "ImageID": "sha256:15b3f0aa488fca4c313bbae57fd12656810923e79eb655b9b932351c02ef2e57",
+    "DiffIDs": [
+      "sha256:5c333159e547a12233a2759f1b1d6827e77c60d6b0447d884f4ad1cac980b907",
+      "sha256:8c33d7006d90b476d76d98851dda741b19fe28112e24dd2fecf8d1b9392e7c34",
+      "sha256:862f995e75a4a6d5deba4c52582ef1198be8b74201cec4a74398c52e3805199e",
+      "sha256:d1343cf5e2efe840197055aa7b7339e4df78e01e146e43e7e323c27fa58dd87f",
+      "sha256:105529294621d86c26830ef8405c0c4f2b908cd1c8502925c23165a006b54c2e",
+      "sha256:ecc02581e5485928a2f415be8e04dfd7f6d0bfa87b1500ca516577541bd0b2ad",
+      "sha256:1a7c3a328351bed6b444398449a79ec3439ae6d2609e018702730d8c941a4979",
+      "sha256:84e24d7fb80bed5a977cc852b06418f79e82286a766144634e7454ea01e70d67",
+      "sha256:a8cb93f5bb1dfbe0ba30d7221a06db8f728bbbb1b4fc6fba70b42ee00d5d2f72",
+      "sha256:3bf8c9815c178157341197855958e3c79cc78854609de42110c9ed3774a8234b"
+    ],
+    "RepoTags": [
+      "scan-snowflake:latest"
+    ],
+    "ImageConfig": {
+      "architecture": "amd64",
+      "created": "2025-07-23T06:16:06.119600502Z",
+      "history": [
+        {
+          "created": "2025-07-15T11:32:09Z",
+          "created_by": "ADD alpine-minirootfs-3.19.8-x86_64.tar.gz / # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-15T11:32:09Z",
+          "created_by": "CMD [\"/bin/sh\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:16Z",
+          "created_by": "LABEL maintainer=Your Name \u003cyour.email@example.com\u003e",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:16Z",
+          "created_by": "LABEL description=MCP Toolbox Server for Snowflake",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:16Z",
+          "created_by": "LABEL version=1.0.0",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:16Z",
+          "created_by": "LABEL database=snowflake",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:16Z",
+          "created_by": "RUN /bin/sh -c apk add --no-cache     ca-certificates     curl     bash     tzdata     tini     openssl     python3     python3-dev     py3-pip     gcc     g++     musl-dev     libffi-dev     \u0026\u0026 update-ca-certificates # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:16Z",
+          "created_by": "RUN /bin/sh -c addgroup -g 1001 mcp \u0026\u0026     adduser -D -u 1001 -G mcp mcp # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:16Z",
+          "created_by": "WORKDIR /app",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:16:04Z",
+          "created_by": "RUN /bin/sh -c python3 -m venv /opt/venv \u0026\u0026     /opt/venv/bin/pip install --no-cache-dir snowflake-connector-python[pandas]==3.7.0 # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:16:04Z",
+          "created_by": "ARG TOOLBOX_VERSION=0.9.0",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:16:04Z",
+          "created_by": "ARG TARGETPLATFORM=linux/amd64",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:16:05Z",
+          "created_by": "RUN |2 TOOLBOX_VERSION=0.9.0 TARGETPLATFORM=linux/amd64 /bin/sh -c case ${TARGETPLATFORM} in     \"linux/amd64\") ARCH=\"linux/amd64\" ;;     \"linux/arm64\") ARCH=\"linux/arm64\" ;;     *) echo \"Unsupported platform: ${TARGETPLATFORM}\" \u0026\u0026 exit 1 ;;     esac \u0026\u0026     curl -L -o toolbox \"https://storage.googleapis.com/genai-toolbox/v${TOOLBOX_VERSION}/${ARCH}/toolbox\" \u0026\u0026     chmod +x toolbox \u0026\u0026     mv toolbox /usr/local/bin/mcp-toolbox # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:16:05Z",
+          "created_by": "COPY scripts/entrypoint.sh /app/scripts/entrypoint.sh # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:16:05Z",
+          "created_by": "COPY scripts/healthcheck.sh /app/scripts/healthcheck.sh # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:16:05Z",
+          "created_by": "RUN |2 TOOLBOX_VERSION=0.9.0 TARGETPLATFORM=linux/amd64 /bin/sh -c chmod +x /app/scripts/entrypoint.sh /app/scripts/healthcheck.sh # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:16:06Z",
+          "created_by": "RUN |2 TOOLBOX_VERSION=0.9.0 TARGETPLATFORM=linux/amd64 /bin/sh -c chown -R mcp:mcp /app # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:16:06Z",
+          "created_by": "USER mcp",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:16:06Z",
+          "created_by": "HEALTHCHECK \u0026{[\"CMD-SHELL\" \"/app/scripts/healthcheck.sh\"] \"30s\" \"10s\" \"30s\" \"0s\" '\\x03'}",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:16:06Z",
+          "created_by": "EXPOSE map[5000/tcp:{}]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:16:06Z",
+          "created_by": "ENV DB_TYPE=snowflake",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:16:06Z",
+          "created_by": "ENV TOOLBOX_PORT=5000",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:16:06Z",
+          "created_by": "ENV TOOLBOX_LOG_LEVEL=info",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:16:06Z",
+          "created_by": "ENV PATH=/opt/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:16:06Z",
+          "created_by": "ENTRYPOINT [\"/sbin/tini\" \"--\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:16:06Z",
+          "created_by": "CMD [\"/app/scripts/entrypoint.sh\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        }
+      ],
+      "os": "linux",
+      "rootfs": {
+        "type": "layers",
+        "diff_ids": [
+          "sha256:5c333159e547a12233a2759f1b1d6827e77c60d6b0447d884f4ad1cac980b907",
+          "sha256:8c33d7006d90b476d76d98851dda741b19fe28112e24dd2fecf8d1b9392e7c34",
+          "sha256:862f995e75a4a6d5deba4c52582ef1198be8b74201cec4a74398c52e3805199e",
+          "sha256:d1343cf5e2efe840197055aa7b7339e4df78e01e146e43e7e323c27fa58dd87f",
+          "sha256:105529294621d86c26830ef8405c0c4f2b908cd1c8502925c23165a006b54c2e",
+          "sha256:ecc02581e5485928a2f415be8e04dfd7f6d0bfa87b1500ca516577541bd0b2ad",
+          "sha256:1a7c3a328351bed6b444398449a79ec3439ae6d2609e018702730d8c941a4979",
+          "sha256:84e24d7fb80bed5a977cc852b06418f79e82286a766144634e7454ea01e70d67",
+          "sha256:a8cb93f5bb1dfbe0ba30d7221a06db8f728bbbb1b4fc6fba70b42ee00d5d2f72",
+          "sha256:3bf8c9815c178157341197855958e3c79cc78854609de42110c9ed3774a8234b"
+        ]
+      },
+      "config": {
+        "Cmd": [
+          "/app/scripts/entrypoint.sh"
+        ],
+        "Healthcheck": {
+          "Test": [
+            "CMD-SHELL",
+            "/app/scripts/healthcheck.sh"
+          ],
+          "Interval": 30000000000,
+          "Timeout": 10000000000,
+          "StartPeriod": 30000000000,
+          "Retries": 3
+        },
+        "Entrypoint": [
+          "/sbin/tini",
+          "--"
+        ],
+        "Env": [
+          "PATH=/opt/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "DB_TYPE=snowflake",
+          "TOOLBOX_PORT=5000",
+          "TOOLBOX_LOG_LEVEL=info"
+        ],
+        "Labels": {
+          "database": "snowflake",
+          "description": "MCP Toolbox Server for Snowflake",
+          "maintainer": "Your Name \u003cyour.email@example.com\u003e",
+          "version": "1.0.0"
+        },
+        "User": "mcp",
+        "WorkingDir": "/app",
+        "ExposedPorts": {
+          "5000/tcp": {}
+        },
+        "ArgsEscaped": true
+      }
+    },
+    "Layers": [
+      {
+        "Size": 7681536,
+        "DiffID": "sha256:5c333159e547a12233a2759f1b1d6827e77c60d6b0447d884f4ad1cac980b907"
+      },
+      {
+        "Size": 364726784,
+        "DiffID": "sha256:8c33d7006d90b476d76d98851dda741b19fe28112e24dd2fecf8d1b9392e7c34"
+      },
+      {
+        "Size": 11776,
+        "DiffID": "sha256:862f995e75a4a6d5deba4c52582ef1198be8b74201cec4a74398c52e3805199e"
+      },
+      {
+        "Size": 1536,
+        "DiffID": "sha256:d1343cf5e2efe840197055aa7b7339e4df78e01e146e43e7e323c27fa58dd87f"
+      },
+      {
+        "Size": 389682688,
+        "DiffID": "sha256:105529294621d86c26830ef8405c0c4f2b908cd1c8502925c23165a006b54c2e"
+      },
+      {
+        "Size": 112025600,
+        "DiffID": "sha256:ecc02581e5485928a2f415be8e04dfd7f6d0bfa87b1500ca516577541bd0b2ad"
+      },
+      {
+        "Size": 20992,
+        "DiffID": "sha256:1a7c3a328351bed6b444398449a79ec3439ae6d2609e018702730d8c941a4979"
+      },
+      {
+        "Size": 5120,
+        "DiffID": "sha256:84e24d7fb80bed5a977cc852b06418f79e82286a766144634e7454ea01e70d67"
+      },
+      {
+        "Size": 20992,
+        "DiffID": "sha256:a8cb93f5bb1dfbe0ba30d7221a06db8f728bbbb1b4fc6fba70b42ee00d5d2f72"
+      },
+      {
+        "Size": 24064,
+        "DiffID": "sha256:3bf8c9815c178157341197855958e3c79cc78854609de42110c9ed3774a8234b"
+      }
+    ]
+  },
+  "Results": [
+    {
+      "Target": "scan-snowflake:latest (alpine 3.19.8)",
+      "Class": "os-pkgs",
+      "Type": "alpine"
+    },
+    {
+      "Target": "Python",
+      "Class": "lang-pkgs",
+      "Type": "python-pkg",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "CVE-2023-50782",
+          "PkgName": "cryptography",
+          "PkgPath": "opt/venv/lib/python3.11/site-packages/cryptography-41.0.7.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/cryptography@41.0.7",
+            "UID": "e155225d872431d1"
+          },
+          "InstalledVersion": "41.0.7",
+          "FixedVersion": "42.0.0",
+          "Status": "fixed",
+          "Layer": {
+            "DiffID": "sha256:105529294621d86c26830ef8405c0c4f2b908cd1c8502925c23165a006b54c2e"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2023-50782",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Title": "python-cryptography: Bleichenbacher timing oracle attack against RSA decryption - incomplete fix for CVE-2020-25659",
+          "Description": "A flaw was found in the python-cryptography package. This issue may allow a remote attacker to decrypt captured messages in TLS servers that use RSA key exchanges, which may lead to exposure of confidential or sensitive data.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-208",
+            "CWE-203"
+          ],
+          "VendorSeverity": {
+            "azure": 3,
+            "cbl-mariner": 3,
+            "ghsa": 3,
+            "nvd": 3,
+            "photon": 3,
+            "redhat": 2,
+            "ubuntu": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "V3Score": 7.5
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "V3Score": 7.5
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "V3Score": 7.5
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2023-50782",
+            "https://bugzilla.redhat.com/show_bug.cgi?id=2254432",
+            "https://github.com/openssl/openssl/pull/13817",
+            "https://github.com/pyca/cryptography",
+            "https://github.com/pyca/cryptography/issues/9785",
+            "https://nvd.nist.gov/vuln/detail/CVE-2023-50782",
+            "https://people.redhat.com/~hkario/marvin/",
+            "https://ubuntu.com/security/notices/USN-6663-1",
+            "https://ubuntu.com/security/notices/USN-6673-1",
+            "https://ubuntu.com/security/notices/USN-6673-2",
+            "https://www.couchbase.com/alerts/",
+            "https://www.cve.org/CVERecord?id=CVE-2023-50782"
+          ],
+          "PublishedDate": "2024-02-05T21:15:11.183Z",
+          "LastModifiedDate": "2024-11-21T08:37:18.337Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2024-26130",
+          "PkgName": "cryptography",
+          "PkgPath": "opt/venv/lib/python3.11/site-packages/cryptography-41.0.7.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/cryptography@41.0.7",
+            "UID": "e155225d872431d1"
+          },
+          "InstalledVersion": "41.0.7",
+          "FixedVersion": "42.0.4",
+          "Status": "fixed",
+          "Layer": {
+            "DiffID": "sha256:105529294621d86c26830ef8405c0c4f2b908cd1c8502925c23165a006b54c2e"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-26130",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Title": "python-cryptography: NULL pointer dereference with pkcs12.serialize_key_and_certificates when called with a non-matching certificate and private key and an hmac_hash override",
+          "Description": "cryptography is a package designed to expose cryptographic primitives and recipes to Python developers. Starting in version 38.0.0 and prior to version 42.0.4, if `pkcs12.serialize_key_and_certificates` is called with both a certificate whose public key did not match the provided private key and an `encryption_algorithm` with `hmac_hash` set (via `PrivateFormat.PKCS12.encryption_builder().hmac_hash(...)`, then a NULL pointer dereference would occur, crashing the Python process. This has been resolved in version 42.0.4, the first version in which a `ValueError` is properly raised.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-476"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3,
+            "nvd": 3,
+            "oracle-oval": 3,
+            "photon": 3,
+            "redhat": 3,
+            "ubuntu": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2024-26130",
+            "https://github.com/pyca/cryptography",
+            "https://github.com/pyca/cryptography/commit/97d231672763cdb5959a3b191e692a362f1b9e55",
+            "https://github.com/pyca/cryptography/pull/10423",
+            "https://github.com/pyca/cryptography/security/advisories/GHSA-6vqw-3v5j-54x4",
+            "https://github.com/pypa/advisory-database/tree/main/vulns/cryptography/PYSEC-2024-225.yaml",
+            "https://linux.oracle.com/cve/CVE-2024-26130.html",
+            "https://linux.oracle.com/errata/ELSA-2025-20364.html",
+            "https://nvd.nist.gov/vuln/detail/CVE-2024-26130",
+            "https://ubuntu.com/security/notices/USN-6673-1",
+            "https://ubuntu.com/security/notices/USN-6673-3",
+            "https://www.cve.org/CVERecord?id=CVE-2024-26130"
+          ],
+          "PublishedDate": "2024-02-21T17:15:09.863Z",
+          "LastModifiedDate": "2025-02-05T22:09:20.427Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2024-0727",
+          "PkgName": "cryptography",
+          "PkgPath": "opt/venv/lib/python3.11/site-packages/cryptography-41.0.7.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/cryptography@41.0.7",
+            "UID": "e155225d872431d1"
+          },
+          "InstalledVersion": "41.0.7",
+          "FixedVersion": "42.0.2",
+          "Status": "fixed",
+          "Layer": {
+            "DiffID": "sha256:105529294621d86c26830ef8405c0c4f2b908cd1c8502925c23165a006b54c2e"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-0727",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Title": "openssl: denial of service via null dereference",
+          "Description": "Issue summary: Processing a maliciously formatted PKCS12 file may lead OpenSSL\nto crash leading to a potential Denial of Service attack\n\nImpact summary: Applications loading files in the PKCS12 format from untrusted\nsources might terminate abruptly.\n\nA file in PKCS12 format can contain certificates and keys and may come from an\nuntrusted source. The PKCS12 specification allows certain fields to be NULL, but\nOpenSSL does not correctly check for this case. This can lead to a NULL pointer\ndereference that results in OpenSSL crashing. If an application processes PKCS12\nfiles from an untrusted source using the OpenSSL APIs then that application will\nbe vulnerable to this issue.\n\nOpenSSL APIs that are vulnerable to this are: PKCS12_parse(),\nPKCS12_unpack_p7data(), PKCS12_unpack_p7encdata(), PKCS12_unpack_authsafes()\nand PKCS12_newpass().\n\nWe have also fixed a similar issue in SMIME_write_PKCS7(). However since this\nfunction is related to writing data we do not consider it security significant.\n\nThe FIPS modules in 3.2, 3.1 and 3.0 are not affected by this issue.",
+          "Severity": "MEDIUM",
+          "CweIDs": [
+            "CWE-476"
+          ],
+          "VendorSeverity": {
+            "alma": 2,
+            "amazon": 2,
+            "azure": 2,
+            "cbl-mariner": 2,
+            "ghsa": 2,
+            "nvd": 2,
+            "oracle-oval": 2,
+            "photon": 2,
+            "redhat": 1,
+            "ubuntu": 1
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+              "V3Score": 5.5
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+              "V3Score": 5.5
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+              "V3Score": 5.5
+            }
+          },
+          "References": [
+            "http://www.openwall.com/lists/oss-security/2024/03/11/1",
+            "https://access.redhat.com/errata/RHSA-2024:9088",
+            "https://access.redhat.com/security/cve/CVE-2024-0727",
+            "https://bugzilla.redhat.com/2257571",
+            "https://bugzilla.redhat.com/2258502",
+            "https://bugzilla.redhat.com/2259944",
+            "https://bugzilla.redhat.com/2284243",
+            "https://errata.almalinux.org/9/ALSA-2024-9088.html",
+            "https://github.com/alexcrichton/openssl-src-rs/commit/add20f73b6b42be7451af2e1044d4e0e778992b2",
+            "https://github.com/github/advisory-database/pull/3472",
+            "https://github.com/openssl/openssl/commit/09df4395b5071217b76dc7d3d2e630eb8c5a79c2",
+            "https://github.com/openssl/openssl/commit/775acfdbd0c6af9ac855f34969cdab0c0c90844a",
+            "https://github.com/openssl/openssl/commit/d135eeab8a5dbf72b3da5240bab9ddb7678dbd2c",
+            "https://github.com/openssl/openssl/pull/23362",
+            "https://github.com/pyca/cryptography/commit/3519591d255d4506fbcd0d04037d45271903c64d",
+            "https://github.openssl.org/openssl/extended-releases/commit/03b3941d60c4bce58fab69a0c22377ab439bc0e8",
+            "https://github.openssl.org/openssl/extended-releases/commit/aebaa5883e31122b404e450732dc833dc9dee539",
+            "https://linux.oracle.com/cve/CVE-2024-0727.html",
+            "https://linux.oracle.com/errata/ELSA-2024-9088.html",
+            "https://nvd.nist.gov/vuln/detail/CVE-2024-0727",
+            "https://security.netapp.com/advisory/ntap-20240208-0006",
+            "https://security.netapp.com/advisory/ntap-20240208-0006/",
+            "https://ubuntu.com/security/notices/USN-6622-1",
+            "https://ubuntu.com/security/notices/USN-6632-1",
+            "https://ubuntu.com/security/notices/USN-6709-1",
+            "https://ubuntu.com/security/notices/USN-7018-1",
+            "https://www.cve.org/CVERecord?id=CVE-2024-0727",
+            "https://www.openssl.org/news/secadv/20240125.txt"
+          ],
+          "PublishedDate": "2024-01-26T09:15:07.637Z",
+          "LastModifiedDate": "2025-05-29T16:15:31.96Z"
+        },
+        {
+          "VulnerabilityID": "GHSA-h4gh-qq45-vh27",
+          "PkgName": "cryptography",
+          "PkgPath": "opt/venv/lib/python3.11/site-packages/cryptography-41.0.7.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/cryptography@41.0.7",
+            "UID": "e155225d872431d1"
+          },
+          "InstalledVersion": "41.0.7",
+          "FixedVersion": "43.0.1",
+          "Status": "fixed",
+          "Layer": {
+            "DiffID": "sha256:105529294621d86c26830ef8405c0c4f2b908cd1c8502925c23165a006b54c2e"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://github.com/advisories/GHSA-h4gh-qq45-vh27",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Title": "pyca/cryptography has a vulnerable OpenSSL included in cryptography wheels",
+          "Description": "pyca/cryptography's wheels include a statically linked copy of OpenSSL. The versions of OpenSSL included in cryptography 37.0.0-43.0.0 are vulnerable to a security issue. More details about the vulnerability itself can be found in https://openssl-library.org/news/secadv/20240903.txt.\n\nIf you are building cryptography source (\"sdist\") then you are responsible for upgrading your copy of OpenSSL. Only users installing from wheels built by the cryptography project (i.e., those distributed on PyPI) need to update their cryptography versions.\n",
+          "Severity": "MEDIUM",
+          "VendorSeverity": {
+            "ghsa": 2
+          },
+          "References": [
+            "https://github.com/pyca/cryptography",
+            "https://github.com/pyca/cryptography/security/advisories/GHSA-h4gh-qq45-vh27",
+            "https://openssl-library.org/news/secadv/20240903.txt"
+          ],
+          "PublishedDate": "2024-09-03T21:59:48Z",
+          "LastModifiedDate": "2024-09-03T21:59:48Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2022-40897",
+          "PkgName": "setuptools",
+          "PkgPath": "opt/venv/lib/python3.11/site-packages/setuptools-65.5.0.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/setuptools@65.5.0",
+            "UID": "6abfaf254d7bda0a"
+          },
+          "InstalledVersion": "65.5.0",
+          "FixedVersion": "65.5.1",
+          "Status": "fixed",
+          "Layer": {
+            "DiffID": "sha256:105529294621d86c26830ef8405c0c4f2b908cd1c8502925c23165a006b54c2e"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2022-40897",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Title": "pypa-setuptools: Regular Expression Denial of Service (ReDoS) in package_index.py",
+          "Description": "Python Packaging Authority (PyPA) setuptools before 65.5.1 allows remote attackers to cause a denial of service via HTML in a crafted package or custom PackageIndex page. There is a Regular Expression Denial of Service (ReDoS) in package_index.py.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-1333"
+          ],
+          "VendorSeverity": {
+            "alma": 2,
+            "amazon": 2,
+            "bitnami": 2,
+            "cbl-mariner": 2,
+            "ghsa": 3,
+            "nvd": 2,
+            "oracle-oval": 2,
+            "photon": 2,
+            "redhat": 2,
+            "rocky": 2,
+            "ubuntu": 2
+          },
+          "CVSS": {
+            "bitnami": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 5.9
+            },
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 5.9
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 5.9
+            }
+          },
+          "References": [
+            "https://access.redhat.com/errata/RHSA-2023:0952",
+            "https://access.redhat.com/security/cve/CVE-2022-40897",
+            "https://bugzilla.redhat.com/2158559",
+            "https://bugzilla.redhat.com/show_bug.cgi?id=2158559",
+            "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-40897",
+            "https://errata.almalinux.org/9/ALSA-2023-0952.html",
+            "https://errata.rockylinux.org/RLSA-2023:0952",
+            "https://github.com/pypa/advisory-database/tree/main/vulns/setuptools/PYSEC-2022-43012.yaml",
+            "https://github.com/pypa/setuptools",
+            "https://github.com/pypa/setuptools/blob/fe8a98e696241487ba6ac9f91faa38ade939ec5d/setuptools/package_index.py#L200",
+            "https://github.com/pypa/setuptools/commit/43a9c9bfa6aa626ec2a22540bea28d2ca77964be",
+            "https://github.com/pypa/setuptools/compare/v65.5.0...v65.5.1",
+            "https://github.com/pypa/setuptools/issues/3659",
+            "https://linux.oracle.com/cve/CVE-2022-40897.html",
+            "https://linux.oracle.com/errata/ELSA-2024-2987.html",
+            "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/ADES3NLOE5QJKBLGNZNI2RGVOSQXA37R",
+            "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/ADES3NLOE5QJKBLGNZNI2RGVOSQXA37R/",
+            "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/YNA2BAH2ACBZ4TVJZKFLCR7L23BG5C3H",
+            "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/YNA2BAH2ACBZ4TVJZKFLCR7L23BG5C3H/",
+            "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/ADES3NLOE5QJKBLGNZNI2RGVOSQXA37R",
+            "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/YNA2BAH2ACBZ4TVJZKFLCR7L23BG5C3H",
+            "https://nvd.nist.gov/vuln/detail/CVE-2022-40897",
+            "https://pyup.io/posts/pyup-discovers-redos-vulnerabilities-in-top-python-packages",
+            "https://pyup.io/posts/pyup-discovers-redos-vulnerabilities-in-top-python-packages/",
+            "https://pyup.io/vulnerabilities/CVE-2022-40897/52495",
+            "https://pyup.io/vulnerabilities/CVE-2022-40897/52495/",
+            "https://security.netapp.com/advisory/ntap-20230214-0001",
+            "https://security.netapp.com/advisory/ntap-20230214-0001/",
+            "https://security.netapp.com/advisory/ntap-20240621-0006",
+            "https://security.netapp.com/advisory/ntap-20240621-0006/",
+            "https://setuptools.pypa.io/en/latest",
+            "https://ubuntu.com/security/notices/USN-5817-1",
+            "https://www.cve.org/CVERecord?id=CVE-2022-40897"
+          ],
+          "PublishedDate": "2022-12-23T00:15:13.987Z",
+          "LastModifiedDate": "2024-11-21T07:22:13.787Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2024-6345",
+          "PkgName": "setuptools",
+          "PkgPath": "opt/venv/lib/python3.11/site-packages/setuptools-65.5.0.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/setuptools@65.5.0",
+            "UID": "6abfaf254d7bda0a"
+          },
+          "InstalledVersion": "65.5.0",
+          "FixedVersion": "70.0.0",
+          "Status": "fixed",
+          "Layer": {
+            "DiffID": "sha256:105529294621d86c26830ef8405c0c4f2b908cd1c8502925c23165a006b54c2e"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-6345",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Title": "pypa/setuptools: Remote code execution via download functions in the package_index module in pypa/setuptools",
+          "Description": "A vulnerability in the package_index module of pypa/setuptools versions up to 69.1.1 allows for remote code execution via its download functions. These functions, which are used to download packages from URLs provided by users or retrieved from package index servers, are susceptible to code injection. If these functions are exposed to user-controlled inputs, such as package URLs, they can execute arbitrary commands on the system. The issue is fixed in version 70.0.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-94"
+          ],
+          "VendorSeverity": {
+            "alma": 3,
+            "amazon": 3,
+            "azure": 3,
+            "bitnami": 3,
+            "cbl-mariner": 3,
+            "ghsa": 3,
+            "oracle-oval": 3,
+            "photon": 3,
+            "redhat": 3,
+            "rocky": 3,
+            "ubuntu": 2
+          },
+          "CVSS": {
+            "bitnami": {
+              "V3Vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+              "V3Score": 8.8
+            },
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+              "V3Score": 8.8
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+              "V3Score": 8.8
+            }
+          },
+          "References": [
+            "https://access.redhat.com/errata/RHSA-2024:6726",
+            "https://access.redhat.com/security/cve/CVE-2024-6345",
+            "https://bugzilla.redhat.com/2297771",
+            "https://bugzilla.redhat.com/show_bug.cgi?id=2297771",
+            "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-6345",
+            "https://errata.almalinux.org/9/ALSA-2024-6726.html",
+            "https://errata.rockylinux.org/RLSA-2024:6726",
+            "https://github.com/pypa/setuptools",
+            "https://github.com/pypa/setuptools/commit/88807c7062788254f654ea8c03427adc859321f0",
+            "https://github.com/pypa/setuptools/pull/4332",
+            "https://huntr.com/bounties/d6362117-ad57-4e83-951f-b8141c6e7ca5",
+            "https://linux.oracle.com/cve/CVE-2024-6345.html",
+            "https://linux.oracle.com/errata/ELSA-2024-6726.html",
+            "https://nvd.nist.gov/vuln/detail/CVE-2024-6345",
+            "https://ubuntu.com/security/notices/USN-7002-1",
+            "https://www.cve.org/CVERecord?id=CVE-2024-6345"
+          ],
+          "PublishedDate": "2024-07-15T01:15:01.73Z",
+          "LastModifiedDate": "2024-11-21T09:49:28.17Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2025-47273",
+          "PkgName": "setuptools",
+          "PkgPath": "opt/venv/lib/python3.11/site-packages/setuptools-65.5.0.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/setuptools@65.5.0",
+            "UID": "6abfaf254d7bda0a"
+          },
+          "InstalledVersion": "65.5.0",
+          "FixedVersion": "78.1.1",
+          "Status": "fixed",
+          "Layer": {
+            "DiffID": "sha256:105529294621d86c26830ef8405c0c4f2b908cd1c8502925c23165a006b54c2e"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-47273",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Title": "setuptools: Path Traversal Vulnerability in setuptools PackageIndex",
+          "Description": "setuptools is a package that allows users to download, build, install, upgrade, and uninstall Python packages. A path traversal vulnerability in `PackageIndex` is present in setuptools prior to version 78.1.1. An attacker would be allowed to write files to arbitrary locations on the filesystem with the permissions of the process running the Python code, which could escalate to remote code execution depending on the context. Version 78.1.1 fixes the issue.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-22"
+          ],
+          "VendorSeverity": {
+            "alma": 2,
+            "amazon": 3,
+            "azure": 3,
+            "bitnami": 3,
+            "ghsa": 3,
+            "nvd": 3,
+            "oracle-oval": 2,
+            "photon": 3,
+            "redhat": 2,
+            "ubuntu": 2
+          },
+          "CVSS": {
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "V3Score": 8.8
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:L",
+              "V3Score": 7.1
+            }
+          },
+          "References": [
+            "https://access.redhat.com/errata/RHSA-2025:10407",
+            "https://access.redhat.com/security/cve/CVE-2025-47273",
+            "https://bugzilla.redhat.com/2366982",
+            "https://errata.almalinux.org/9/ALSA-2025-10407.html",
+            "https://github.com/pypa/advisory-database/tree/main/vulns/setuptools/PYSEC-2025-49.yaml",
+            "https://github.com/pypa/setuptools",
+            "https://github.com/pypa/setuptools/blob/6ead555c5fb29bc57fe6105b1bffc163f56fd558/setuptools/package_index.py#L810C1-L825C88",
+            "https://github.com/pypa/setuptools/commit/250a6d17978f9f6ac3ac887091f2d32886fbbb0b",
+            "https://github.com/pypa/setuptools/issues/4946",
+            "https://github.com/pypa/setuptools/security/advisories/GHSA-5rjg-fvgr-3xxf",
+            "https://linux.oracle.com/cve/CVE-2025-47273.html",
+            "https://linux.oracle.com/errata/ELSA-2025-9940.html",
+            "https://lists.debian.org/debian-lts-announce/2025/05/msg00035.html",
+            "https://nvd.nist.gov/vuln/detail/CVE-2025-47273",
+            "https://ubuntu.com/security/notices/USN-7544-1",
+            "https://www.cve.org/CVERecord?id=CVE-2025-47273"
+          ],
+          "PublishedDate": "2025-05-17T16:15:19.11Z",
+          "LastModifiedDate": "2025-06-12T16:29:01.66Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2025-24793",
+          "PkgName": "snowflake-connector-python",
+          "PkgPath": "opt/venv/lib/python3.11/site-packages/snowflake_connector_python-3.7.0.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/snowflake-connector-python@3.7.0",
+            "UID": "69202f34a0d5c595"
+          },
+          "InstalledVersion": "3.7.0",
+          "FixedVersion": "3.13.1",
+          "Status": "fixed",
+          "Layer": {
+            "DiffID": "sha256:105529294621d86c26830ef8405c0c4f2b908cd1c8502925c23165a006b54c2e"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-24793",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Title": "snowflake-connector-python vulnerable to SQL Injection in write_pandas",
+          "Description": "The Snowflake Connector for Python provides an interface for developing Python applications that can connect to Snowflake and perform all standard operations. Snowflake discovered and remediated a vulnerability in the Snowflake Connector for Python. A function from the snowflake.connector.pandas_tools module is vulnerable to SQL injection. This vulnerability affects versions 2.2.5 through 3.13.0. Snowflake fixed the issue in version 3.13.1.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-89"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+              "V3Score": 7
+            }
+          },
+          "References": [
+            "https://github.com/pypa/advisory-database/tree/main/vulns/snowflake-connector-python/PYSEC-2025-26.yaml",
+            "https://github.com/snowflakedb/snowflake-connector-python",
+            "https://github.com/snowflakedb/snowflake-connector-python/commit/f3f9b666518d29c31a49384bbaa9a65889e72056",
+            "https://github.com/snowflakedb/snowflake-connector-python/releases/tag/v3.13.1",
+            "https://github.com/snowflakedb/snowflake-connector-python/security/advisories/GHSA-2vpq-fh52-j3wv",
+            "https://nvd.nist.gov/vuln/detail/CVE-2025-24793"
+          ],
+          "PublishedDate": "2025-01-29T21:15:21.27Z",
+          "LastModifiedDate": "2025-01-29T21:15:21.27Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2024-49750",
+          "PkgName": "snowflake-connector-python",
+          "PkgPath": "opt/venv/lib/python3.11/site-packages/snowflake_connector_python-3.7.0.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/snowflake-connector-python@3.7.0",
+            "UID": "69202f34a0d5c595"
+          },
+          "InstalledVersion": "3.7.0",
+          "FixedVersion": "3.12.3",
+          "Status": "fixed",
+          "Layer": {
+            "DiffID": "sha256:105529294621d86c26830ef8405c0c4f2b908cd1c8502925c23165a006b54c2e"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-49750",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Title": "The Snowflake Connector for Python stores sensitive data in logs",
+          "Description": "The Snowflake Connector for Python provides an interface for developing Python applications that can connect to Snowflake and perform all standard operations. Prior to version 3.12.3, when the logging level was set by the user to DEBUG, the Connector could have logged Duo passcodes (when specified via the `passcode` parameter) and Azure SAS tokens. Additionally, the SecretDetector logging formatter, if enabled, contained bugs which caused it to not fully redact JWT tokens and certain private key formats. Snowflake released version 3.12.3 of the Snowflake Connector for Python, which fixes the issue. In addition to upgrading, users should review their logs for any potentially sensitive information that may have been captured.",
+          "Severity": "MEDIUM",
+          "CweIDs": [
+            "CWE-532"
+          ],
+          "VendorSeverity": {
+            "ghsa": 2,
+            "nvd": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+              "V3Score": 5.5
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+              "V3Score": 5.5
+            }
+          },
+          "References": [
+            "https://github.com/pypa/advisory-database/tree/main/vulns/snowflake-connector-python/PYSEC-2024-191.yaml",
+            "https://github.com/snowflakedb/snowflake-connector-python",
+            "https://github.com/snowflakedb/snowflake-connector-python/commit/dbc9284a3c0382c131b971b35e8d6ab93c46f37a",
+            "https://github.com/snowflakedb/snowflake-connector-python/security/advisories/GHSA-5vvg-pvhp-hv2m",
+            "https://nvd.nist.gov/vuln/detail/CVE-2024-49750"
+          ],
+          "PublishedDate": "2024-10-24T22:15:04.49Z",
+          "LastModifiedDate": "2024-11-06T14:58:19.993Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2025-24794",
+          "PkgName": "snowflake-connector-python",
+          "PkgPath": "opt/venv/lib/python3.11/site-packages/snowflake_connector_python-3.7.0.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/snowflake-connector-python@3.7.0",
+            "UID": "69202f34a0d5c595"
+          },
+          "InstalledVersion": "3.7.0",
+          "FixedVersion": "3.13.1",
+          "Status": "fixed",
+          "Layer": {
+            "DiffID": "sha256:105529294621d86c26830ef8405c0c4f2b908cd1c8502925c23165a006b54c2e"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-24794",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Title": "snowflake-connector-python vulnerable to insecure deserialization of the OCSP response cache",
+          "Description": "The Snowflake Connector for Python provides an interface for developing Python applications that can connect to Snowflake and perform all standard operations. Snowflake discovered and remediated a vulnerability in the Snowflake Connector for Python. The OCSP response cache uses pickle as the serialization format, potentially leading to local privilege escalation. This vulnerability affects versions 2.7.12 through 3.13.0. Snowflake fixed the issue in version 3.13.1.",
+          "Severity": "MEDIUM",
+          "CweIDs": [
+            "CWE-502"
+          ],
+          "VendorSeverity": {
+            "ghsa": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+              "V3Score": 6.7
+            }
+          },
+          "References": [
+            "https://github.com/pypa/advisory-database/tree/main/vulns/snowflake-connector-python/PYSEC-2025-27.yaml",
+            "https://github.com/snowflakedb/snowflake-connector-python",
+            "https://github.com/snowflakedb/snowflake-connector-python/commit/3769b43822357c3874c40f5e74068458c2dc79af",
+            "https://github.com/snowflakedb/snowflake-connector-python/releases/tag/v3.13.1",
+            "https://github.com/snowflakedb/snowflake-connector-python/security/advisories/GHSA-m4f6-vcj4-w5mx",
+            "https://nvd.nist.gov/vuln/detail/CVE-2025-24794"
+          ],
+          "PublishedDate": "2025-01-29T21:15:21.397Z",
+          "LastModifiedDate": "2025-01-29T21:15:21.397Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2025-24795",
+          "PkgName": "snowflake-connector-python",
+          "PkgPath": "opt/venv/lib/python3.11/site-packages/snowflake_connector_python-3.7.0.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/snowflake-connector-python@3.7.0",
+            "UID": "69202f34a0d5c595"
+          },
+          "InstalledVersion": "3.7.0",
+          "FixedVersion": "3.13.1",
+          "Status": "fixed",
+          "Layer": {
+            "DiffID": "sha256:105529294621d86c26830ef8405c0c4f2b908cd1c8502925c23165a006b54c2e"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-24795",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Title": "snowflake-connector-python vulnerable to insecure cache files permissions",
+          "Description": "The Snowflake Connector for Python provides an interface for developing Python applications that can connect to Snowflake and perform all standard operations. Snowflake discovered and remediated a vulnerability in the Snowflake Connector for Python. On Linux systems, when temporary credential caching is enabled, the Snowflake Connector for Python will cache temporary credentials locally in a world-readable file. This vulnerability affects versions 2.3.7 through 3.13.0. Snowflake fixed the issue in version 3.13.1.",
+          "Severity": "MEDIUM",
+          "CweIDs": [
+            "CWE-276"
+          ],
+          "VendorSeverity": {
+            "ghsa": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+              "V3Score": 4.4
+            }
+          },
+          "References": [
+            "https://github.com/pypa/advisory-database/tree/main/vulns/snowflake-connector-python/PYSEC-2025-28.yaml",
+            "https://github.com/snowflakedb/snowflake-connector-python",
+            "https://github.com/snowflakedb/snowflake-connector-python/commit/3769b43822357c3874c40f5e74068458c2dc79af",
+            "https://github.com/snowflakedb/snowflake-connector-python/releases/tag/v3.13.1",
+            "https://github.com/snowflakedb/snowflake-connector-python/security/advisories/GHSA-r2x6-cjg7-8r43",
+            "https://nvd.nist.gov/vuln/detail/CVE-2025-24795"
+          ],
+          "PublishedDate": "2025-01-29T21:15:21.533Z",
+          "LastModifiedDate": "2025-01-29T21:15:21.533Z"
+        }
+      ]
+    },
+    {
+      "Target": "usr/local/bin/mcp-toolbox",
+      "Class": "lang-pkgs",
+      "Type": "gobinary"
+    }
+  ]
+}

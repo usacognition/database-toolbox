@@ -1,0 +1,282 @@
+{
+  "SchemaVersion": 2,
+  "CreatedAt": "2025-07-23T06:15:31.68580369Z",
+  "ArtifactName": "scan-sqlite:latest",
+  "ArtifactType": "container_image",
+  "Metadata": {
+    "Size": 426696192,
+    "OS": {
+      "Family": "alpine",
+      "Name": "3.19.8"
+    },
+    "ImageID": "sha256:cd37cbd70870d99d86bdb2456bab0e695454b1f19f32878e1bac71643b0cb995",
+    "DiffIDs": [
+      "sha256:5c333159e547a12233a2759f1b1d6827e77c60d6b0447d884f4ad1cac980b907",
+      "sha256:b6e995d4faee15c1ff65fa846e2fb1db450bdcf2d1c44ea1d1f9b4daff28a6b3",
+      "sha256:d6feef957691cb3d2bfd76787e9490a4906981d8bba99a3ebb44274377b7e9e0",
+      "sha256:968cd6763a5b3386286f25882404b83f891b173a3ef3711652ee5154e9213530",
+      "sha256:cfa0238bb8bb5330b3610920719709b946a4386037aab43d1905c7e799cd62d0",
+      "sha256:f9ab647039315f1c165b6280a4b5f00b1fd16a1c1c88d96b55bfe776cd77c44b",
+      "sha256:6a2d53d737a7881fabb8e591d2298a9a47ac864fd731a18937301c0dc83e392f",
+      "sha256:20c6f660b97a49ab883b39a67f4e7afb449ea53fffe80fd9bd239aecf99101fd",
+      "sha256:a7858ddec5432cd596ef89a4bd7124ab3b5ddc455fda30d9a5518a4a4a33aca8",
+      "sha256:05a7d497d62de0d9a543f2da67e9c11f9f275d4e107c310a8f4c90c8489c591f"
+    ],
+    "RepoTags": [
+      "scan-sqlite:latest"
+    ],
+    "ImageConfig": {
+      "architecture": "amd64",
+      "created": "2025-07-23T06:15:14.08801517Z",
+      "history": [
+        {
+          "created": "2025-07-15T11:32:09Z",
+          "created_by": "ADD alpine-minirootfs-3.19.8-x86_64.tar.gz / # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-15T11:32:09Z",
+          "created_by": "CMD [\"/bin/sh\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:12Z",
+          "created_by": "LABEL maintainer=Your Name \u003cyour.email@example.com\u003e",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:12Z",
+          "created_by": "LABEL description=MCP Toolbox Server for SQLite",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:12Z",
+          "created_by": "LABEL version=1.0.0",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:12Z",
+          "created_by": "LABEL database=sqlite",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:12Z",
+          "created_by": "RUN /bin/sh -c apk add --no-cache     ca-certificates     curl     bash     tzdata     tini     sqlite     openssl     python3     python3-dev     py3-pip     gcc     musl-dev     libffi-dev     \u0026\u0026 update-ca-certificates # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:12Z",
+          "created_by": "RUN /bin/sh -c addgroup -g 1001 mcp \u0026\u0026     adduser -D -u 1001 -G mcp mcp # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:12Z",
+          "created_by": "WORKDIR /app",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:12Z",
+          "created_by": "RUN /bin/sh -c mkdir -p /app/data \u0026\u0026 chown mcp:mcp /app/data # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:12Z",
+          "created_by": "ARG TOOLBOX_VERSION=0.9.0",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:12Z",
+          "created_by": "ARG TARGETPLATFORM=linux/amd64",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:13Z",
+          "created_by": "RUN |2 TOOLBOX_VERSION=0.9.0 TARGETPLATFORM=linux/amd64 /bin/sh -c case ${TARGETPLATFORM} in     \"linux/amd64\") ARCH=\"linux/amd64\" ;;     \"linux/arm64\") ARCH=\"linux/arm64\" ;;     *) echo \"Unsupported platform: ${TARGETPLATFORM}\" \u0026\u0026 exit 1 ;;     esac \u0026\u0026     curl -L -o toolbox \"https://storage.googleapis.com/genai-toolbox/v${TOOLBOX_VERSION}/${ARCH}/toolbox\" \u0026\u0026     chmod +x toolbox \u0026\u0026     mv toolbox /usr/local/bin/mcp-toolbox # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:13Z",
+          "created_by": "COPY scripts/entrypoint.sh /app/scripts/entrypoint.sh # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:13Z",
+          "created_by": "COPY scripts/healthcheck.sh /app/scripts/healthcheck.sh # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:13Z",
+          "created_by": "RUN |2 TOOLBOX_VERSION=0.9.0 TARGETPLATFORM=linux/amd64 /bin/sh -c chmod +x /app/scripts/entrypoint.sh /app/scripts/healthcheck.sh # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:14Z",
+          "created_by": "RUN |2 TOOLBOX_VERSION=0.9.0 TARGETPLATFORM=linux/amd64 /bin/sh -c chown -R mcp:mcp /app # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:14Z",
+          "created_by": "USER mcp",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:14Z",
+          "created_by": "HEALTHCHECK \u0026{[\"CMD-SHELL\" \"/app/scripts/healthcheck.sh\"] \"30s\" \"10s\" \"30s\" \"0s\" '\\x03'}",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:14Z",
+          "created_by": "EXPOSE map[5000/tcp:{}]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:14Z",
+          "created_by": "ENV DB_TYPE=sqlite",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:14Z",
+          "created_by": "ENV TOOLBOX_PORT=5000",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:14Z",
+          "created_by": "ENV TOOLBOX_LOG_LEVEL=info",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:14Z",
+          "created_by": "ENTRYPOINT [\"/sbin/tini\" \"--\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:14Z",
+          "created_by": "CMD [\"/app/scripts/entrypoint.sh\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        }
+      ],
+      "os": "linux",
+      "rootfs": {
+        "type": "layers",
+        "diff_ids": [
+          "sha256:5c333159e547a12233a2759f1b1d6827e77c60d6b0447d884f4ad1cac980b907",
+          "sha256:b6e995d4faee15c1ff65fa846e2fb1db450bdcf2d1c44ea1d1f9b4daff28a6b3",
+          "sha256:d6feef957691cb3d2bfd76787e9490a4906981d8bba99a3ebb44274377b7e9e0",
+          "sha256:968cd6763a5b3386286f25882404b83f891b173a3ef3711652ee5154e9213530",
+          "sha256:cfa0238bb8bb5330b3610920719709b946a4386037aab43d1905c7e799cd62d0",
+          "sha256:f9ab647039315f1c165b6280a4b5f00b1fd16a1c1c88d96b55bfe776cd77c44b",
+          "sha256:6a2d53d737a7881fabb8e591d2298a9a47ac864fd731a18937301c0dc83e392f",
+          "sha256:20c6f660b97a49ab883b39a67f4e7afb449ea53fffe80fd9bd239aecf99101fd",
+          "sha256:a7858ddec5432cd596ef89a4bd7124ab3b5ddc455fda30d9a5518a4a4a33aca8",
+          "sha256:05a7d497d62de0d9a543f2da67e9c11f9f275d4e107c310a8f4c90c8489c591f"
+        ]
+      },
+      "config": {
+        "Cmd": [
+          "/app/scripts/entrypoint.sh"
+        ],
+        "Healthcheck": {
+          "Test": [
+            "CMD-SHELL",
+            "/app/scripts/healthcheck.sh"
+          ],
+          "Interval": 30000000000,
+          "Timeout": 10000000000,
+          "StartPeriod": 30000000000,
+          "Retries": 3
+        },
+        "Entrypoint": [
+          "/sbin/tini",
+          "--"
+        ],
+        "Env": [
+          "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "DB_TYPE=sqlite",
+          "TOOLBOX_PORT=5000",
+          "TOOLBOX_LOG_LEVEL=info"
+        ],
+        "Labels": {
+          "database": "sqlite",
+          "description": "MCP Toolbox Server for SQLite",
+          "maintainer": "Your Name \u003cyour.email@example.com\u003e",
+          "version": "1.0.0"
+        },
+        "User": "mcp",
+        "WorkingDir": "/app",
+        "ExposedPorts": {
+          "5000/tcp": {}
+        },
+        "ArgsEscaped": true
+      }
+    },
+    "Layers": [
+      {
+        "Size": 7681536,
+        "DiffID": "sha256:5c333159e547a12233a2759f1b1d6827e77c60d6b0447d884f4ad1cac980b907"
+      },
+      {
+        "Size": 306902528,
+        "DiffID": "sha256:b6e995d4faee15c1ff65fa846e2fb1db450bdcf2d1c44ea1d1f9b4daff28a6b3"
+      },
+      {
+        "Size": 11776,
+        "DiffID": "sha256:d6feef957691cb3d2bfd76787e9490a4906981d8bba99a3ebb44274377b7e9e0"
+      },
+      {
+        "Size": 1536,
+        "DiffID": "sha256:968cd6763a5b3386286f25882404b83f891b173a3ef3711652ee5154e9213530"
+      },
+      {
+        "Size": 2048,
+        "DiffID": "sha256:cfa0238bb8bb5330b3610920719709b946a4386037aab43d1905c7e799cd62d0"
+      },
+      {
+        "Size": 112025600,
+        "DiffID": "sha256:f9ab647039315f1c165b6280a4b5f00b1fd16a1c1c88d96b55bfe776cd77c44b"
+      },
+      {
+        "Size": 20992,
+        "DiffID": "sha256:6a2d53d737a7881fabb8e591d2298a9a47ac864fd731a18937301c0dc83e392f"
+      },
+      {
+        "Size": 5120,
+        "DiffID": "sha256:20c6f660b97a49ab883b39a67f4e7afb449ea53fffe80fd9bd239aecf99101fd"
+      },
+      {
+        "Size": 20992,
+        "DiffID": "sha256:a7858ddec5432cd596ef89a4bd7124ab3b5ddc455fda30d9a5518a4a4a33aca8"
+      },
+      {
+        "Size": 24064,
+        "DiffID": "sha256:05a7d497d62de0d9a543f2da67e9c11f9f275d4e107c310a8f4c90c8489c591f"
+      }
+    ]
+  },
+  "Results": [
+    {
+      "Target": "scan-sqlite:latest (alpine 3.19.8)",
+      "Class": "os-pkgs",
+      "Type": "alpine"
+    },
+    {
+      "Target": "usr/local/bin/mcp-toolbox",
+      "Class": "lang-pkgs",
+      "Type": "gobinary"
+    }
+  ]
+}

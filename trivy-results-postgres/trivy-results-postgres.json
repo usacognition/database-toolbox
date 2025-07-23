@@ -1,0 +1,276 @@
+{
+  "SchemaVersion": 2,
+  "CreatedAt": "2025-07-23T06:15:16.427456541Z",
+  "ArtifactName": "scan-postgres:latest",
+  "ArtifactType": "container_image",
+  "Metadata": {
+    "Size": 132789248,
+    "OS": {
+      "Family": "alpine",
+      "Name": "3.19.8"
+    },
+    "ImageID": "sha256:ba69cc20a1d8ec0ac16a6735df8421d4ddd8e296dcb08e18b3910881b8d04025",
+    "DiffIDs": [
+      "sha256:5c333159e547a12233a2759f1b1d6827e77c60d6b0447d884f4ad1cac980b907",
+      "sha256:7bf5ab2f02eb853f9049c59b7a00700b8759ddf8f7d6694b86e77824e6717c0b",
+      "sha256:b844848ff0e32944656a9a828b85d4ced71896d61364932b612f92e0ad24013b",
+      "sha256:e0f44e183f9214c43afa3daf3a222cf27ac3e84aa36f887f1abdd4ed770d3439",
+      "sha256:6bf94c994e4227d3bdc039d3cd8810de2174e49b3dbb25f99530ac3e92634038",
+      "sha256:d5002729c49c2c42ab015c10241c01987eac8fa2fa7c8a4093ea3d513e505ab6",
+      "sha256:82ce08c8cf67a656a1a61c3e35e9de250c2d42e749dc8dcdf426745b8d40436a",
+      "sha256:35eb8b7b67516de0dc43602e2859d61ac9ef7d738d3c8308e2a548c029652207",
+      "sha256:df129b5a83247c1103682faf24c87d6539ba2b01867da11def1d534efcc7b459"
+    ],
+    "RepoTags": [
+      "scan-postgres:latest"
+    ],
+    "ImageConfig": {
+      "architecture": "amd64",
+      "created": "2025-07-23T06:15:07.056483866Z",
+      "history": [
+        {
+          "created": "2025-07-15T11:32:09Z",
+          "created_by": "ADD alpine-minirootfs-3.19.8-x86_64.tar.gz / # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-15T11:32:09Z",
+          "created_by": "CMD [\"/bin/sh\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:05Z",
+          "created_by": "LABEL maintainer=Your Name \u003cyour.email@example.com\u003e",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:05Z",
+          "created_by": "LABEL description=MCP Toolbox Server for PostgreSQL",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:05Z",
+          "created_by": "LABEL version=1.0.0",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:05Z",
+          "created_by": "LABEL database=postgresql",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:05Z",
+          "created_by": "RUN /bin/sh -c apk add --no-cache     ca-certificates     curl     bash     tzdata     tini     postgresql15-client     \u0026\u0026 update-ca-certificates # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:06Z",
+          "created_by": "RUN /bin/sh -c addgroup -g 1001 mcp \u0026\u0026     adduser -D -u 1001 -G mcp mcp # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:06Z",
+          "created_by": "WORKDIR /app",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:06Z",
+          "created_by": "ARG TOOLBOX_VERSION=0.9.0",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:06Z",
+          "created_by": "ARG TARGETPLATFORM=linux/amd64",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:06Z",
+          "created_by": "RUN |2 TOOLBOX_VERSION=0.9.0 TARGETPLATFORM=linux/amd64 /bin/sh -c case ${TARGETPLATFORM} in     \"linux/amd64\") ARCH=\"linux/amd64\" ;;     \"linux/arm64\") ARCH=\"linux/arm64\" ;;     *) echo \"Unsupported platform: ${TARGETPLATFORM}\" \u0026\u0026 exit 1 ;;     esac \u0026\u0026     curl -L -o toolbox \"https://storage.googleapis.com/genai-toolbox/v${TOOLBOX_VERSION}/${ARCH}/toolbox\" \u0026\u0026     chmod +x toolbox \u0026\u0026     chown mcp:mcp toolbox # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:06Z",
+          "created_by": "RUN |2 TOOLBOX_VERSION=0.9.0 TARGETPLATFORM=linux/amd64 /bin/sh -c mkdir -p /app/config /app/data /app/logs \u0026\u0026     chown -R mcp:mcp /app # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:06Z",
+          "created_by": "COPY --chown=mcp:mcp scripts/healthcheck.sh /app/healthcheck.sh # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:06Z",
+          "created_by": "COPY --chown=mcp:mcp scripts/entrypoint.sh /app/entrypoint.sh # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:07Z",
+          "created_by": "RUN |2 TOOLBOX_VERSION=0.9.0 TARGETPLATFORM=linux/amd64 /bin/sh -c chmod +x /app/healthcheck.sh /app/entrypoint.sh # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-23T06:15:07Z",
+          "created_by": "USER mcp",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:07Z",
+          "created_by": "ENV DB_TYPE=postgres",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:07Z",
+          "created_by": "ENV DB_PORT=5432",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:07Z",
+          "created_by": "ENV DB_SSL_MODE=prefer",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:07Z",
+          "created_by": "ENV TOOLBOX_PORT=5000",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:07Z",
+          "created_by": "ENV TOOLBOX_LOG_LEVEL=info",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:07Z",
+          "created_by": "EXPOSE map[5000/tcp:{}]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:07Z",
+          "created_by": "HEALTHCHECK \u0026{[\"CMD-SHELL\" \"/app/healthcheck.sh\"] \"30s\" \"10s\" \"5s\" \"0s\" '\\x03'}",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2025-07-23T06:15:07Z",
+          "created_by": "ENTRYPOINT [\"/sbin/tini\" \"--\" \"/app/entrypoint.sh\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        }
+      ],
+      "os": "linux",
+      "rootfs": {
+        "type": "layers",
+        "diff_ids": [
+          "sha256:5c333159e547a12233a2759f1b1d6827e77c60d6b0447d884f4ad1cac980b907",
+          "sha256:7bf5ab2f02eb853f9049c59b7a00700b8759ddf8f7d6694b86e77824e6717c0b",
+          "sha256:b844848ff0e32944656a9a828b85d4ced71896d61364932b612f92e0ad24013b",
+          "sha256:e0f44e183f9214c43afa3daf3a222cf27ac3e84aa36f887f1abdd4ed770d3439",
+          "sha256:6bf94c994e4227d3bdc039d3cd8810de2174e49b3dbb25f99530ac3e92634038",
+          "sha256:d5002729c49c2c42ab015c10241c01987eac8fa2fa7c8a4093ea3d513e505ab6",
+          "sha256:82ce08c8cf67a656a1a61c3e35e9de250c2d42e749dc8dcdf426745b8d40436a",
+          "sha256:35eb8b7b67516de0dc43602e2859d61ac9ef7d738d3c8308e2a548c029652207",
+          "sha256:df129b5a83247c1103682faf24c87d6539ba2b01867da11def1d534efcc7b459"
+        ]
+      },
+      "config": {
+        "Healthcheck": {
+          "Test": [
+            "CMD-SHELL",
+            "/app/healthcheck.sh"
+          ],
+          "Interval": 30000000000,
+          "Timeout": 10000000000,
+          "StartPeriod": 5000000000,
+          "Retries": 3
+        },
+        "Entrypoint": [
+          "/sbin/tini",
+          "--",
+          "/app/entrypoint.sh"
+        ],
+        "Env": [
+          "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "DB_TYPE=postgres",
+          "DB_PORT=5432",
+          "DB_SSL_MODE=prefer",
+          "TOOLBOX_PORT=5000",
+          "TOOLBOX_LOG_LEVEL=info"
+        ],
+        "Labels": {
+          "database": "postgresql",
+          "description": "MCP Toolbox Server for PostgreSQL",
+          "maintainer": "Your Name \u003cyour.email@example.com\u003e",
+          "version": "1.0.0"
+        },
+        "User": "mcp",
+        "WorkingDir": "/app",
+        "ExposedPorts": {
+          "5000/tcp": {}
+        }
+      }
+    },
+    "Layers": [
+      {
+        "Size": 7681536,
+        "DiffID": "sha256:5c333159e547a12233a2759f1b1d6827e77c60d6b0447d884f4ad1cac980b907"
+      },
+      {
+        "Size": 13021184,
+        "DiffID": "sha256:7bf5ab2f02eb853f9049c59b7a00700b8759ddf8f7d6694b86e77824e6717c0b"
+      },
+      {
+        "Size": 11776,
+        "DiffID": "sha256:b844848ff0e32944656a9a828b85d4ced71896d61364932b612f92e0ad24013b"
+      },
+      {
+        "Size": 1536,
+        "DiffID": "sha256:e0f44e183f9214c43afa3daf3a222cf27ac3e84aa36f887f1abdd4ed770d3439"
+      },
+      {
+        "Size": 112024576,
+        "DiffID": "sha256:6bf94c994e4227d3bdc039d3cd8810de2174e49b3dbb25f99530ac3e92634038"
+      },
+      {
+        "Size": 3072,
+        "DiffID": "sha256:d5002729c49c2c42ab015c10241c01987eac8fa2fa7c8a4093ea3d513e505ab6"
+      },
+      {
+        "Size": 4608,
+        "DiffID": "sha256:82ce08c8cf67a656a1a61c3e35e9de250c2d42e749dc8dcdf426745b8d40436a"
+      },
+      {
+        "Size": 20480,
+        "DiffID": "sha256:35eb8b7b67516de0dc43602e2859d61ac9ef7d738d3c8308e2a548c029652207"
+      },
+      {
+        "Size": 20480,
+        "DiffID": "sha256:df129b5a83247c1103682faf24c87d6539ba2b01867da11def1d534efcc7b459"
+      }
+    ]
+  },
+  "Results": [
+    {
+      "Target": "scan-postgres:latest (alpine 3.19.8)",
+      "Class": "os-pkgs",
+      "Type": "alpine"
+    },
+    {
+      "Target": "app/toolbox",
+      "Class": "lang-pkgs",
+      "Type": "gobinary"
+    }
+  ]
+}

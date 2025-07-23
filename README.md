@@ -15,12 +15,24 @@ Docker images that provide database connectivity through the **Model Context Pro
 
 ## 📋 Supported Databases
 
-| Database | Image Name | Status |
-|----------|------------|--------|
-| PostgreSQL | `toolbox-images/postgres` | ✅ Ready |
-| MySQL | `toolbox-images/mysql` | ✅ Ready |
-| Redis | `toolbox-images/redis` | ✅ Ready |
-| SQLite | `toolbox-images/sqlite` | ✅ Ready |
+| Database | Image Name | Type | Status |
+|----------|------------|------|--------|
+| **Relational Databases** | | | |
+| PostgreSQL | `toolbox-images/postgres` | SQL | ✅ Ready |
+| MySQL | `toolbox-images/mysql` | SQL | ✅ Ready |
+| Microsoft SQL Server | `toolbox-images/sqlserver` | SQL | ✅ Ready |
+| SQLite | `toolbox-images/sqlite` | SQL | ✅ Ready |
+| **Cloud Databases** | | | |
+| Google BigQuery | `toolbox-images/bigquery` | Analytics | ✅ Ready |
+| Google AlloyDB | `toolbox-images/alloydb` | SQL | ✅ Ready |
+| Google Cloud Spanner | `toolbox-images/spanner` | SQL | ✅ Ready |
+| Google Firestore | `toolbox-images/firestore` | NoSQL | ✅ Ready |
+| Snowflake | `toolbox-images/snowflake` | Analytics | ✅ Ready |
+| Amazon Redshift | `toolbox-images/redshift` | Analytics | ✅ Ready |
+| Supabase | `toolbox-images/supabase` | SQL | ✅ Ready |
+| **NoSQL & Graph** | | | |
+| Neo4j | `toolbox-images/neo4j` | Graph | ✅ Ready |
+| Redis | `toolbox-images/redis` | Cache/NoSQL | ✅ Ready |
 
 ## 🚀 Quick Start
 
@@ -258,7 +270,7 @@ Commands:
 Options:
   -n, --namespace NAMESPACE    Docker namespace (default: toolbox-images)
   -v, --version VERSION        Image version (default: latest)
-  -d, --database DATABASE      Specific database (postgres|mysql|redis|sqlite)
+  -d, --database DATABASE      Specific database (postgres|mysql|redis|sqlite|...)
   --push                       Push after build
   --test                       Test after build
 ```
@@ -266,7 +278,7 @@ Options:
 ### Project Structure
 
 ```
-├── Dockerfile.{postgres,mysql,redis,sqlite}  # Database-specific Dockerfiles
+├── Dockerfile.{postgres,mysql,redis,sqlite,...}  # Database-specific Dockerfiles
 ├── scripts/
 │   ├── entrypoint.sh           # Container entrypoint
 │   └── validate_setup.sh       # Setup validation
@@ -332,4 +344,4 @@ This project uses GitHub Actions for continuous integration:
 - **Build & Test**: Automatically builds and tests Docker images for all supported databases
 - **Simple Pipeline**: Focused on core functionality without complex security scanning
 
-The CI pipeline builds images for: PostgreSQL, MySQL, Redis, and SQLite.
+The CI pipeline builds images for all 13 supported databases.
