@@ -320,20 +320,6 @@ docker run --rm -d \
   toolbox-images/postgres:latest
 ```
 
-### Network Security
-```bash
-# Create dedicated network
-docker network create mcp-network
-
-# Run containers in isolated network
-docker run --rm -d \
-  --name mcp-postgres \
-  --network mcp-network \
-  -p 5000:5000 \
-  -e DB_HOST=postgres-db \
-  # ... other variables
-  toolbox-images/postgres:latest
-```
 
 ## 🧪 Development
 
