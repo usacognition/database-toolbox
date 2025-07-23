@@ -17,6 +17,12 @@ Docker images that provide database connectivity through the **Model Context Pro
   - [Amazon Redshift](#amazon-redshift)
   - [Snowflake](#snowflake)
   - [Google BigQuery](#google-bigquery)
+  - [Google AlloyDB](#google-alloydb)
+  - [Google Cloud Spanner](#google-cloud-spanner)
+  - [Google Firestore](#google-firestore)
+  - [Microsoft SQL Server](#microsoft-sql-server)
+  - [Neo4j](#neo4j)
+  - [Supabase](#supabase)
 - [Security Best Practices](#-security-best-practices)
 - [Development](#-development)
 - [License](#-license)
@@ -72,12 +78,12 @@ docker run --rm -d \
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
-| `DB_HOST` | ✅ | Database hostname | - | `localhost`, `db.example.com` |
-| `DB_NAME` | ✅ | Database name | - | `myapp_production` |
-| `DB_USER` | ✅ | Database username | - | `postgres` |
-| `DB_PASSWORD` | ✅ | Database password | - | `your_secure_password` |
-| `DB_PORT` | ❌ | Database port | `5432` | `5432` |
-| `DB_SSL_MODE` | ❌ | SSL connection mode | `prefer` | `disable`, `allow`, `prefer`, `require`, `verify-ca`, `verify-full` |
+| `DB_HOST` | Yes | Database hostname | - | `localhost`, `db.example.com` |
+| `DB_NAME` | Yes | Database name | - | `myapp_production` |
+| `DB_USER` | Yes | Database username | - | `postgres` |
+| `DB_PASSWORD` | Yes | Database password | - | `your_secure_password` |
+| `DB_PORT` | No | Database port | `5432` | `5432` |
+| `DB_SSL_MODE` | No | SSL connection mode | `prefer` | `disable`, `allow`, `prefer`, `require`, `verify-ca`, `verify-full` |
 
 ### MCP Tools Available
 - `execute_query` - Execute SQL queries with results
@@ -110,12 +116,12 @@ docker run --rm -d \
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
-| `DB_HOST` | ✅ | Database hostname | - | `localhost`, `mysql.example.com` |
-| `DB_NAME` | ✅ | Database name | - | `myapp_production` |
-| `DB_USER` | ✅ | Database username | - | `root`, `app_user` |
-| `DB_PASSWORD` | ✅ | Database password | - | `your_secure_password` |
-| `DB_PORT` | ❌ | Database port | `3306` | `3306` |
-| `DB_CHARSET` | ❌ | Connection charset | `utf8mb4` | `utf8mb4` |
+| `DB_HOST` | Yes | Database hostname | - | `localhost`, `mysql.example.com` |
+| `DB_NAME` | Yes | Database name | - | `myapp_production` |
+| `DB_USER` | Yes | Database username | - | `root`, `app_user` |
+| `DB_PASSWORD` | Yes | Database password | - | `your_secure_password` |
+| `DB_PORT` | No | Database port | `3306` | `3306` |
+| `DB_CHARSET` | No | Connection charset | `utf8mb4` | `utf8mb4` |
 
 ### MCP Tools Available
 - `execute_query` - Execute SQL queries with results
@@ -147,12 +153,12 @@ docker run --rm -d \
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
-| `REDIS_HOST` | ✅ | Redis hostname | - | `localhost`, `redis.example.com` |
-| `REDIS_PORT` | ❌ | Redis port | `6379` | `6379` |
-| `REDIS_PASSWORD` | ❌ | Redis password | None | `your_password` |
-| `REDIS_DB` | ❌ | Redis database number | `0` | `0`, `1`, `2` |
-| `REDIS_SSL` | ❌ | Enable SSL connection | `false` | `true`, `false` |
-| `REDIS_USERNAME` | ❌ | Redis username (Redis 6+) | None | `username` |
+| `REDIS_HOST` | Yes | Redis hostname | - | `localhost`, `redis.example.com` |
+| `REDIS_PORT` | No | Redis port | `6379` | `6379` |
+| `REDIS_PASSWORD` | No | Redis password | None | `your_password` |
+| `REDIS_DB` | No | Redis database number | `0` | `0`, `1`, `2` |
+| `REDIS_SSL` | No | Enable SSL connection | `false` | `true`, `false` |
+| `REDIS_USERNAME` | No | Redis username (Redis 6+) | None | `username` |
 
 ### MCP Tools Available
 - `get` - Get value by key
@@ -182,8 +188,8 @@ docker run --rm -d \
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
-| `SQLITE_DATABASE_PATH` | ✅ | Path to SQLite database file | - | `/data/database.db` |
-| `SQLITE_READ_ONLY` | ❌ | Open database in read-only mode | `false` | `true`, `false` |
+| `SQLITE_DATABASE_PATH` | Yes | Path to SQLite database file | - | `/data/database.db` |
+| `SQLITE_READ_ONLY` | No | Open database in read-only mode | `false` | `true`, `false` |
 
 ### Volume Mounts
 - `-v /host/path/to/database:/data` - Mount directory containing SQLite database file
@@ -219,12 +225,12 @@ docker run --rm -d \
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
-| `REDSHIFT_HOST` | ✅ | Redshift cluster endpoint | - | `cluster.abc123.us-west-2.redshift.amazonaws.com` |
-| `REDSHIFT_DATABASE` | ✅ | Database name | - | `analytics` |
-| `REDSHIFT_USER` | ✅ | Database username | - | `admin` |
-| `REDSHIFT_PASSWORD` | ✅ | Database password | - | `your_secure_password` |
-| `REDSHIFT_PORT` | ❌ | Database port | `5439` | `5439` |
-| `REDSHIFT_SSL_MODE` | ❌ | SSL mode | `require` | `require`, `prefer` |
+| `REDSHIFT_HOST` | Yes | Redshift cluster endpoint | - | `cluster.abc123.us-west-2.redshift.amazonaws.com` |
+| `REDSHIFT_DATABASE` | Yes | Database name | - | `analytics` |
+| `REDSHIFT_USER` | Yes | Database username | - | `admin` |
+| `REDSHIFT_PASSWORD` | Yes | Database password | - | `your_secure_password` |
+| `REDSHIFT_PORT` | No | Database port | `5439` | `5439` |
+| `REDSHIFT_SSL_MODE` | No | SSL mode | `require` | `require`, `prefer` |
 
 ### MCP Tools Available
 - `execute_query` - Execute SQL queries with results
@@ -257,13 +263,13 @@ docker run --rm -d \
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
-| `SNOWFLAKE_ACCOUNT` | ✅ | Snowflake account URL | - | `abc12345.snowflakecomputing.com` |
-| `SNOWFLAKE_USER` | ✅ | Snowflake username | - | `john.doe@company.com` |
-| `SNOWFLAKE_PASSWORD` | ✅ | Snowflake password | - | `your_secure_password` |
-| `SNOWFLAKE_DATABASE` | ✅ | Database name | - | `ANALYTICS_DB` |
-| `SNOWFLAKE_WAREHOUSE` | ✅ | Compute warehouse | - | `COMPUTE_WH` |
-| `SNOWFLAKE_SCHEMA` | ❌ | Schema name | `PUBLIC` | `PUBLIC`, `STAGING` |
-| `SNOWFLAKE_ROLE` | ❌ | User role | User's default role | `ANALYST`, `ADMIN` |
+| `SNOWFLAKE_ACCOUNT` | Yes | Snowflake account URL | - | `abc12345.snowflakecomputing.com` |
+| `SNOWFLAKE_USER` | Yes | Snowflake username | - | `john.doe@company.com` |
+| `SNOWFLAKE_PASSWORD` | Yes | Snowflake password | - | `your_secure_password` |
+| `SNOWFLAKE_DATABASE` | Yes | Database name | - | `ANALYTICS_DB` |
+| `SNOWFLAKE_WAREHOUSE` | Yes | Compute warehouse | - | `COMPUTE_WH` |
+| `SNOWFLAKE_SCHEMA` | No | Schema name | `PUBLIC` | `PUBLIC`, `STAGING` |
+| `SNOWFLAKE_ROLE` | No | User role | User's default role | `ANALYST`, `ADMIN` |
 
 ### MCP Tools Available
 - `execute_query` - Execute SQL queries
@@ -294,10 +300,10 @@ docker run --rm -d \
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
-| `BIGQUERY_PROJECT_ID` | ✅ | Google Cloud project ID | - | `my-analytics-project` |
-| `GOOGLE_APPLICATION_CREDENTIALS` | ✅ | Path to service account JSON | - | `/credentials/service-account.json` |
-| `BIGQUERY_DATASET_ID` | ❌ | Default dataset ID | None | `my_dataset` |
-| `BIGQUERY_LOCATION` | ❌ | BigQuery location | `US` | `US`, `EU` |
+| `BIGQUERY_PROJECT_ID` | Yes | Google Cloud project ID | - | `my-analytics-project` |
+| `GOOGLE_APPLICATION_CREDENTIALS` | Yes | Path to service account JSON | - | `/credentials/service-account.json` |
+| `BIGQUERY_DATASET_ID` | No | Default dataset ID | None | `my_dataset` |
+| `BIGQUERY_LOCATION` | No | BigQuery location | `US` | `US`, `EU` |
 
 ### Volume Mounts
 - `-v /host/path/to/credentials:/credentials` - Mount Google Cloud service account credentials
@@ -308,6 +314,225 @@ docker run --rm -d \
 - `list_tables` - List tables in dataset
 - `describe_table` - Get table schema
 - `get_job_status` - Check query job status
+
+---
+
+## Google AlloyDB
+
+Connect to Google AlloyDB instances for PostgreSQL-compatible cloud databases.
+
+### Docker Command
+```bash
+docker run --rm -d \
+  --name mcp-alloydb \
+  -p 5000:5000 \
+  -e ALLOYDB_INSTANCE=projects/your-project/locations/region/clusters/cluster-id/instances/instance-id \
+  -e DB_NAME=your_database \
+  -e DB_USER=your_username \
+  -e DB_PASSWORD=your_password \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json \
+  -v /host/path/to/credentials:/credentials \
+  toolbox-images/alloydb:latest
+```
+
+### Environment Variables
+| Variable | Required | Description | Default | Example |
+|----------|----------|-------------|---------|---------|
+| `ALLOYDB_INSTANCE` | Yes | AlloyDB instance path | - | `projects/my-project/locations/us-central1/clusters/my-cluster/instances/my-instance` |
+| `DB_NAME` | Yes | Database name | - | `myapp_production` |
+| `DB_USER` | Yes | Database username | - | `postgres` |
+| `DB_PASSWORD` | Yes | Database password | - | `your_secure_password` |
+| `GOOGLE_APPLICATION_CREDENTIALS` | Yes | Path to service account JSON | - | `/credentials/service-account.json` |
+
+### Volume Mounts
+- `-v /host/path/to/credentials:/credentials` - Mount Google Cloud service account credentials
+
+### MCP Tools Available
+- `execute_query` - Execute SQL queries with results
+- `execute_statement` - Execute SQL statements
+- `list_tables` - List all tables
+- `describe_table` - Get table schema
+- `get_schema` - Get complete schema
+
+---
+
+## Google Cloud Spanner
+
+Connect to Google Cloud Spanner for globally distributed, strongly consistent databases.
+
+### Docker Command
+```bash
+docker run --rm -d \
+  --name mcp-spanner \
+  -p 5000:5000 \
+  -e SPANNER_PROJECT_ID=your-project-id \
+  -e SPANNER_INSTANCE_ID=your-instance-id \
+  -e SPANNER_DATABASE_ID=your-database-id \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json \
+  -v /host/path/to/credentials:/credentials \
+  toolbox-images/spanner:latest
+```
+
+### Environment Variables
+| Variable | Required | Description | Default | Example |
+|----------|----------|-------------|---------|---------|
+| `SPANNER_PROJECT_ID` | Yes | Google Cloud project ID | - | `my-project` |
+| `SPANNER_INSTANCE_ID` | Yes | Spanner instance ID | - | `my-instance` |
+| `SPANNER_DATABASE_ID` | Yes | Spanner database ID | - | `my-database` |
+| `GOOGLE_APPLICATION_CREDENTIALS` | Yes | Path to service account JSON | - | `/credentials/service-account.json` |
+
+### Volume Mounts
+- `-v /host/path/to/credentials:/credentials` - Mount Google Cloud service account credentials
+
+### MCP Tools Available
+- `execute_query` - Execute SQL queries
+- `list_tables` - List tables in database
+- `describe_table` - Get table schema
+- `get_schema` - Get complete schema
+
+---
+
+## Google Firestore
+
+Connect to Google Firestore NoSQL document databases.
+
+### Docker Command
+```bash
+docker run --rm -d \
+  --name mcp-firestore \
+  -p 5000:5000 \
+  -e FIRESTORE_PROJECT_ID=your-project-id \
+  -e FIRESTORE_DATABASE_ID=(default) \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/credentials/service-account.json \
+  -v /host/path/to/credentials:/credentials \
+  toolbox-images/firestore:latest
+```
+
+### Environment Variables
+| Variable | Required | Description | Default | Example |
+|----------|----------|-------------|---------|---------|
+| `FIRESTORE_PROJECT_ID` | Yes | Google Cloud project ID | - | `my-project` |
+| `GOOGLE_APPLICATION_CREDENTIALS` | Yes | Path to service account JSON | - | `/credentials/service-account.json` |
+| `FIRESTORE_DATABASE_ID` | No | Firestore database ID | `(default)` | `(default)`, `my-database` |
+
+### Volume Mounts
+- `-v /host/path/to/credentials:/credentials` - Mount Google Cloud service account credentials
+
+### MCP Tools Available
+- `get_document` - Get document by path
+- `set_document` - Create or update document
+- `delete_document` - Delete document
+- `list_collections` - List collections
+- `query_collection` - Query documents in collection
+
+---
+
+## Microsoft SQL Server
+
+Connect to Microsoft SQL Server databases.
+
+### Docker Command
+```bash
+docker run --rm -d \
+  --name mcp-sqlserver \
+  -p 5000:5000 \
+  -e SQLSERVER_HOST=your-sqlserver-host.com \
+  -e SQLSERVER_PORT=1433 \
+  -e SQLSERVER_DATABASE=your_database \
+  -e SQLSERVER_USER=your_username \
+  -e SQLSERVER_PASSWORD=your_password \
+  -e SQLSERVER_ENCRYPT=true \
+  -e SQLSERVER_TRUST_SERVER_CERTIFICATE=false \
+  toolbox-images/sqlserver:latest
+```
+
+### Environment Variables
+| Variable | Required | Description | Default | Example |
+|----------|----------|-------------|---------|---------|
+| `SQLSERVER_HOST` | Yes | SQL Server hostname | - | `localhost`, `sql.example.com` |
+| `SQLSERVER_DATABASE` | Yes | Database name | - | `myapp_production` |
+| `SQLSERVER_USER` | Yes | Database username | - | `sa`, `app_user` |
+| `SQLSERVER_PASSWORD` | Yes | Database password | - | `your_secure_password` |
+| `SQLSERVER_PORT` | No | Database port | `1433` | `1433` |
+| `SQLSERVER_ENCRYPT` | No | Enable encryption | `true` | `true`, `false` |
+| `SQLSERVER_TRUST_SERVER_CERTIFICATE` | No | Trust server certificate | `false` | `true`, `false` |
+
+### MCP Tools Available
+- `execute_query` - Execute SQL queries with results
+- `execute_statement` - Execute SQL statements
+- `list_tables` - List all tables
+- `describe_table` - Get table schema
+- `get_schema` - Get complete schema
+
+---
+
+## Neo4j
+
+Connect to Neo4j graph databases for relationship-based data modeling.
+
+### Docker Command
+```bash
+docker run --rm -d \
+  --name mcp-neo4j \
+  -p 5000:5000 \
+  -e NEO4J_URI=bolt://your-neo4j-host.com:7687 \
+  -e NEO4J_USER=neo4j \
+  -e NEO4J_PASSWORD=your_password \
+  -e NEO4J_DATABASE=neo4j \
+  toolbox-images/neo4j:latest
+```
+
+### Environment Variables
+| Variable | Required | Description | Default | Example |
+|----------|----------|-------------|---------|---------|
+| `NEO4J_URI` | Yes | Neo4j connection URI | - | `bolt://localhost:7687`, `neo4j://localhost:7687` |
+| `NEO4J_USER` | Yes | Neo4j username | - | `neo4j` |
+| `NEO4J_PASSWORD` | Yes | Neo4j password | - | `your_secure_password` |
+| `NEO4J_DATABASE` | No | Database name | `neo4j` | `neo4j`, `movies` |
+| `NEO4J_MAX_CONNECTION_LIFETIME` | No | Max connection lifetime | `3600` | `3600` |
+| `NEO4J_MAX_CONNECTION_POOL_SIZE` | No | Max connection pool size | `100` | `100` |
+
+### MCP Tools Available
+- `execute_cypher` - Execute Cypher queries
+- `list_labels` - List node labels
+- `list_relationships` - List relationship types
+- `get_schema` - Get graph schema
+- `count_nodes` - Count nodes by label
+- `count_relationships` - Count relationships by type
+
+---
+
+## Supabase
+
+Connect to Supabase PostgreSQL databases with additional Supabase-specific features.
+
+### Docker Command
+```bash
+docker run --rm -d \
+  --name mcp-supabase \
+  -p 5000:5000 \
+  -e SUPABASE_URL=https://your-project.supabase.co \
+  -e SUPABASE_SERVICE_ROLE_KEY=your_service_role_key \
+  -e DB_NAME=postgres \
+  toolbox-images/supabase:latest
+```
+
+### Environment Variables
+| Variable | Required | Description | Default | Example |
+|----------|----------|-------------|---------|---------|
+| `SUPABASE_URL` | Yes | Supabase project URL | - | `https://abcd1234.supabase.co` |
+| `SUPABASE_SERVICE_ROLE_KEY` | Yes | Service role key | - | `eyJ...` |
+| `DB_NAME` | No | Database name | `postgres` | `postgres` |
+| `SUPABASE_SCHEMA` | No | Default schema | `public` | `public`, `auth` |
+
+### MCP Tools Available
+- `execute_query` - Execute SQL queries with results
+- `execute_statement` - Execute SQL statements
+- `list_tables` - List all tables
+- `describe_table` - Get table schema
+- `get_schema` - Get complete schema
+- `list_rls_policies` - List Row Level Security policies
+- `get_auth_users` - Get authentication users (admin only)
 
 ---
 
