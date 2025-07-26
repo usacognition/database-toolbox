@@ -14,22 +14,30 @@ This guide explains how to set up a development environment, run tests, and cont
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/mcp-database-servers.git
-   cd mcp-database-servers
+   git clone https://github.com/marcosfede/toolbox-db-images.git
+   cd toolbox-db-images
    ```
 
 2. **Set up development environment:**
    ```bash
-   # Set up and start all services
-   ./tests/run_tests.sh setup
+   # Start PostgreSQL environment
+   cd databases/postgres
+   docker-compose up -d
+   
+   # Start MySQL environment  
+   cd ../mysql
+   docker-compose up -d
+   
+   # Or use the build script for specific databases
+   ./build.sh build-db -d postgres --test
    ```
 
 3. **Access development services:**
-   - **PostgreSQL MCP Server**: http://localhost:5000
-   - **MySQL MCP Server**: http://localhost:5001
-   - **pgAdmin**: http://localhost:8080 (admin@mcp.dev / admin123)
-   - **phpMyAdmin**: http://localhost:8081
-   - **Test Reports**: http://localhost:8082
+   - **PostgreSQL MCP Server**: http://localhost:5001/mcp
+   - **MySQL MCP Server**: http://localhost:5002/mcp  
+   - **PostgreSQL Database**: localhost:5432
+   - **MySQL Database**: localhost:3306
+   - **Each database folder** contains a working docker-compose.yml for local testing
 
 ## 🧪 Testing
 
@@ -163,9 +171,13 @@ To add support for a new database (e.g., Snowflake):
    # Modify for Snowflake-specific dependencies
    ```
 
-2. **Update scripts:**
-   - Add Snowflake support to `scripts/entrypoint.sh`
-   - Add health check logic to `scripts/healthcheck.sh`
+2. **Create and update scripts:**
+   ```bash
+   mkdir -p databases/snowflake/scripts
+   cp databases/postgres/scripts/* databases/snowflake/scripts/
+   # Modify entrypoint.sh for Snowflake-specific configuration
+   # Update healthcheck.sh for Snowflake health checks
+   ```
 
 3. **Add to build system:**
    - Update `build.sh` DATABASES array
@@ -178,9 +190,11 @@ To add support for a new database (e.g., Snowflake):
    # Modify for Snowflake-specific features
    ```
 
-5. **Update Docker Compose:**
-   - Add Snowflake MCP service to development compose file
-   - Add any required configuration
+5. **Create Docker Compose setup:**
+   ```bash
+   cp databases/postgres/docker-compose.yml databases/snowflake/docker-compose.yml
+   # Modify for Snowflake-specific configuration and ports
+   ```
 
 ### 3. Testing Changes
 
@@ -198,32 +212,47 @@ To add support for a new database (e.g., Snowflake):
 ## 🏗️ Project Structure
 
 ```
-mcp-database-servers/
-├── Dockerfile.{postgres,mysql,snowflake,redshift}  # Database-specific images
-├── scripts/
-│   ├── entrypoint.sh                               # Container entrypoint
-│   └── healthcheck.sh                              # Health check script
+toolbox-db-images/
+├── databases/                                      # Database-specific folders
+│   ├── postgres/
+│   │   ├── Dockerfile                             # PostgreSQL image
+│   │   ├── docker-compose.yml                     # Local testing setup  
+│   │   ├── init.sql                               # Test data
+│   │   └── scripts/
+│   │       ├── entrypoint.sh                      # Container entrypoint
+│   │       ├── healthcheck.sh                     # Health check script
+│   │       └── validate_setup.sh                  # Setup validation
+│   ├── mysql/
+│   │   ├── Dockerfile                             # MySQL image
+│   │   ├── docker-compose.yml                     # Local testing setup
+│   │   ├── init.sql                               # Test data
+│   │   └── scripts/                               # MySQL-specific scripts
+│   ├── redis/                                     # Redis configuration
+│   ├── neo4j/                                     # Neo4j configuration
+│   ├── sqlite/                                    # SQLite configuration
+│   └── {snowflake,redshift,bigquery,etc}/         # Cloud databases
 ├── tests/
-│   ├── Dockerfile.test                             # Test runner image
-│   ├── conftest.py                                 # Pytest configuration
-│   ├── test_health_checks.py                      # Health check tests
-│   ├── test_postgres.py                           # PostgreSQL tests
-│   ├── test_mysql.py                              # MySQL tests
-│   ├── test_integration.py                        # Integration tests
-│   ├── requirements.txt                           # Test dependencies
-│   └── run_tests.sh                               # Test runner script
-├── examples/
-│   ├── docker-compose/
-│   │   ├── docker-compose.dev.yml                 # Development environment
-│   │   ├── docker-compose.all.yml                 # All databases
-│   │   ├── pgadmin-servers.json                   # pgAdmin configuration
-│   │   └── nginx.conf                             # Test viewer config
-│   └── configs/                                   # Configuration examples
+│   ├── Dockerfile.test                            # Test runner image
+│   ├── conftest.py                                # Pytest configuration
+│   ├── test_health_checks.py                     # Health check tests
+│   ├── test_postgres.py                          # PostgreSQL tests
+│   ├── test_mysql.py                             # MySQL tests
+│   ├── test_integration.py                       # Integration tests
+│   ├── requirements.txt                          # Test dependencies
+│   └── run_tests.sh                              # Test runner script
 ├── .github/workflows/                             # CI/CD pipelines
 ├── build.sh                                       # Build automation
 ├── Makefile                                       # Alternative build system
+├── DEVELOPMENT.md                                 # This file
 └── README.md                                      # User documentation
 ```
+
+### Key Changes from Previous Structure
+
+- **Database-specific folders**: Each database now has its own folder under `databases/` with all related files
+- **Self-contained configurations**: Each `databases/*/` folder contains everything needed to run that database
+- **No more top-level Dockerfiles**: All Dockerfiles moved to `databases/*/Dockerfile`
+- **Working examples**: Each `databases/*/docker-compose.yml` serves as a tested, working example
 
 ## 🐛 Debugging
 
@@ -231,12 +260,12 @@ mcp-database-servers/
 
 ```bash
 # MCP server logs
-docker logs dev-mcp-postgres
-docker logs dev-mcp-mysql
+docker logs mcp-postgres-server-local
+docker logs mcp-mysql-server-local
 
-# Database logs
-docker logs dev-postgres
-docker logs dev-mysql
+# Database logs  
+docker logs postgres-db-local
+docker logs mysql-db-local
 
 # All logs
 ./tests/run_tests.sh logs
@@ -246,27 +275,27 @@ docker logs dev-mysql
 
 ```bash
 # Connect to MCP server container
-docker exec -it dev-mcp-postgres /bin/bash
+docker exec -it mcp-postgres-server-local /bin/bash
 
-# Connect to database container
-docker exec -it dev-postgres psql -U testuser -d testdb
+# Connect to database container  
+docker exec -it postgres-db-local psql -U testuser -d testdb
 
 # Run test container interactively
-docker-compose -f examples/docker-compose/docker-compose.dev.yml run --rm -it mcp-tester bash
+cd databases/postgres && docker-compose run --rm -it mcp-postgres bash
 ```
 
 ### Manual Testing
 
 ```bash
-# Test MCP endpoints directly
-curl http://localhost:5000/health
-curl -X POST http://localhost:5000/mcp \
+# Test MCP endpoints directly (PostgreSQL on port 5001, MySQL on port 5002)
+curl http://localhost:5001/health
+curl -X POST http://localhost:5001/mcp \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}'
 
 # Test database connectivity
-docker exec -it dev-postgres pg_isready -U testuser -d testdb
-docker exec -it dev-mysql mysqladmin ping -u testuser -ptestpass
+docker exec -it postgres-db-local pg_isready -U testuser -d testdb
+docker exec -it mysql-db-local mysqladmin ping -u testuser -ptestpass
 ```
 
 ## 📊 Performance Testing
@@ -287,7 +316,7 @@ Monitor containers during development:
 
 ```bash
 # Resource usage
-docker stats dev-mcp-postgres dev-mcp-mysql
+docker stats mcp-postgres-server-local mcp-mysql-server-local
 
 # Container health
 docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
