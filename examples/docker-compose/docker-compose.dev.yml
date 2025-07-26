@@ -46,8 +46,8 @@ services:
   # MCP PostgreSQL Server
   mcp-postgres:
     build:
-      context: ../../
-      dockerfile: Dockerfile.postgres
+      context: ../../databases/postgres
+      dockerfile: Dockerfile
     container_name: dev-mcp-postgres
     depends_on:
       postgres:
@@ -119,8 +119,8 @@ services:
   # MCP MySQL Server
   mcp-mysql:
     build:
-      context: ../../
-      dockerfile: Dockerfile.mysql
+      context: ../../databases/mysql
+      dockerfile: Dockerfile
     container_name: dev-mcp-mysql
     depends_on:
       mysql:
@@ -149,8 +149,8 @@ services:
   # MCP Snowflake Server (mock for testing)
   mcp-snowflake:
     build:
-      context: ../../
-      dockerfile: Dockerfile.snowflake
+      context: ../../databases/snowflake
+      dockerfile: Dockerfile
     container_name: dev-mcp-snowflake
     environment:
       DB_TYPE: snowflake
@@ -180,8 +180,8 @@ services:
   # MCP Redshift Server (mock for testing)
   mcp-redshift:
     build:
-      context: ../../
-      dockerfile: Dockerfile.redshift
+      context: ../../databases/redshift
+      dockerfile: Dockerfile
     container_name: dev-mcp-redshift
     environment:
       DB_TYPE: redshift

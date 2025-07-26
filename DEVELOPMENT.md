@@ -159,7 +159,7 @@ To add support for a new database (e.g., Snowflake):
 
 1. **Create Dockerfile:**
    ```bash
-   cp Dockerfile.postgres Dockerfile.snowflake
+   cp databases/postgres/Dockerfile databases/snowflake/Dockerfile
    # Modify for Snowflake-specific dependencies
    ```
 

@@ -56,8 +56,8 @@ build-postgres: setup ## Build PostgreSQL MCP server image
 		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
 		--tag $(POSTGRES_IMAGE):$(VERSION) \
 		--tag $(POSTGRES_IMAGE):latest \
-		--file Dockerfile.postgres \
-		--load .
+		--file databases/postgres/Dockerfile \
+		--context databases/postgres .
 	@echo "✅ PostgreSQL image built successfully"
 
 build-mysql: setup ## Build MySQL MCP server image
@@ -67,8 +67,8 @@ build-mysql: setup ## Build MySQL MCP server image
 		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
 		--tag $(MYSQL_IMAGE):$(VERSION) \
 		--tag $(MYSQL_IMAGE):latest \
-		--file Dockerfile.mysql \
-		--load .
+		--file databases/mysql/Dockerfile \
+		--context databases/mysql .
 	@echo "✅ MySQL image built successfully"
 
 build-snowflake: setup ## Build Snowflake MCP server image
@@ -78,8 +78,8 @@ build-snowflake: setup ## Build Snowflake MCP server image
 		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
 		--tag $(SNOWFLAKE_IMAGE):$(VERSION) \
 		--tag $(SNOWFLAKE_IMAGE):latest \
-		--file Dockerfile.snowflake \
-		--load .
+		--file databases/snowflake/Dockerfile \
+		--context databases/snowflake .
 	@echo "✅ Snowflake image built successfully"
 
 build-redshift: setup ## Build Redshift MCP server image
@@ -89,8 +89,8 @@ build-redshift: setup ## Build Redshift MCP server image
 		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
 		--tag $(REDSHIFT_IMAGE):$(VERSION) \
 		--tag $(REDSHIFT_IMAGE):latest \
-		--file Dockerfile.redshift \
-		--load .
+		--file databases/redshift/Dockerfile \
+		--context databases/redshift .
 	@echo "✅ Redshift image built successfully"
 
 # Push targets
@@ -103,8 +103,8 @@ push-postgres: ## Push PostgreSQL image to registry
 		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
 		--tag $(POSTGRES_IMAGE):$(VERSION) \
 		--tag $(POSTGRES_IMAGE):latest \
-		--file Dockerfile.postgres \
-		--push .
+		--file databases/postgres/Dockerfile \
+		--context databases/postgres --push .
 	@echo "✅ PostgreSQL image pushed successfully"
 
 push-mysql: ## Push MySQL image to registry
@@ -114,8 +114,8 @@ push-mysql: ## Push MySQL image to registry
 		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
 		--tag $(MYSQL_IMAGE):$(VERSION) \
 		--tag $(MYSQL_IMAGE):latest \
-		--file Dockerfile.mysql \
-		--push .
+		--file databases/mysql/Dockerfile \
+		--context databases/mysql --push .
 	@echo "✅ MySQL image pushed successfully"
 
 push-snowflake: ## Push Snowflake image to registry
@@ -125,8 +125,8 @@ push-snowflake: ## Push Snowflake image to registry
 		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
 		--tag $(SNOWFLAKE_IMAGE):$(VERSION) \
 		--tag $(SNOWFLAKE_IMAGE):latest \
-		--file Dockerfile.snowflake \
-		--push .
+		--file databases/snowflake/Dockerfile \
+		--context databases/snowflake --push .
 	@echo "✅ Snowflake image pushed successfully"
 
 push-redshift: ## Push Redshift image to registry
@@ -136,8 +136,8 @@ push-redshift: ## Push Redshift image to registry
 		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
 		--tag $(REDSHIFT_IMAGE):$(VERSION) \
 		--tag $(REDSHIFT_IMAGE):latest \
-		--file Dockerfile.redshift \
-		--push .
+		--file databases/redshift/Dockerfile \
+		--context databases/redshift --push .
 	@echo "✅ Redshift image pushed successfully"
 
 # Test targets
