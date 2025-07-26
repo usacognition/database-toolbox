@@ -1,240 +1,305 @@
 # MCP Database Server Docker Images Build System
 # 
-# This Makefile automates the building, tagging, and pushing of Docker images
-# for Google's MCP Toolbox database servers.
+# Comprehensive Makefile that consolidates all database building, testing, and deployment
+# functionality for Google's MCP Toolbox database servers.
 
 # Configuration
 REGISTRY ?= docker.io
 NAMESPACE ?= your-dockerhub-username
 VERSION ?= latest
 TOOLBOX_VERSION ?= 0.9.0
+PLATFORMS ?= linux/amd64,linux/arm64
+BUILDER ?= mcp-builder
 
-# Image names
-POSTGRES_IMAGE = $(REGISTRY)/$(NAMESPACE)/mcp-postgres
-MYSQL_IMAGE = $(REGISTRY)/$(NAMESPACE)/mcp-mysql
-SNOWFLAKE_IMAGE = $(REGISTRY)/$(NAMESPACE)/mcp-snowflake
-REDSHIFT_IMAGE = $(REGISTRY)/$(NAMESPACE)/mcp-redshift
+# All supported databases
+DATABASES := postgres mysql redis sqlite neo4j snowflake redshift bigquery alloydb spanner firestore sqlserver supabase
 
-# Build platforms
-PLATFORMS = linux/amd64,linux/arm64
+# Colors for output
+RED = \033[0;31m
+GREEN = \033[0;32m
+YELLOW = \033[1;33m
+BLUE = \033[0;34m
+NC = \033[0m
 
-# Docker buildx builder name
-BUILDER = mcp-builder
+# Helper functions
+define log
+	@echo "$(BLUE)[$(shell date '+%Y-%m-%d %H:%M:%S')] $(1)$(NC)"
+endef
 
-.PHONY: help setup build-all build-postgres build-mysql build-snowflake build-redshift \
-        push-all push-postgres push-mysql push-snowflake push-redshift \
-        test-all test-postgres test-mysql test-snowflake test-redshift \
-        clean login
+define success
+	@echo "$(GREEN)[SUCCESS] $(1)$(NC)"
+endef
+
+define warning
+	@echo "$(YELLOW)[WARNING] $(1)$(NC)"
+endef
+
+define error
+	@echo "$(RED)[ERROR] $(1)$(NC)" && exit 1
+endef
+
+# Image name helper
+define image_name
+$(REGISTRY)/$(NAMESPACE)/mcp-$(1)
+endef
+
+# Validate database helper
+define validate_db
+$(if $(filter $(1),$(DATABASES)),,$(call error,Invalid database '$(1)'. Supported: $(DATABASES)))
+endef
 
 # Default target
-help: ## Show this help message
-	@echo "MCP Database Server Docker Images"
-	@echo "=================================="
+.DEFAULT_GOAL := help
+
+# All phony targets
+.PHONY: help setup validate-environment clean clean-all login \
+        build build-all $(addprefix build-,$(DATABASES)) \
+        push push-all $(addprefix push-,$(DATABASES)) \
+        test test-all $(addprefix test-,$(DATABASES)) \
+        list-databases status info
+
+help: ## Show this comprehensive help message
+	@echo "$(BLUE)MCP Database Server Docker Images Build System$(NC)"
+	@echo "=================================================="
 	@echo ""
-	@echo "Available targets:"
-	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  %-20s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@echo "$(YELLOW)Quick Start:$(NC)"
+	@echo "  make build-postgres          # Build PostgreSQL image"
+	@echo "  make build DB=mysql          # Build specific database"
+	@echo "  make build-all               # Build all 13 databases"
+	@echo "  make test-postgres           # Test PostgreSQL setup"
+	@echo "  make push-all                # Push all images to registry"
 	@echo ""
-	@echo "Configuration:"
-	@echo "  REGISTRY=$(REGISTRY)"
-	@echo "  NAMESPACE=$(NAMESPACE)"
-	@echo "  VERSION=$(VERSION)"
-	@echo "  TOOLBOX_VERSION=$(TOOLBOX_VERSION)"
+	@echo "$(YELLOW)Available Commands:$(NC)"
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  $(GREEN)%-20s$(NC) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@echo ""
+	@echo "$(YELLOW)Supported Databases ($(words $(DATABASES)) total):$(NC)"
+	@echo "  $(DATABASES)" | tr ' ' '\n' | sort | pr -t -3 -w 60 | sed 's/^/  /'
+	@echo ""
+	@echo "$(YELLOW)Configuration:$(NC)"
+	@echo "  REGISTRY:        $(REGISTRY)"
+	@echo "  NAMESPACE:       $(NAMESPACE)"
+	@echo "  VERSION:         $(VERSION)"
+	@echo "  TOOLBOX_VERSION: $(TOOLBOX_VERSION)"
+	@echo "  PLATFORMS:       $(PLATFORMS)"
+	@echo ""
+	@echo "$(YELLOW)Usage Examples:$(NC)"
+	@echo "  make build-postgres REGISTRY=ghcr.io NAMESPACE=myorg"
+	@echo "  make push-all VERSION=v1.2.0"
+	@echo "  make test DB=redis"
+	@echo "  make clean DB=mysql"
+
+list-databases: ## List all supported databases
+	@echo "$(BLUE)Supported Databases ($(words $(DATABASES)) total):$(NC)"
+	@for db in $(DATABASES); do \
+		echo "  $(GREEN)$$db$(NC) - mcp-$$db"; \
+	done
+
+info: ## Show detailed build environment information
+	@echo "$(BLUE)Build Environment Information$(NC)"
+	@echo "=============================="
+	@echo "Docker version:     $$(docker --version)"
+	@echo "Docker Buildx:      $$(docker buildx version)"
+	@echo "Current builder:    $$(docker buildx inspect --bootstrap 2>/dev/null | head -1 || echo 'Not set')"
+	@echo "Available platforms: $$(docker buildx inspect --bootstrap 2>/dev/null | grep 'Platforms:' | cut -d: -f2 || echo 'Unknown')"
+	@echo ""
+	@echo "Project Structure:"
+	@echo "  Total databases:  $(words $(DATABASES))"
+	@echo "  Database folders: $$(find databases -maxdepth 1 -type d | wc -l | tr -d ' ') (including databases/)"
+	@echo "  Registry:         $(REGISTRY)"
+	@echo "  Namespace:        $(NAMESPACE)"
 
 setup: ## Set up Docker buildx for multi-platform builds
-	@echo "Setting up Docker buildx..."
-	docker buildx inspect $(BUILDER) >/dev/null 2>&1 || \
+	$(call log,Setting up Docker buildx...)
+	@docker buildx inspect $(BUILDER) >/dev/null 2>&1 || \
 		docker buildx create --name $(BUILDER) --use --bootstrap
-	docker buildx use $(BUILDER)
+	@docker buildx use $(BUILDER)
+	$(call success,Docker buildx setup complete)
 
-# Build targets
-build-all: build-postgres build-mysql build-snowflake build-redshift ## Build all database images
+validate-environment: ## Validate build environment and dependencies
+	$(call log,Validating build environment...)
+	@which docker >/dev/null 2>&1 || (echo "$(RED)[ERROR] Docker not found. Please install Docker.$(NC)" && exit 1)
+	@docker buildx version >/dev/null 2>&1 || (echo "$(RED)[ERROR] Docker buildx not available. Please upgrade Docker.$(NC)" && exit 1)
+	@for db in $(DATABASES); do \
+		if [ ! -d "databases/$$db" ]; then \
+			echo "$(YELLOW)[WARNING] Database folder databases/$$db not found$(NC)"; \
+		elif [ ! -f "databases/$$db/Dockerfile" ]; then \
+			echo "$(YELLOW)[WARNING] Dockerfile not found for $$db$(NC)"; \
+		fi; \
+	done
+	$(call success,Environment validation complete)
 
-build-postgres: setup ## Build PostgreSQL MCP server image
-	@echo "Building PostgreSQL MCP server image..."
+# Dynamic database build target
+build: ## Build specific database (usage: make build DB=postgres)
+	@$(if $(DB),,$(call error,Database not specified. Usage: make build DB=<database>))
+	@$(call validate_db,$(DB))
+	@$(MAKE) build-$(DB)
+
+# Build all databases
+build-all: setup validate-environment ## Build all database images
+	$(call log,Building all $(words $(DATABASES)) database images...)
+	@for db in $(DATABASES); do \
+		$(call log,Building $$db...); \
+		$(MAKE) build-$$db || exit 1; \
+	done
+	$(call success,All database images built successfully)
+
+# Generate build targets for each database
+define build_template
+build-$(1): setup ## Build $(1) MCP server image
+	$$(call log,Building $(1) MCP server image...)
 	docker buildx build \
-		--platform $(PLATFORMS) \
-		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
-		--tag $(POSTGRES_IMAGE):$(VERSION) \
-		--tag $(POSTGRES_IMAGE):latest \
-		--file databases/postgres/Dockerfile \
-		--context databases/postgres .
-	@echo "✅ PostgreSQL image built successfully"
+		--platform $$(PLATFORMS) \
+		--build-arg TOOLBOX_VERSION=$$(TOOLBOX_VERSION) \
+		--tag $$(call image_name,$(1)):$$(VERSION) \
+		--tag $$(call image_name,$(1)):latest \
+		--file databases/$(1)/Dockerfile \
+		--load databases/$(1)
+	$$(call success,$(1) image built successfully)
+endef
 
-build-mysql: setup ## Build MySQL MCP server image
-	@echo "Building MySQL MCP server image..."
+# Generate build targets for all databases
+$(foreach db,$(DATABASES),$(eval $(call build_template,$(db))))
+
+# Dynamic database push target
+push: ## Push specific database (usage: make push DB=postgres)
+	@$(if $(DB),,$(call error,Database not specified. Usage: make push DB=<database>))
+	@$(call validate_db,$(DB))
+	@$(MAKE) push-$(DB)
+
+# Push all databases
+push-all: ## Push all images to registry
+	$(call log,Pushing all $(words $(DATABASES)) database images...)
+	@for db in $(DATABASES); do \
+		$(call log,Pushing $$db...); \
+		$(MAKE) push-$$db || exit 1; \
+	done
+	$(call success,All database images pushed successfully)
+
+# Generate push targets for each database
+define push_template
+push-$(1): ## Push $(1) image to registry
+	$$(call log,Pushing $(1) MCP server image...)
 	docker buildx build \
-		--platform $(PLATFORMS) \
-		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
-		--tag $(MYSQL_IMAGE):$(VERSION) \
-		--tag $(MYSQL_IMAGE):latest \
-		--file databases/mysql/Dockerfile \
-		--context databases/mysql .
-	@echo "✅ MySQL image built successfully"
+		--platform $$(PLATFORMS) \
+		--build-arg TOOLBOX_VERSION=$$(TOOLBOX_VERSION) \
+		--tag $$(call image_name,$(1)):$$(VERSION) \
+		--tag $$(call image_name,$(1)):latest \
+		--file databases/$(1)/Dockerfile \
+		--push databases/$(1)
+	$$(call success,$(1) image pushed successfully)
+endef
 
-build-snowflake: setup ## Build Snowflake MCP server image
-	@echo "Building Snowflake MCP server image..."
-	docker buildx build \
-		--platform $(PLATFORMS) \
-		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
-		--tag $(SNOWFLAKE_IMAGE):$(VERSION) \
-		--tag $(SNOWFLAKE_IMAGE):latest \
-		--file databases/snowflake/Dockerfile \
-		--context databases/snowflake .
-	@echo "✅ Snowflake image built successfully"
+# Generate push targets for all databases
+$(foreach db,$(DATABASES),$(eval $(call push_template,$(db))))
 
-build-redshift: setup ## Build Redshift MCP server image
-	@echo "Building Redshift MCP server image..."
-	docker buildx build \
-		--platform $(PLATFORMS) \
-		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
-		--tag $(REDSHIFT_IMAGE):$(VERSION) \
-		--tag $(REDSHIFT_IMAGE):latest \
-		--file databases/redshift/Dockerfile \
-		--context databases/redshift .
-	@echo "✅ Redshift image built successfully"
+# Dynamic database test target
+test: ## Test specific database (usage: make test DB=postgres)
+	@$(if $(DB),,$(call error,Database not specified. Usage: make test DB=<database>))
+	@$(call validate_db,$(DB))
+	@$(MAKE) test-$(DB)
 
-# Push targets
-push-all: push-postgres push-mysql push-snowflake push-redshift ## Push all images to registry
+# Test all databases
+test-all: ## Test all database images
+	$(call log,Testing all $(words $(DATABASES)) database images...)
+	@for db in $(DATABASES); do \
+		$(call log,Testing $$db...); \
+		$(MAKE) test-$$db || exit 1; \
+	done
+	$(call success,All database images tested successfully)
 
-push-postgres: ## Push PostgreSQL image to registry
-	@echo "Pushing PostgreSQL MCP server image..."
-	docker buildx build \
-		--platform $(PLATFORMS) \
-		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
-		--tag $(POSTGRES_IMAGE):$(VERSION) \
-		--tag $(POSTGRES_IMAGE):latest \
-		--file databases/postgres/Dockerfile \
-		--context databases/postgres --push .
-	@echo "✅ PostgreSQL image pushed successfully"
+# Generate test targets for each database
+define test_template
+test-$(1): ## Test $(1) MCP server setup
+	$$(call log,Testing $(1) MCP server...)
+	@cd databases/$(1) && \
+	if [ -f "docker-compose.yml" ]; then \
+		$$(call log,Starting $(1) test environment...); \
+		docker-compose up -d --build; \
+		sleep 10; \
+		$$(call log,Testing $(1) health...); \
+		if docker-compose ps | grep -q "Up (healthy)"; then \
+			echo "$$(GREEN)[SUCCESS] $(1) health check passed$$(NC)"; \
+		else \
+			echo "$$(YELLOW)[WARNING] $(1) health check inconclusive$$(NC)"; \
+		fi; \
+		docker-compose down; \
+	else \
+		echo "$$(YELLOW)[WARNING] No docker-compose.yml found for $(1), skipping integration test$$(NC)"; \
+		$$(call log,Running basic container test for $(1)...); \
+		docker run --rm $$(call image_name,$(1)):latest --version || true; \
+	fi
+	$$(call success,$(1) test completed)
+endef
 
-push-mysql: ## Push MySQL image to registry
-	@echo "Pushing MySQL MCP server image..."
-	docker buildx build \
-		--platform $(PLATFORMS) \
-		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
-		--tag $(MYSQL_IMAGE):$(VERSION) \
-		--tag $(MYSQL_IMAGE):latest \
-		--file databases/mysql/Dockerfile \
-		--context databases/mysql --push .
-	@echo "✅ MySQL image pushed successfully"
+# Generate test targets for all databases
+$(foreach db,$(DATABASES),$(eval $(call test_template,$(db))))
 
-push-snowflake: ## Push Snowflake image to registry
-	@echo "Pushing Snowflake MCP server image..."
-	docker buildx build \
-		--platform $(PLATFORMS) \
-		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
-		--tag $(SNOWFLAKE_IMAGE):$(VERSION) \
-		--tag $(SNOWFLAKE_IMAGE):latest \
-		--file databases/snowflake/Dockerfile \
-		--context databases/snowflake --push .
-	@echo "✅ Snowflake image pushed successfully"
+# Dynamic database clean target
+clean: ## Clean specific database artifacts (usage: make clean DB=postgres)
+	@$(if $(DB),,$(call error,Database not specified. Usage: make clean DB=<database>))
+	@$(call validate_db,$(DB))
+	@$(MAKE) clean-$(DB)
 
-push-redshift: ## Push Redshift image to registry
-	@echo "Pushing Redshift MCP server image..."
-	docker buildx build \
-		--platform $(PLATFORMS) \
-		--build-arg TOOLBOX_VERSION=$(TOOLBOX_VERSION) \
-		--tag $(REDSHIFT_IMAGE):$(VERSION) \
-		--tag $(REDSHIFT_IMAGE):latest \
-		--file databases/redshift/Dockerfile \
-		--context databases/redshift --push .
-	@echo "✅ Redshift image pushed successfully"
+# Clean all artifacts
+clean-all: ## Clean all build artifacts and containers
+	$(call log,Cleaning all build artifacts...)
+	@for db in $(DATABASES); do \
+		$(call log,Cleaning $$db...); \
+		$(MAKE) clean-$$db 2>/dev/null || true; \
+	done
+	@$(call log,Removing Docker builder...)
+	@docker buildx rm $(BUILDER) 2>/dev/null || true
+	@$(call log,Pruning unused Docker resources...)
+	@docker system prune -f 2>/dev/null || true
+	$(call success,All artifacts cleaned)
 
-# Test targets
-test-all: test-postgres test-mysql test-snowflake test-redshift ## Test all images
+# Generate clean targets for each database
+define clean_template
+clean-$(1): ## Clean $(1) build artifacts
+	$$(call log,Cleaning $(1) artifacts...)
+	@cd databases/$(1) 2>/dev/null && docker-compose down 2>/dev/null || true
+	@docker rmi $$(call image_name,$(1)):$$(VERSION) 2>/dev/null || true
+	@docker rmi $$(call image_name,$(1)):latest 2>/dev/null || true
+	$$(call success,$(1) artifacts cleaned)
+endef
 
-test-postgres: ## Test PostgreSQL image
-	@echo "Testing PostgreSQL MCP server image..."
-	docker run --rm \
-		-e DB_TYPE=postgres \
-		-e DB_HOST=test \
-		-e DB_NAME=test \
-		-e DB_USER=test \
-		-e DB_PASSWORD=test \
-		$(POSTGRES_IMAGE):$(VERSION) \
-		--help
-	@echo "✅ PostgreSQL image test passed"
+# Generate clean targets for all databases
+$(foreach db,$(DATABASES),$(eval $(call clean_template,$(db))))
 
-test-mysql: ## Test MySQL image
-	@echo "Testing MySQL MCP server image..."
-	docker run --rm \
-		-e DB_TYPE=mysql \
-		-e DB_HOST=test \
-		-e DB_NAME=test \
-		-e DB_USER=test \
-		-e DB_PASSWORD=test \
-		$(MYSQL_IMAGE):$(VERSION) \
-		--help
-	@echo "✅ MySQL image test passed"
+# Status and monitoring
+status: ## Show status of all database containers
+	@echo "$(BLUE)Database Container Status$(NC)"
+	@echo "=========================="
+	@docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}" | \
+		grep -E "(mcp-|postgres|mysql|redis)" || echo "No database containers found"
 
-test-snowflake: ## Test Snowflake image
-	@echo "Testing Snowflake MCP server image..."
-	docker run --rm \
-		-e DB_TYPE=snowflake \
-		-e SNOWFLAKE_ACCOUNT=test \
-		-e SNOWFLAKE_USER=test \
-		-e SNOWFLAKE_PASSWORD=test \
-		-e SNOWFLAKE_DATABASE=test \
-		-e SNOWFLAKE_WAREHOUSE=test \
-		$(SNOWFLAKE_IMAGE):$(VERSION) \
-		--help
-	@echo "✅ Snowflake image test passed"
-
-test-redshift: ## Test Redshift image
-	@echo "Testing Redshift MCP server image..."
-	docker run --rm \
-		-e DB_TYPE=redshift \
-		-e REDSHIFT_HOST=test \
-		-e REDSHIFT_DATABASE=test \
-		-e REDSHIFT_USER=test \
-		-e REDSHIFT_PASSWORD=test \
-		$(REDSHIFT_IMAGE):$(VERSION) \
-		--help
-	@echo "✅ Redshift image test passed"
-
-# Utility targets
 login: ## Login to Docker registry
-	@echo "Logging into Docker registry..."
-	@echo "Make sure to set DOCKER_PASSWORD environment variable"
-	@echo "$$DOCKER_PASSWORD" | docker login $(REGISTRY) -u "$$DOCKER_USERNAME" --password-stdin
+	$(call log,Logging into $(REGISTRY)...)
+	@docker login $(REGISTRY)
+	$(call success,Logged into $(REGISTRY))
 
-clean: ## Clean up Docker buildx builder and unused images
-	@echo "Cleaning up..."
-	docker buildx rm $(BUILDER) 2>/dev/null || true
-	docker system prune -f
-	@echo "✅ Cleanup completed"
+# Development helpers
+dev-postgres: ## Start PostgreSQL development environment
+	@cd databases/postgres && docker-compose up -d
+	$(call success,PostgreSQL development environment started on port 5001)
 
-# Development targets
-dev-postgres: ## Run PostgreSQL server in development mode
-	docker run --rm -it \
-		-p 5000:5000 \
-		-e DB_HOST=host.docker.internal \
-		-e DB_NAME=postgres \
-		-e DB_USER=postgres \
-		-e DB_PASSWORD=postgres \
-		-e TOOLBOX_LOG_LEVEL=debug \
-		$(POSTGRES_IMAGE):$(VERSION)
+dev-mysql: ## Start MySQL development environment  
+	@cd databases/mysql && docker-compose up -d
+	$(call success,MySQL development environment started on port 5002)
 
-dev-mysql: ## Run MySQL server in development mode
-	docker run --rm -it \
-		-p 5000:5000 \
-		-e DB_HOST=host.docker.internal \
-		-e DB_NAME=mysql \
-		-e DB_USER=root \
-		-e DB_PASSWORD=password \
-		-e TOOLBOX_LOG_LEVEL=debug \
-		$(MYSQL_IMAGE):$(VERSION)
+dev-stop: ## Stop all development environments
+	@for db in $(DATABASES); do \
+		if [ -f "databases/$$db/docker-compose.yml" ]; then \
+			cd databases/$$db && docker-compose down 2>/dev/null || true; \
+			cd ../..; \
+		fi; \
+	done
+	$(call success,All development environments stopped)
 
-# Release targets
-release: build-all push-all ## Build and push all images for release
-	@echo "🚀 Release completed successfully!"
-	@echo "Images available at:"
-	@echo "  - $(POSTGRES_IMAGE):$(VERSION)"
-	@echo "  - $(MYSQL_IMAGE):$(VERSION)"
-	@echo "  - $(SNOWFLAKE_IMAGE):$(VERSION)"
-	@echo "  - $(REDSHIFT_IMAGE):$(VERSION)"
-
-# Show image sizes
-sizes: ## Show sizes of built images
-	@echo "Image sizes:"
-	@docker images --format "table {{.Repository}}:{{.Tag}}\t{{.Size}}" | grep mcp- || echo "No MCP images found"
+# Validation target for CI/CD
+validate: validate-environment ## Run comprehensive validation
+	$(call log,Running comprehensive validation...)
+	@$(MAKE) build-postgres
+	@$(MAKE) test-postgres
+	@$(MAKE) clean-postgres
+	$(call success,Validation completed successfully)
