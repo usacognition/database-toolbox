@@ -121,7 +121,8 @@ validate_environment() {
 
 build_image() {
     local database="$1"
-    local dockerfile="Dockerfile.${database}"
+    local database_dir="databases/${database}"
+    local dockerfile="${database_dir}/Dockerfile"
     local image_name="${REGISTRY}/${NAMESPACE}/mcp-${database}"
     local build_args="--build-arg TOOLBOX_VERSION=${TOOLBOX_VERSION}"
     
@@ -149,7 +150,7 @@ build_image() {
         docker_cmd+=" --load"
     fi
     
-    docker_cmd+=" ."
+    docker_cmd+=" ${database_dir}"
     
     log "Executing: $docker_cmd"
     eval "$docker_cmd"

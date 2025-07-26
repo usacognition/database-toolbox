@@ -2,7 +2,7 @@ services:
   # PostgreSQL Database
   postgres:
     image: postgres:15-alpine
-    container_name: postgres-db-local
+    container_name: postgres-db-hub
     environment:
       POSTGRES_DB: testdb
       POSTGRES_USER: testuser
@@ -22,14 +22,10 @@ services:
     networks:
       - mcp-network
 
-  # MCP PostgreSQL Server (Built Locally)
+  # MCP PostgreSQL Server (From DockerHub)
   mcp-postgres:
-    build:
-      context: ../../
-      dockerfile: Dockerfile.postgres
-      args:
-        TOOLBOX_VERSION: 0.9.0
-    container_name: mcp-postgres-server-local
+    image: toolbox-images/mcp-postgres:latest
+    container_name: mcp-postgres-server-hub
     environment:
       DB_TYPE: postgres
       DB_HOST: postgres

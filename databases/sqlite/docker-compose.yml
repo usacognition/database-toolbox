@@ -1,0 +1,28 @@
+services:
+  # MCP SQLite Server (Built Locally)
+  mcp-sqlite:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        TOOLBOX_VERSION: 0.9.0
+    container_name: mcp-sqlite-server-local
+    environment:
+      DB_TYPE: sqlite
+      SQLITE_PATH: /data/test.db
+      TOOLBOX_LOG_LEVEL: info
+    ports:
+      - "5004:5000"
+    volumes:
+      - sqlite_data:/data
+    healthcheck:
+      test: ["CMD", "/app/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+volumes:
+  sqlite_data:
+    driver: local
