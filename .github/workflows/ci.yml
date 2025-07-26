@@ -43,7 +43,7 @@ jobs:
           cd databases/${{ matrix.database }}
           if [ -f docker-compose.yml ]; then
             echo "Starting ${{ matrix.database }} services..."
-            docker-compose up -d --build
+            docker compose up -d --build
             echo "Waiting for services to be ready..."
             sleep 30
           else
@@ -56,7 +56,7 @@ jobs:
           cd databases/${{ matrix.database }}
           if [ -f docker-compose.yml ]; then
             # Get the MCP service container
-            MCP_CONTAINER=$(docker-compose ps -q | head -1)
+            MCP_CONTAINER=$(docker compose ps -q | head -1)
             if [ -n "$MCP_CONTAINER" ]; then
               echo "Testing MCP tools/list endpoint..."
               # Test MCP tools/list endpoint
@@ -76,5 +76,5 @@ jobs:
         run: |
           cd databases/${{ matrix.database }}
           if [ -f docker-compose.yml ]; then
-            docker-compose down -v
+            docker compose down -v
           fi
