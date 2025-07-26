@@ -726,12 +726,12 @@ main() {
                 # Use custom YAML configuration with standardized tools
                 set -- "--tools-file" "/app/config/tools.yaml"
                 ;;
-            "mysql")
-                # Use custom YAML configuration with standardized tools
-                set -- "--tools-file" "/app/config/tools.yaml"
+            "cloud-sql-mysql")
+                # Use prebuilt cloud-sql-mysql configuration
                 export MYSQL_HOST="${DB_HOST}"
                 export MYSQL_PORT="${DB_PORT:-3306}"
                 export MYSQL_DATABASE="${DB_NAME}"
+                export MYSQL_USER="${DB_USER}"
                 export MYSQL_PASSWORD="${DB_PASSWORD}"
                 set -- "--prebuilt" "cloud-sql-mysql"
                 ;;

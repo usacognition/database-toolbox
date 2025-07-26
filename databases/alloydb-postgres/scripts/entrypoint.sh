@@ -750,8 +750,8 @@ main() {
             "spanner")
                 set -- "--prebuilt" "spanner"
                 ;;
-            "alloydb")
-                # Set environment variables expected by prebuilt alloydb configuration
+            "alloydb-postgres")
+                # Set environment variables expected by prebuilt alloydb-postgres configuration
                 export POSTGRES_USER="${DB_USER}"
                 export POSTGRES_HOST="${DB_HOST}"
                 export POSTGRES_PORT="${DB_PORT:-5432}"

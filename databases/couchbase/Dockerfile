@@ -1,20 +1,19 @@
-# Supabase MCP Server
+# Redis MCP Server
 FROM alpine:3.19
 
 # Set metadata
 LABEL maintainer="Your Name <your.email@example.com>"
-LABEL description="MCP Toolbox Server for Supabase"
+LABEL description="MCP Toolbox Server for Redis"
 LABEL version="1.0.0"
-LABEL database="supabase"
+LABEL database="redis"
 
-# Install system dependencies including PostgreSQL client (Supabase is PostgreSQL-compatible)
+# Install system dependencies including Python (required for Redis client)
 RUN apk add --no-cache \
     ca-certificates \
     curl \
     bash \
     tzdata \
     tini \
-    postgresql15-client \
     openssl \
     python3 \
     python3-dev \
@@ -31,9 +30,9 @@ RUN addgroup -g 1001 mcp && \
 # Set up application directory
 WORKDIR /app
 
-# Create virtual environment and install PostgreSQL driver and Supabase client
+# Create virtual environment and install Redis Python client
 RUN python3 -m venv /opt/venv && \
-    /opt/venv/bin/pip install --no-cache-dir psycopg2-binary==2.9.9 supabase>=2.0.0
+    /opt/venv/bin/pip install --no-cache-dir redis>=5.0.0 hiredis>=2.2.0
 
 # Download and install MCP Toolbox
 ARG TOOLBOX_VERSION=0.9.0
@@ -68,7 +67,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
 EXPOSE 5000
 
 # Set environment variables
-ENV DB_TYPE=supabase
+ENV DB_TYPE=redis
 ENV TOOLBOX_PORT=5000
 ENV TOOLBOX_LOG_LEVEL=info
 ENV PATH="/opt/venv/bin:$PATH"

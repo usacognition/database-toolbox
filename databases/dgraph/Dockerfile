@@ -1,13 +1,13 @@
-# Snowflake MCP Server
+# Neo4j MCP Server
 FROM alpine:3.19
 
 # Set metadata
 LABEL maintainer="Your Name <your.email@example.com>"
-LABEL description="MCP Toolbox Server for Snowflake"
+LABEL description="MCP Toolbox Server for Neo4j Graph Database"
 LABEL version="1.0.0"
-LABEL database="snowflake"
+LABEL database="neo4j"
 
-# Install system dependencies including Python (required for Snowflake connector)
+# Install system dependencies including Python (required for Neo4j driver)
 RUN apk add --no-cache \
     ca-certificates \
     curl \
@@ -19,7 +19,6 @@ RUN apk add --no-cache \
     python3-dev \
     py3-pip \
     gcc \
-    g++ \
     musl-dev \
     libffi-dev \
     && update-ca-certificates
@@ -31,9 +30,9 @@ RUN addgroup -g 1001 mcp && \
 # Set up application directory
 WORKDIR /app
 
-# Create virtual environment and install Snowflake Python connector
+# Create virtual environment and install Neo4j Python driver
 RUN python3 -m venv /opt/venv && \
-    /opt/venv/bin/pip install --no-cache-dir snowflake-connector-python[pandas]==3.7.0
+    /opt/venv/bin/pip install --no-cache-dir neo4j>=5.14.0
 
 # Download and install MCP Toolbox
 ARG TOOLBOX_VERSION=0.9.0
@@ -68,7 +67,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
 EXPOSE 5000
 
 # Set environment variables
-ENV DB_TYPE=snowflake
+ENV DB_TYPE=neo4j
 ENV TOOLBOX_PORT=5000
 ENV TOOLBOX_LOG_LEVEL=info
 ENV PATH="/opt/venv/bin:$PATH"

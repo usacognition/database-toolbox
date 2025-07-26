@@ -11,8 +11,8 @@ TOOLBOX_VERSION ?= 0.9.0
 PLATFORMS ?= linux/amd64,linux/arm64
 BUILDER ?= mcp-builder
 
-# All supported databases
-DATABASES := postgres mysql redis sqlite neo4j snowflake redshift bigquery alloydb spanner firestore sqlserver supabase
+# All supported databases (matching MCP Toolbox prebuilt configurations)
+DATABASES := postgres mysql sqlite redis neo4j bigquery spanner sqlserver alloydb-postgres cloud-sql-postgres cloud-sql-mysql cloud-sql-mssql bigtable dgraph couchbase
 
 # Colors for output
 RED = \033[0;31m

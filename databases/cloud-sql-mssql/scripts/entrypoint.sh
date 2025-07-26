@@ -735,8 +735,8 @@ main() {
                 export MYSQL_PASSWORD="${DB_PASSWORD}"
                 set -- "--prebuilt" "cloud-sql-mysql"
                 ;;
-            "sqlserver")
-                # Set environment variables expected by prebuilt sqlserver configuration
+            "cloud-sql-mssql")
+                # Set environment variables expected by prebuilt cloud-sql-mssql configuration
                 export SQLSERVER_USER="${DB_USER}"
                 export SQLSERVER_HOST="${DB_HOST}"
                 export SQLSERVER_PORT="${DB_PORT:-1433}"

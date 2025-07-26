@@ -1,13 +1,13 @@
-# Firestore MCP Server
+# BigQuery MCP Server
 FROM alpine:3.19
 
 # Set metadata
 LABEL maintainer="Your Name <your.email@example.com>"
-LABEL description="MCP Toolbox Server for Google Firestore"
+LABEL description="MCP Toolbox Server for Google BigQuery"
 LABEL version="1.0.0"
-LABEL database="firestore"
+LABEL database="bigquery"
 
-# Install system dependencies including Python (required for Firestore client)
+# Install system dependencies including Python (required for BigQuery client)
 RUN apk add --no-cache \
     ca-certificates \
     curl \
@@ -30,9 +30,9 @@ RUN addgroup -g 1001 mcp && \
 # Set up application directory
 WORKDIR /app
 
-# Create virtual environment and install Google Cloud Firestore client library
+# Create virtual environment and install Google Cloud BigQuery client library
 RUN python3 -m venv /opt/venv && \
-    /opt/venv/bin/pip install --no-cache-dir google-cloud-firestore>=2.13.0 google-auth>=2.23.0
+    /opt/venv/bin/pip install --no-cache-dir google-cloud-bigquery>=3.13.0 google-auth>=2.23.0
 
 # Download and install MCP Toolbox
 ARG TOOLBOX_VERSION=0.9.0
@@ -67,7 +67,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
 EXPOSE 5000
 
 # Set environment variables
-ENV DB_TYPE=firestore
+ENV DB_TYPE=bigquery
 ENV TOOLBOX_PORT=5000
 ENV TOOLBOX_LOG_LEVEL=info
 ENV PATH="/opt/venv/bin:$PATH"

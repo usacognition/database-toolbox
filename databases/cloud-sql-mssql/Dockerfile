@@ -1,27 +1,31 @@
-# Redshift MCP Server
+# SQL Server MCP Server
 FROM alpine:3.19
 
 # Set metadata
 LABEL maintainer="Your Name <your.email@example.com>"
-LABEL description="MCP Toolbox Server for Amazon Redshift"
+LABEL description="MCP Toolbox Server for Microsoft SQL Server"
 LABEL version="1.0.0"
-LABEL database="redshift"
+LABEL database="sqlserver"
 
-# Install system dependencies including PostgreSQL client (Redshift is PostgreSQL-compatible)
+# Install system dependencies including ODBC driver for SQL Server
 RUN apk add --no-cache \
     ca-certificates \
     curl \
     bash \
     tzdata \
     tini \
-    postgresql15-client \
     openssl \
     python3 \
     python3-dev \
     py3-pip \
     gcc \
+    g++ \
     musl-dev \
     libffi-dev \
+    unixodbc \
+    unixodbc-dev \
+    freetds \
+    freetds-dev \
     && update-ca-certificates
 
 # Create non-root user for security
@@ -31,9 +35,9 @@ RUN addgroup -g 1001 mcp && \
 # Set up application directory
 WORKDIR /app
 
-# Create virtual environment and install PostgreSQL Python driver (for Redshift compatibility)
+# Create virtual environment and install SQL Server Python driver (using pymssql which works well with FreeTDS)
 RUN python3 -m venv /opt/venv && \
-    /opt/venv/bin/pip install --no-cache-dir psycopg2-binary==2.9.9
+    /opt/venv/bin/pip install --no-cache-dir pymssql>=2.2.8 pyodbc>=4.0.39
 
 # Download and install MCP Toolbox
 ARG TOOLBOX_VERSION=0.9.0
@@ -68,7 +72,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
 EXPOSE 5000
 
 # Set environment variables
-ENV DB_TYPE=redshift
+ENV DB_TYPE=sqlserver
 ENV TOOLBOX_PORT=5000
 ENV TOOLBOX_LOG_LEVEL=info
 ENV PATH="/opt/venv/bin:$PATH"
