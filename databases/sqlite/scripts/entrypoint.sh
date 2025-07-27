@@ -696,14 +696,32 @@ EOF
     log "Configuration generated successfully"
 }
 
+# Function to initialize SQLite database with test data
+init_sqlite_database() {
+    if [[ "${DB_TYPE}" == "sqlite" && -f "/app/init.sql" ]]; then
+        log "Initializing SQLite database with test data..."
+        
+        # Ensure the directory exists
+        mkdir -p "$(dirname "${SQLITE_PATH}")"
+        
+        # Check if database already exists and has tables
+        if sqlite3 "${SQLITE_PATH}" ".tables" 2>/dev/null | grep -q "users"; then
+            log "Database already initialized, skipping initialization"
+        else
+            log "Running initialization script..."
+            sqlite3 "${SQLITE_PATH}" < /app/init.sql
+            log "SQLite database initialized successfully"
+        fi
+    fi
+}
+
 # Function to test database connection
 test_connection() {
     log "Testing database connection..."
     
     # Use a simple timeout for connection test
-    timeout 10 /app/toolbox --tools-file /app/config/tools.yaml --test-connection 2>/dev/null || {
-        log "WARNING: Database connection test failed, but continuing startup..."
-    }
+    # Skip connection test for now as --test-connection flag doesn't exist
+    log "Skipping connection test, proceeding with startup..."
 }
 
 # Main execution
@@ -715,6 +733,9 @@ main() {
     
     # Generate configuration
     generate_config
+    
+    # Initialize database with test data (SQLite only)
+    init_sqlite_database
     
     # Test connection (non-blocking)
     test_connection
@@ -772,7 +793,7 @@ main() {
     
     # Add port configuration
     if [[ "${ENABLE_STDIO:-}" != "true" ]]; then
-        set -- "$@" "--port" "${TOOLBOX_PORT:-5000}"
+        set -- "$@" "--port" "${TOOLBOX_PORT:-5000}" "--address" "0.0.0.0"
     fi
     
     # Add log level

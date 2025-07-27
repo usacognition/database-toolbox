@@ -701,9 +701,8 @@ test_connection() {
     log "Testing database connection..."
     
     # Use a simple timeout for connection test
-    timeout 10 /app/toolbox --tools-file /app/config/tools.yaml --test-connection 2>/dev/null || {
-        log "WARNING: Database connection test failed, but continuing startup..."
-    }
+    # Skip connection test for now as --test-connection flag doesn't exist
+    log "Skipping connection test, proceeding with startup..."
 }
 
 # Main execution
@@ -772,7 +771,7 @@ main() {
     
     # Add port configuration
     if [[ "${ENABLE_STDIO:-}" != "true" ]]; then
-        set -- "$@" "--port" "${TOOLBOX_PORT:-5000}"
+        set -- "$@" "--port" "${TOOLBOX_PORT:-5000}" "--address" "0.0.0.0"
     fi
     
     # Add log level

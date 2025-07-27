@@ -15,6 +15,7 @@ services:
       - "5004:5000"
     volumes:
       - sqlite_data:/data
+      - ./init.sql:/app/init.sql:ro
     healthcheck:
       test: ["CMD", "/app/healthcheck.sh"]
       interval: 30s

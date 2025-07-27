@@ -1,7 +1,7 @@
 services:
   # MCP SQLite Server (From DockerHub)
   mcp-sqlite:
-    image: toolbox-images/mcp-sqlite:latest
+    image: toolbox-images/sqlite:latest
     container_name: mcp-sqlite-server-hub
     environment:
       DB_TYPE: sqlite

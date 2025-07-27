@@ -25,7 +25,7 @@ services:
 
   # MCP MySQL Server (From DockerHub)
   mcp-mysql:
-    image: toolbox-images/mcp-mysql:latest
+    image: toolbox-images/cloud-sql-mysql:latest
     container_name: mcp-mysql-server-hub
     environment:
       DB_TYPE: mysql

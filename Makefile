@@ -8,6 +8,10 @@ REGISTRY ?= docker.io
 NAMESPACE ?= your-dockerhub-username
 VERSION ?= latest
 TOOLBOX_VERSION ?= 0.9.0
+# Platform options:
+# linux/amd64 - Intel/AMD processors (Intel Macs, most PCs)
+# linux/arm64 - ARM processors (Apple Silicon Macs, ARM servers)
+# linux/arm/v7 - 32-bit ARM (Raspberry Pi, older ARM devices)
 PLATFORMS ?= linux/amd64,linux/arm64
 BUILDER ?= mcp-builder
 
@@ -40,7 +44,7 @@ endef
 
 # Image name helper
 define image_name
-$(REGISTRY)/$(NAMESPACE)/mcp-$(1)
+$(REGISTRY)/toolbox-images/$(1)
 endef
 
 # Validate database helper
@@ -153,7 +157,7 @@ build-$(1): setup ## Build $(1) MCP server image
 		--tag $$(call image_name,$(1)):$$(VERSION) \
 		--tag $$(call image_name,$(1)):latest \
 		--file databases/$(1)/Dockerfile \
-		--load databases/$(1)
+		databases/$(1)
 	$$(call success,$(1) image built successfully)
 endef
 
@@ -199,35 +203,19 @@ test: ## Test specific database (usage: make test DB=postgres)
 	@$(MAKE) test-$(DB)
 
 # Test all databases
-test-all: ## Test all database images
-	$(call log,Testing all $(words $(DATABASES)) database images...)
-	@for db in $(DATABASES); do \
-		$(call log,Testing $$db...); \
-		$(MAKE) test-$$db || exit 1; \
-	done
+test-all: ## Test all database images with unified test suite
+	$(call log,Testing all database images...)
+	docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit test-runner
+	docker-compose -f docker-compose.test.yml down -v
 	$(call success,All database images tested successfully)
 
 # Generate test targets for each database
 define test_template
-test-$(1): ## Test $(1) MCP server setup
+test-$(1): ## Test $(1) MCP server with database-specific test suite
 	$$(call log,Testing $(1) MCP server...)
-	@cd databases/$(1) && \
-	if [ -f "docker-compose.yml" ]; then \
-		$$(call log,Starting $(1) test environment...); \
-		docker-compose up -d --build; \
-		sleep 10; \
-		$$(call log,Testing $(1) health...); \
-		if docker-compose ps | grep -q "Up (healthy)"; then \
-			echo "$$(GREEN)[SUCCESS] $(1) health check passed$$(NC)"; \
-		else \
-			echo "$$(YELLOW)[WARNING] $(1) health check inconclusive$$(NC)"; \
-		fi; \
-		docker-compose down; \
-	else \
-		echo "$$(YELLOW)[WARNING] No docker-compose.yml found for $(1), skipping integration test$$(NC)"; \
-		$$(call log,Running basic container test for $(1)...); \
-		docker run --rm $$(call image_name,$(1)):latest --version || true; \
-	fi
+	@docker-compose -f tests/docker-compose.test-$(1).yml down -v 2>/dev/null || true
+	docker-compose -f tests/docker-compose.test-$(1).yml up --build --abort-on-container-exit test-runner
+	docker-compose -f tests/docker-compose.test-$(1).yml down -v
 	$$(call success,$(1) test completed)
 endef
 

@@ -24,7 +24,7 @@ services:
 
   # MCP PostgreSQL Server (From DockerHub)
   mcp-postgres:
-    image: toolbox-images/mcp-postgres:latest
+    image: toolbox-images/cloud-sql-postgres:latest
     container_name: mcp-postgres-server-hub
     environment:
       DB_TYPE: postgres

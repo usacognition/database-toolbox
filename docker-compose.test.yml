@@ -1,0 +1,164 @@
+services:
+  # Test runner container
+  test-runner:
+    build:
+      context: .
+      dockerfile: tests/Dockerfile.test
+    container_name: mcp-test-runner
+    environment:
+      - DATABASE=${DATABASE:-}
+    volumes:
+      - ./tests:/app/tests:ro
+    depends_on:
+      - mcp-postgres
+      - mcp-mysql
+      - mcp-sqlite
+      - mcp-redis
+    networks:
+      - mcp-test-network
+    command: ["python", "/app/test_all.py", "${DATABASE:-}"]
+
+  # PostgreSQL setup
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres-test-db
+    environment:
+      POSTGRES_DB: testdb
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+      - ./databases/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U testuser -d testdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mcp-test-network
+
+  mcp-postgres:
+    build:
+      context: databases/postgres
+      dockerfile: Dockerfile
+    container_name: mcp-postgres
+    environment:
+      DB_TYPE: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: testdb
+      DB_USER: testuser
+      DB_PASSWORD: testpass
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "/app/healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mcp-test-network
+
+  # MySQL setup
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-test-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpass
+    volumes:
+      - mysql_test_data:/var/lib/mysql
+      - ./databases/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "testuser", "-ptestpass"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mcp-test-network
+
+  mcp-mysql:
+    build:
+      context: databases/mysql
+      dockerfile: Dockerfile
+    container_name: mcp-mysql
+    environment:
+      DB_TYPE: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: testdb
+      DB_USER: testuser
+      DB_PASSWORD: testpass
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "/app/healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mcp-test-network
+
+  # SQLite setup
+  mcp-sqlite:
+    build:
+      context: databases/sqlite
+      dockerfile: Dockerfile
+    container_name: mcp-sqlite
+    environment:
+      DB_TYPE: sqlite
+      SQLITE_PATH: /data/test.db
+    volumes:
+      - sqlite_test_data:/data
+    healthcheck:
+      test: ["CMD", "/app/healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mcp-test-network
+
+  # Redis setup
+  redis:
+    image: redis:7-alpine
+    container_name: redis-test-db
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mcp-test-network
+
+  mcp-redis:
+    build:
+      context: databases/redis
+      dockerfile: Dockerfile
+    container_name: mcp-redis
+    environment:
+      DB_TYPE: redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "/app/healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mcp-test-network
+
+volumes:
+  postgres_test_data:
+  mysql_test_data:
+  sqlite_test_data:
+
+networks:
+  mcp-test-network:
+    driver: bridge 

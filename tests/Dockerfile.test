@@ -1,7 +1,7 @@
 FROM python:3.11-slim
 
 LABEL description="MCP Database Server Test Runner"
-LABEL version="1.0.0"
+LABEL version="2.0.0"
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -17,15 +17,15 @@ WORKDIR /app
 COPY tests/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy the unified test script
+COPY tests/test_all.py /app/test_all.py
+RUN chmod +x /app/test_all.py
+
 # Create results directory
 RUN mkdir -p /app/results
 
-# Copy test files (will be mounted in development)
-COPY tests/ /app/tests/
-
 # Set environment variables
 ENV PYTHONPATH=/app
-ENV PYTEST_CURRENT_TEST=""
 
-# Default command
-CMD ["python", "-m", "pytest", "/app/tests", "-v", "--tb=short", "--html=/app/results/report.html", "--self-contained-html"]
+# Default command - run unified test suite
+CMD ["python", "/app/test_all.py"]

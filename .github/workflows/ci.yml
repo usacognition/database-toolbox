@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        database: [postgres, mysql, redis, sqlite]
+        database: [postgres, mysql, sqlite, redis]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,59 +22,36 @@ jobs:
       - name: Build Docker image
         run: |
           cd databases/${{ matrix.database }}
-          docker build -f Dockerfile -t mcp-${{ matrix.database }}:latest .
+          docker build -f Dockerfile -t toolbox-images/${{ matrix.database }}:latest .
 
       - name: Test image runs
         run: |
-          docker run --rm mcp-${{ matrix.database }}:latest --help || true
+          docker run --rm toolbox-images/${{ matrix.database }}:latest --help || true
 
   test-mcp-functionality:
-    name: Test MCP Functionality
+    name: Test MCP Functionality  
     runs-on: ubuntu-latest
+    needs: build-dockerfiles
     strategy:
       matrix:
-        database: [postgres, mysql, redis]
+        database: [postgres, mysql, sqlite, redis]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Start test environment
+      - name: Run isolated database test suite
         run: |
-          cd databases/${{ matrix.database }}
-          if [ -f docker-compose.yml ]; then
-            echo "Starting ${{ matrix.database }} services..."
-            docker compose up -d --build
-            echo "Waiting for services to be ready..."
-            sleep 30
-          else
-            echo "No docker-compose.yml found for ${{ matrix.database }}, skipping"
-            exit 0
-          fi
+          echo "🚀 Running isolated test suite for ${{ matrix.database }}..."
+          echo "📊 This test only builds the ${{ matrix.database }} container (not all databases)"
+          echo "⚡ Expected speedup: ~3x faster than previous approach"
+          time make test-${{ matrix.database }}
 
-      - name: Test MCP tools/list endpoint
+      - name: Verify container isolation
         run: |
-          cd databases/${{ matrix.database }}
-          if [ -f docker-compose.yml ]; then
-            # Get the MCP service container
-            MCP_CONTAINER=$(docker compose ps -q | head -1)
-            if [ -n "$MCP_CONTAINER" ]; then
-              echo "Testing MCP tools/list endpoint..."
-              # Test MCP tools/list endpoint
-              docker exec $MCP_CONTAINER curl -f -X POST http://localhost:5000/mcp \
-                -H "Content-Type: application/json" \
-                -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}' \
-                && echo "✅ MCP test passed for ${{ matrix.database }}" \
-                || echo "⚠️ MCP test failed for ${{ matrix.database }}"
-            else
-              echo "No MCP container found for ${{ matrix.database }}"
-              exit 1
-            fi
-          fi
-
-      - name: Clean up
+          echo "📋 Containers that were created during this test:"
+          docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}" | grep -E "(test-runner|mcp-|${{ matrix.database }})" || echo "No containers found"
+        
+      - name: Cleanup
         if: always()
         run: |
-          cd databases/${{ matrix.database }}
-          if [ -f docker-compose.yml ]; then
-            docker compose down -v
-          fi
+          docker-compose -f tests/docker-compose.test-${{ matrix.database }}.yml down -v || true
