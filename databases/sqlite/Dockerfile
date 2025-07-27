@@ -31,8 +31,8 @@ RUN addgroup -g 1001 mcp && \
 # Set up application directory
 WORKDIR /app
 
-# Create directory for SQLite databases
-RUN mkdir -p /app/data && chown mcp:mcp /app/data
+# Create directories for SQLite databases and config
+RUN mkdir -p /app/config /app/data /app/logs && chown -R mcp:mcp /app/config /app/data /app/logs
 
 # Python already includes sqlite3 module, no additional packages needed
 
@@ -46,7 +46,7 @@ RUN case ${TARGETPLATFORM} in \
     esac && \
     curl -L -o toolbox "https://storage.googleapis.com/genai-toolbox/v${TOOLBOX_VERSION}/${ARCH}/toolbox" && \
     chmod +x toolbox && \
-    mv toolbox /usr/local/bin/mcp-toolbox
+    chown mcp:mcp toolbox
 
 # Copy scripts
 COPY scripts/entrypoint.sh /app/scripts/entrypoint.sh

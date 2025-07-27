@@ -44,7 +44,7 @@ RUN case ${TARGETPLATFORM} in \
     esac && \
     curl -L -o toolbox "https://storage.googleapis.com/genai-toolbox/v${TOOLBOX_VERSION}/${ARCH}/toolbox" && \
     chmod +x toolbox && \
-    mv toolbox /usr/local/bin/mcp-toolbox
+    chown mcp:mcp toolbox
 
 # Copy scripts
 COPY scripts/entrypoint.sh /app/scripts/entrypoint.sh
@@ -52,6 +52,9 @@ COPY scripts/healthcheck.sh /app/scripts/healthcheck.sh
 
 # Make scripts executable
 RUN chmod +x /app/scripts/entrypoint.sh /app/scripts/healthcheck.sh
+
+# Create required directories
+RUN mkdir -p /app/config /app/data /app/logs
 
 # Set ownership
 RUN chown -R mcp:mcp /app
