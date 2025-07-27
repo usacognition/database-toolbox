@@ -2,11 +2,11 @@ services:
   # Test runner container for sqlite
   test-runner:
     build:
-      context: ..
+      context: .
       dockerfile: tests/Dockerfile.test
     container_name: mcp-test-runner-sqlite
     volumes:
-      - ./:/app/tests:ro
+      - ./tests:/app/tests:ro
     depends_on:
       - mcp-sqlite
     networks:
@@ -16,7 +16,7 @@ services:
   # SQLite setup
   mcp-sqlite:
     build:
-      context: ../databases/sqlite
+      context: databases/sqlite
       dockerfile: Dockerfile
     image: tests-mcp-sqlite
     container_name: mcp-sqlite

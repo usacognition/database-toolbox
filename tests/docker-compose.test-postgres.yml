@@ -2,11 +2,11 @@ services:
   # Test runner container for postgres
   test-runner:
     build:
-      context: ..
+      context: .
       dockerfile: tests/Dockerfile.test
     container_name: mcp-test-runner-postgres
     volumes:
-      - ./:/app/tests:ro
+      - ./tests:/app/tests:ro
     depends_on:
       - mcp-postgres
     networks:
@@ -35,7 +35,7 @@ services:
 
   mcp-postgres:
     build:
-      context: ../databases/postgres
+      context: databases/postgres
       dockerfile: Dockerfile
     image: tests-mcp-postgres
     container_name: mcp-postgres

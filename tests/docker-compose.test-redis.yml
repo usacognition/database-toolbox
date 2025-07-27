@@ -2,11 +2,11 @@ services:
   # Test runner container for redis
   test-runner:
     build:
-      context: ..
+      context: .
       dockerfile: tests/Dockerfile.test
     container_name: mcp-test-runner-redis
     volumes:
-      - ./:/app/tests:ro
+      - ./tests:/app/tests:ro
     depends_on:
       - mcp-redis
     networks:
@@ -28,7 +28,7 @@ services:
 
   mcp-redis:
     build:
-      context: ../databases/redis
+      context: databases/redis
       dockerfile: Dockerfile
     image: tests-mcp-redis
     container_name: mcp-redis

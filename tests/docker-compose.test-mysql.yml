@@ -2,11 +2,11 @@ services:
   # Test runner container for mysql
   test-runner:
     build:
-      context: ..
+      context: .
       dockerfile: tests/Dockerfile.test
     container_name: mcp-test-runner-mysql
     volumes:
-      - ./:/app/tests:ro
+      - ./tests:/app/tests:ro
     depends_on:
       - mcp-mysql
     networks:
@@ -36,7 +36,7 @@ services:
 
   mcp-mysql:
     build:
-      context: ../databases/mysql
+      context: databases/mysql
       dockerfile: Dockerfile
     image: tests-mcp-mysql
     container_name: mcp-mysql
