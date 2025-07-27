@@ -205,17 +205,17 @@ test: ## Test specific database (usage: make test DB=postgres)
 # Test all databases
 test-all: ## Test all database images with unified test suite
 	$(call log,Testing all database images...)
-	docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit test-runner
-	docker-compose -f docker-compose.test.yml down -v
+	docker compose -f docker-compose.test.yml up --build --abort-on-container-exit test-runner
+	docker compose -f docker-compose.test.yml down -v
 	$(call success,All database images tested successfully)
 
 # Generate test targets for each database
 define test_template
 test-$(1): ## Test $(1) MCP server with database-specific test suite
 	$$(call log,Testing $(1) MCP server...)
-	@docker-compose -f tests/docker-compose.test-$(1).yml down -v 2>/dev/null || true
-	docker-compose -f tests/docker-compose.test-$(1).yml up --build --abort-on-container-exit test-runner
-	docker-compose -f tests/docker-compose.test-$(1).yml down -v
+	@docker compose -f tests/docker-compose.test-$(1).yml down -v 2>/dev/null || true
+	docker compose -f tests/docker-compose.test-$(1).yml up --build --abort-on-container-exit test-runner
+	docker compose -f tests/docker-compose.test-$(1).yml down -v
 	$$(call success,$(1) test completed)
 endef
 

@@ -54,4 +54,4 @@ jobs:
       - name: Cleanup
         if: always()
         run: |
-          docker-compose -f tests/docker-compose.test-${{ matrix.database }}.yml down -v || true
+          docker compose -f tests/docker-compose.test-${{ matrix.database }}.yml down -v || true
