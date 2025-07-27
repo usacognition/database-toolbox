@@ -30,6 +30,7 @@ services:
     build:
       context: ../databases/redis
       dockerfile: Dockerfile
+    image: tests-mcp-redis
     container_name: mcp-redis
     environment:
       DB_TYPE: redis

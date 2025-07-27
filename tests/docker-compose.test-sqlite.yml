@@ -18,6 +18,7 @@ services:
     build:
       context: ../databases/sqlite
       dockerfile: Dockerfile
+    image: tests-mcp-sqlite
     container_name: mcp-sqlite
     environment:
       DB_TYPE: sqlite

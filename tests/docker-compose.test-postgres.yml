@@ -37,6 +37,7 @@ services:
     build:
       context: ../databases/postgres
       dockerfile: Dockerfile
+    image: tests-mcp-postgres
     container_name: mcp-postgres
     environment:
       DB_TYPE: postgres

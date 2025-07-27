@@ -38,6 +38,7 @@ services:
     build:
       context: ../databases/mysql
       dockerfile: Dockerfile
+    image: tests-mcp-mysql
     container_name: mcp-mysql
     environment:
       DB_TYPE: mysql
