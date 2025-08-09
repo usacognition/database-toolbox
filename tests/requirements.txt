@@ -1,2 +1,0 @@
-# Minimal dependencies for unified MCP test suite
-requests>=2.31.0 
