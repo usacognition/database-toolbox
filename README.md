@@ -80,7 +80,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "ALLOYDB_PROJECT=my-project",
         "-e", "ALLOYDB_REGION=us-central1", 
         "-e", "ALLOYDB_CLUSTER=my-cluster",
@@ -107,9 +106,6 @@ docker run --rm -d \
 | `ALLOYDB_DATABASE` | Yes | Database name | - | `mydb` |
 | `ALLOYDB_USER` | Yes | Database username | - | `postgres` |
 | `ALLOYDB_PASSWORD` | Yes | Database password | - | `your-password` |
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all AlloyDB-specific tools, including query execution, schema inspection, and AI-powered natural language capabilities.
 
 ---
 
@@ -139,7 +135,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "BIGQUERY_PROJECT=my-project",
         "-e", "BIGQUERY_DATASET=my_dataset",
         "-v", "/path/to/service-account.json:/creds/sa.json",
@@ -162,9 +157,6 @@ docker run --rm -d \
 | `GOOGLE_APPLICATION_CREDENTIALS` | Yes* | Path to service account JSON | - | `/creds/sa.json` |
 
 *Either provide `GOOGLE_APPLICATION_CREDENTIALS` or ensure the container has access to GCP credentials through other means.
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all BigQuery-specific tools, including SQL execution, dataset management, and table operations.
 
 ---
 
@@ -195,7 +187,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "BIGTABLE_PROJECT=my-project",
         "-e", "BIGTABLE_INSTANCE=my-instance",
         "-e", "BIGTABLE_TABLE=my-table",
@@ -217,9 +208,6 @@ docker run --rm -d \
 | `BIGTABLE_INSTANCE` | Yes | Bigtable instance ID | - | `my-instance` |
 | `BIGTABLE_TABLE` | Yes | Bigtable table name | - | `my-table` |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Yes* | Path to service account JSON | - | `/creds/sa.json` |
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all Bigtable-specific tools, including data operations and table management.
 
 ---
 
@@ -251,7 +239,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "CLOUDSQL_MYSQL_PROJECT=my-project",
         "-e", "CLOUDSQL_MYSQL_REGION=us-central1",
         "-e", "CLOUDSQL_MYSQL_INSTANCE=my-instance",
@@ -276,9 +263,6 @@ docker run --rm -d \
 | `CLOUDSQL_MYSQL_DATABASE` | Yes | Database name | - | `mydb` |
 | `CLOUDSQL_MYSQL_USER` | Yes | Database username | - | `root` |
 | `CLOUDSQL_MYSQL_PASSWORD` | Yes | Database password | - | `your-password` |
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all Cloud SQL MySQL-specific tools, including query execution and schema management.
 
 ---
 
@@ -310,7 +294,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "CLOUDSQL_POSTGRES_PROJECT=my-project",
         "-e", "CLOUDSQL_POSTGRES_REGION=us-central1",
         "-e", "CLOUDSQL_POSTGRES_INSTANCE=my-instance",
@@ -335,9 +318,6 @@ docker run --rm -d \
 | `CLOUDSQL_POSTGRES_DATABASE` | Yes | Database name | - | `mydb` |
 | `CLOUDSQL_POSTGRES_USER` | Yes | Database username | - | `postgres` |
 | `CLOUDSQL_POSTGRES_PASSWORD` | Yes | Database password | - | `your-password` |
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all Cloud SQL PostgreSQL-specific tools, including query execution and schema management.
 
 ---
 
@@ -369,7 +349,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "CLOUDSQL_SQLSERVER_PROJECT=my-project",
         "-e", "CLOUDSQL_SQLSERVER_REGION=us-central1",
         "-e", "CLOUDSQL_SQLSERVER_INSTANCE=my-instance",
@@ -394,9 +373,6 @@ docker run --rm -d \
 | `CLOUDSQL_SQLSERVER_DATABASE` | Yes | Database name | - | `mydb` |
 | `CLOUDSQL_SQLSERVER_USER` | Yes | Database username | - | `sqlserver` |
 | `CLOUDSQL_SQLSERVER_PASSWORD` | Yes | Database password | - | `your-password` |
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all Cloud SQL SQL Server-specific tools, including query execution and schema management.
 
 ---
 
@@ -426,7 +402,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "COUCHBASE_HOST=localhost",
         "-e", "COUCHBASE_BUCKET=my-bucket",
         "-e", "COUCHBASE_USERNAME=Administrator",
@@ -448,9 +423,6 @@ docker run --rm -d \
 | `COUCHBASE_BUCKET` | Yes | Bucket name | - | `my-bucket` |
 | `COUCHBASE_USERNAME` | Yes | Username | - | `Administrator` |
 | `COUCHBASE_PASSWORD` | Yes | Password | - | `your-password` |
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all Couchbase-specific tools, including document operations and bucket management.
 
 ---
 
@@ -480,7 +452,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "DATAPLEX_PROJECT=my-project",
         "-e", "DATAPLEX_LOCATION=us-central1",
         "-v", "/path/to/service-account.json:/creds/sa.json",
@@ -500,9 +471,6 @@ docker run --rm -d \
 | `DATAPLEX_PROJECT` | Yes | GCP project ID | - | `my-project` |
 | `DATAPLEX_LOCATION` | Yes | Dataplex location | - | `us-central1` |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Yes* | Path to service account JSON | - | `/creds/sa.json` |
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all Dataplex-specific tools, including entry lookup and search capabilities.
 
 ---
 
@@ -530,7 +498,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "DGRAPH_HOST=localhost",
         "-e", "DGRAPH_PORT=9080",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
@@ -548,9 +515,6 @@ docker run --rm -d \
 | `DGRAPH_HOST` | Yes | Dgraph host | - | `localhost` |
 | `DGRAPH_PORT` | No | Dgraph gRPC port | `9080` | `9080` |
 | `DGRAPH_API_KEY` | No | API key if using Dgraph Cloud | - | `your-api-key` |
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all Dgraph-specific tools, including DQL query execution and schema management.
 
 ---
 
@@ -580,7 +544,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "FIRESTORE_PROJECT=my-project",
         "-e", "FIRESTORE_DATABASE=(default)",
         "-v", "/path/to/service-account.json:/creds/sa.json",
@@ -600,9 +563,6 @@ docker run --rm -d \
 | `FIRESTORE_PROJECT` | Yes | GCP project ID | - | `my-project` |
 | `FIRESTORE_DATABASE` | No | Database ID | `(default)` | `(default)` |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Yes* | Path to service account JSON | - | `/creds/sa.json` |
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all Firestore-specific tools, including document operations, collection management, and query capabilities.
 
 ---
 
@@ -631,7 +591,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "LOOKER_BASE_URL=https://mycompany.looker.com",
         "-e", "LOOKER_CLIENT_ID=your-client-id",
         "-e", "LOOKER_CLIENT_SECRET=your-client-secret",
@@ -646,7 +605,7 @@ docker run --rm -d \
 
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|  
+|----------|----------|-------------|---------|---------|
 | `LOOKER_BASE_URL` | Yes | Looker instance URL | - | `https://mycompany.looker.com` |
 | `LOOKER_CLIENT_ID` | Yes | API client ID | - | `your-client-id` |
 | `LOOKER_CLIENT_SECRET` | Yes | API client secret | - | `your-client-secret` |
@@ -682,7 +641,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "MONGODB_URI=mongodb://localhost:27017",
         "-e", "MONGODB_DATABASE=mydb",
         "-e", "MONGODB_USERNAME=admin",
@@ -736,7 +694,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "MYSQL_HOST=localhost",
         "-e", "MYSQL_DATABASE=mydb",
         "-e", "MYSQL_USER=root",
@@ -753,7 +710,7 @@ docker run --rm -d \
 
 ### Environment Variables
 | Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|  
+|----------|----------|-------------|---------|---------|
 | `MYSQL_HOST` | Yes | MySQL host | - | `localhost` |
 | `MYSQL_PORT` | No | MySQL port | `3306` | `3306` |
 | `MYSQL_DATABASE` | Yes | Database name | - | `mydb` |
@@ -791,7 +748,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "NEO4J_URI=bolt://localhost:7687",
         "-e", "NEO4J_USERNAME=neo4j",
         "-e", "NEO4J_PASSWORD=your-password",
@@ -845,7 +801,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "POSTGRES_HOST=localhost",
         "-e", "POSTGRES_DATABASE=mydb",
         "-e", "POSTGRES_USER=postgres",
@@ -900,7 +855,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "REDIS_HOST=localhost",
         "-e", "REDIS_PORT=6379",
         "-e", "REDIS_PASSWORD=your-password",
@@ -954,7 +908,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "SPANNER_PROJECT=my-project",
         "-e", "SPANNER_INSTANCE=my-instance",
         "-e", "SPANNER_DATABASE=mydb",
@@ -1009,7 +962,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "SQLSERVER_HOST=localhost",
         "-e", "SQLSERVER_DATABASE=mydb",
         "-e", "SQLSERVER_USER=sa",
@@ -1063,7 +1015,7 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
+
         "-v", "/path/to/mydb.sqlite:/data/mydb.sqlite",
         "-e", "SQLITE_FILE=/data/mydb.sqlite",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
@@ -1113,7 +1065,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "TIDB_HOST=localhost",
         "-e", "TIDB_DATABASE=mydb",
         "-e", "TIDB_USER=root",
@@ -1167,7 +1118,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--pull", "always",
         "-e", "VALKEY_HOST=localhost",
         "-e", "VALKEY_PORT=6379",
         "-e", "VALKEY_PASSWORD=your-password",
@@ -1193,41 +1143,6 @@ docker run --rm -d \
 The `--prebuilt` flag automatically loads all Valkey-specific tools, including key-value operations and server management.
 
 ---
-
-## 🛡️ Security Best Practices
-
-### Use Environment Files
-Instead of passing sensitive credentials directly in the command line, use environment files:
-
-```bash
-# Create .env file
-cat > .env << EOF
-POSTGRES_HOST=localhost
-POSTGRES_DATABASE=mydb
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=your-secure-password
-EOF
-
-# Use in MCP config
-{
-  "mcpServers": {
-    "postgres": {
-      "command": "docker",
-      "args": [
-        "run", "--rm", "-i",
-        "--pull", "always",
-        "--env-file", ".env",
-        "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-        "--source", "postgres",
-        "--prebuilt"
-      ]
-    }
-  }
-}
-```
-
-### Use Docker Secrets
-For production environments, consider using Docker secrets or a secret management service.
 
 ## 📚 Additional Resources
 
