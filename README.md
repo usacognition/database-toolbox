@@ -41,6 +41,7 @@ Each database configuration runs this image with the appropriate source type and
 | [Neo4j](#neo4j) | Graph | Graph database management system |
 | [PostgreSQL](#postgresql) | SQL | Open-source object-relational database |
 | [Redis](#redis) | Cache/NoSQL | In-memory data structure store |
+| [Redshift](#redshift) | Analytics | Amazon's data warehouse service |
 | [Spanner](#spanner) | SQL | Globally distributed relational database |
 | [SQL Server](#sql-server) | SQL | Microsoft relational database |
 | [SQLite](#sqlite) | SQL | Lightweight file-based database |
@@ -80,17 +81,26 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "ALLOYDB_PROJECT=my-project",
-        "-e", "ALLOYDB_REGION=us-central1", 
-        "-e", "ALLOYDB_CLUSTER=my-cluster",
-        "-e", "ALLOYDB_INSTANCE=my-instance",
-        "-e", "ALLOYDB_DATABASE=mydb",
-        "-e", "ALLOYDB_USER=postgres",
-        "-e", "ALLOYDB_PASSWORD=your-password",
+        "-e", "ALLOYDB_PROJECT",
+        "-e", "ALLOYDB_REGION", 
+        "-e", "ALLOYDB_CLUSTER",
+        "-e", "ALLOYDB_INSTANCE",
+        "-e", "ALLOYDB_DATABASE",
+        "-e", "ALLOYDB_USER",
+        "-e", "ALLOYDB_PASSWORD",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "alloydb",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "ALLOYDB_PROJECT": "my-project",
+        "ALLOYDB_REGION": "us-central1",
+        "ALLOYDB_CLUSTER": "my-cluster",
+        "ALLOYDB_INSTANCE": "my-instance",
+        "ALLOYDB_DATABASE": "mydb",
+        "ALLOYDB_USER": "postgres",
+        "ALLOYDB_PASSWORD": "your-password"
+      }
     }
   }
 }
@@ -135,14 +145,19 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "BIGQUERY_PROJECT=my-project",
-        "-e", "BIGQUERY_DATASET=my_dataset",
-        "-v", "/path/to/service-account.json:/creds/sa.json",
+        "-e", "BIGQUERY_PROJECT",
+        "-e", "BIGQUERY_DATASET",
+        "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
         "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "bigquery",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "BIGQUERY_PROJECT": "my-project",
+        "BIGQUERY_DATASET": "my_dataset",
+        "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/service-account.json"
+      }
     }
   }
 }
@@ -187,15 +202,21 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "BIGTABLE_PROJECT=my-project",
-        "-e", "BIGTABLE_INSTANCE=my-instance",
-        "-e", "BIGTABLE_TABLE=my-table",
-        "-v", "/path/to/service-account.json:/creds/sa.json",
+        "-e", "BIGTABLE_PROJECT",
+        "-e", "BIGTABLE_INSTANCE",
+        "-e", "BIGTABLE_TABLE",
+        "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
         "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "bigtable",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "BIGTABLE_PROJECT": "my-project",
+        "BIGTABLE_INSTANCE": "my-instance",
+        "BIGTABLE_TABLE": "my-table",
+        "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/service-account.json"
+      }
     }
   }
 }
@@ -239,16 +260,24 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "CLOUDSQL_MYSQL_PROJECT=my-project",
-        "-e", "CLOUDSQL_MYSQL_REGION=us-central1",
-        "-e", "CLOUDSQL_MYSQL_INSTANCE=my-instance",
-        "-e", "CLOUDSQL_MYSQL_DATABASE=mydb",
-        "-e", "CLOUDSQL_MYSQL_USER=root",
-        "-e", "CLOUDSQL_MYSQL_PASSWORD=your-password",
+        "-e", "CLOUDSQL_MYSQL_PROJECT",
+        "-e", "CLOUDSQL_MYSQL_REGION",
+        "-e", "CLOUDSQL_MYSQL_INSTANCE",
+        "-e", "CLOUDSQL_MYSQL_DATABASE",
+        "-e", "CLOUDSQL_MYSQL_USER",
+        "-e", "CLOUDSQL_MYSQL_PASSWORD",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "cloud-sql-mysql",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "CLOUDSQL_MYSQL_PROJECT": "my-project",
+        "CLOUDSQL_MYSQL_REGION": "us-central1",
+        "CLOUDSQL_MYSQL_INSTANCE": "my-instance",
+        "CLOUDSQL_MYSQL_DATABASE": "mydb",
+        "CLOUDSQL_MYSQL_USER": "root",
+        "CLOUDSQL_MYSQL_PASSWORD": "your-password"
+      }
     }
   }
 }
@@ -294,16 +323,24 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "CLOUDSQL_POSTGRES_PROJECT=my-project",
-        "-e", "CLOUDSQL_POSTGRES_REGION=us-central1",
-        "-e", "CLOUDSQL_POSTGRES_INSTANCE=my-instance",
-        "-e", "CLOUDSQL_POSTGRES_DATABASE=mydb",
-        "-e", "CLOUDSQL_POSTGRES_USER=postgres",
-        "-e", "CLOUDSQL_POSTGRES_PASSWORD=your-password",
+        "-e", "CLOUDSQL_POSTGRES_PROJECT",
+        "-e", "CLOUDSQL_POSTGRES_REGION",
+        "-e", "CLOUDSQL_POSTGRES_INSTANCE",
+        "-e", "CLOUDSQL_POSTGRES_DATABASE",
+        "-e", "CLOUDSQL_POSTGRES_USER",
+        "-e", "CLOUDSQL_POSTGRES_PASSWORD",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "cloud-sql-postgres",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "CLOUDSQL_POSTGRES_PROJECT": "my-project",
+        "CLOUDSQL_POSTGRES_REGION": "us-central1",
+        "CLOUDSQL_POSTGRES_INSTANCE": "my-instance",
+        "CLOUDSQL_POSTGRES_DATABASE": "mydb",
+        "CLOUDSQL_POSTGRES_USER": "postgres",
+        "CLOUDSQL_POSTGRES_PASSWORD": "your-password"
+      }
     }
   }
 }
@@ -349,16 +386,24 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "CLOUDSQL_SQLSERVER_PROJECT=my-project",
-        "-e", "CLOUDSQL_SQLSERVER_REGION=us-central1",
-        "-e", "CLOUDSQL_SQLSERVER_INSTANCE=my-instance",
-        "-e", "CLOUDSQL_SQLSERVER_DATABASE=mydb",
-        "-e", "CLOUDSQL_SQLSERVER_USER=sqlserver",
-        "-e", "CLOUDSQL_SQLSERVER_PASSWORD=your-password",
+        "-e", "CLOUDSQL_SQLSERVER_PROJECT",
+        "-e", "CLOUDSQL_SQLSERVER_REGION",
+        "-e", "CLOUDSQL_SQLSERVER_INSTANCE",
+        "-e", "CLOUDSQL_SQLSERVER_DATABASE",
+        "-e", "CLOUDSQL_SQLSERVER_USER",
+        "-e", "CLOUDSQL_SQLSERVER_PASSWORD",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "cloud-sql-mssql",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "CLOUDSQL_SQLSERVER_PROJECT": "my-project",
+        "CLOUDSQL_SQLSERVER_REGION": "us-central1",
+        "CLOUDSQL_SQLSERVER_INSTANCE": "my-instance",
+        "CLOUDSQL_SQLSERVER_DATABASE": "mydb",
+        "CLOUDSQL_SQLSERVER_USER": "sqlserver",
+        "CLOUDSQL_SQLSERVER_PASSWORD": "your-password"
+      }
     }
   }
 }
@@ -402,14 +447,20 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "COUCHBASE_HOST=localhost",
-        "-e", "COUCHBASE_BUCKET=my-bucket",
-        "-e", "COUCHBASE_USERNAME=Administrator",
-        "-e", "COUCHBASE_PASSWORD=your-password",
+        "-e", "COUCHBASE_HOST",
+        "-e", "COUCHBASE_BUCKET",
+        "-e", "COUCHBASE_USERNAME",
+        "-e", "COUCHBASE_PASSWORD",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "couchbase",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "COUCHBASE_HOST": "localhost",
+        "COUCHBASE_BUCKET": "my-bucket",
+        "COUCHBASE_USERNAME": "Administrator",
+        "COUCHBASE_PASSWORD": "your-password"
+      }
     }
   }
 }
@@ -452,14 +503,19 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "DATAPLEX_PROJECT=my-project",
-        "-e", "DATAPLEX_LOCATION=us-central1",
-        "-v", "/path/to/service-account.json:/creds/sa.json",
+        "-e", "DATAPLEX_PROJECT",
+        "-e", "DATAPLEX_LOCATION",
+        "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
         "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "dataplex",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "DATAPLEX_PROJECT": "my-project",
+        "DATAPLEX_LOCATION": "us-central1",
+        "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/service-account.json"
+      }
     }
   }
 }
@@ -498,12 +554,16 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "DGRAPH_HOST=localhost",
-        "-e", "DGRAPH_PORT=9080",
+        "-e", "DGRAPH_HOST",
+        "-e", "DGRAPH_PORT",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "dgraph",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "DGRAPH_HOST": "localhost",
+        "DGRAPH_PORT": "9080"
+      }
     }
   }
 }
@@ -544,14 +604,19 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "FIRESTORE_PROJECT=my-project",
-        "-e", "FIRESTORE_DATABASE=(default)",
-        "-v", "/path/to/service-account.json:/creds/sa.json",
+        "-e", "FIRESTORE_PROJECT",
+        "-e", "FIRESTORE_DATABASE",
+        "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
         "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "firestore",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "FIRESTORE_PROJECT": "my-project",
+        "FIRESTORE_DATABASE": "(default)",
+        "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/service-account.json"
+      }
     }
   }
 }
@@ -591,13 +656,18 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "LOOKER_BASE_URL=https://mycompany.looker.com",
-        "-e", "LOOKER_CLIENT_ID=your-client-id",
-        "-e", "LOOKER_CLIENT_SECRET=your-client-secret",
+        "-e", "LOOKER_BASE_URL",
+        "-e", "LOOKER_CLIENT_ID",
+        "-e", "LOOKER_CLIENT_SECRET",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "looker",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "LOOKER_BASE_URL": "https://mycompany.looker.com",
+        "LOOKER_CLIENT_ID": "your-client-id",
+        "LOOKER_CLIENT_SECRET": "your-client-secret"
+      }
     }
   }
 }
@@ -641,14 +711,20 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "MONGODB_URI=mongodb://localhost:27017",
-        "-e", "MONGODB_DATABASE=mydb",
-        "-e", "MONGODB_USERNAME=admin",
-        "-e", "MONGODB_PASSWORD=your-password",
+        "-e", "MONGODB_URI",
+        "-e", "MONGODB_DATABASE",
+        "-e", "MONGODB_USERNAME",
+        "-e", "MONGODB_PASSWORD",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "mongodb",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "MONGODB_URI": "mongodb://localhost:27017",
+        "MONGODB_DATABASE": "mydb",
+        "MONGODB_USERNAME": "admin",
+        "MONGODB_PASSWORD": "your-password"
+      }
     }
   }
 }
@@ -694,15 +770,22 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "MYSQL_HOST=localhost",
-        "-e", "MYSQL_DATABASE=mydb",
-        "-e", "MYSQL_USER=root",
-        "-e", "MYSQL_PASSWORD=your-password",
-        "-e", "MYSQL_PORT=3306",
+        "-e", "MYSQL_HOST",
+        "-e", "MYSQL_DATABASE",
+        "-e", "MYSQL_USER",
+        "-e", "MYSQL_PASSWORD",
+        "-e", "MYSQL_PORT",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "mysql",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "MYSQL_HOST": "localhost",
+        "MYSQL_DATABASE": "mydb",
+        "MYSQL_USER": "root",
+        "MYSQL_PASSWORD": "your-password",
+        "MYSQL_PORT": "3306"
+      }
     }
   }
 }
@@ -748,14 +831,20 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "NEO4J_URI=bolt://localhost:7687",
-        "-e", "NEO4J_USERNAME=neo4j",
-        "-e", "NEO4J_PASSWORD=your-password",
-        "-e", "NEO4J_DATABASE=neo4j",
+        "-e", "NEO4J_URI",
+        "-e", "NEO4J_USERNAME",
+        "-e", "NEO4J_PASSWORD",
+        "-e", "NEO4J_DATABASE",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "neo4j",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "NEO4J_URI": "bolt://localhost:7687",
+        "NEO4J_USERNAME": "neo4j",
+        "NEO4J_PASSWORD": "your-password",
+        "NEO4J_DATABASE": "neo4j"
+      }
     }
   }
 }
@@ -801,15 +890,22 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "POSTGRES_HOST=localhost",
-        "-e", "POSTGRES_DATABASE=mydb",
-        "-e", "POSTGRES_USER=postgres",
-        "-e", "POSTGRES_PASSWORD=your-password",
-        "-e", "POSTGRES_PORT=5432",
+        "-e", "POSTGRES_HOST",
+        "-e", "POSTGRES_DATABASE",
+        "-e", "POSTGRES_USER",
+        "-e", "POSTGRES_PASSWORD",
+        "-e", "POSTGRES_PORT",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "postgres",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "POSTGRES_HOST": "localhost",
+        "POSTGRES_DATABASE": "mydb",
+        "POSTGRES_USER": "postgres",
+        "POSTGRES_PASSWORD": "your-password",
+        "POSTGRES_PORT": "5432"
+      }
     }
   }
 }
@@ -855,13 +951,18 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "REDIS_HOST=localhost",
-        "-e", "REDIS_PORT=6379",
-        "-e", "REDIS_PASSWORD=your-password",
+        "-e", "REDIS_HOST",
+        "-e", "REDIS_PORT",
+        "-e", "REDIS_PASSWORD",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "redis",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "REDIS_HOST": "localhost",
+        "REDIS_PORT": "6379",
+        "REDIS_PASSWORD": "your-password"
+      }
     }
   }
 }
@@ -878,6 +979,68 @@ docker run --rm -d \
 
 ### MCP Tools Available
 The `--prebuilt` flag automatically loads all Redis-specific tools, including key-value operations and server management.
+
+---
+
+## Redshift
+
+Amazon Redshift is a fast, scalable data warehouse that makes it simple and cost-effective to analyze all your data using standard SQL and your existing business intelligence tools.
+
+### Docker Command
+```bash
+docker run --rm -d \
+  --name mcp-redshift \
+  -p 3000:3000 \
+  -e REDSHIFT_HOST=your-cluster.redshift.amazonaws.com \
+  -e REDSHIFT_DATABASE=mydb \
+  -e REDSHIFT_USER=awsuser \
+  -e REDSHIFT_PASSWORD=your-password \
+  -e REDSHIFT_PORT=5439 \
+  us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
+  --source postgres \
+  --prebuilt
+```
+
+### MCP Client Configuration
+```json
+{
+  "mcpServers": {
+    "redshift": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "-e", "POSTGRES_HOST=${REDSHIFT_HOST}",
+        "-e", "POSTGRES_DATABASE=${REDSHIFT_DATABASE}",
+        "-e", "POSTGRES_USER=${REDSHIFT_USER}",
+        "-e", "POSTGRES_PASSWORD=${REDSHIFT_PASSWORD}",
+        "-e", "POSTGRES_PORT=${REDSHIFT_PORT}",
+        "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
+        "--source", "postgres",
+        "--prebuilt"
+      ],
+      "env": {
+        "REDSHIFT_HOST": "your-cluster.redshift.amazonaws.com",
+        "REDSHIFT_DATABASE": "mydb",
+        "REDSHIFT_USER": "awsuser",
+        "REDSHIFT_PASSWORD": "your-password",
+        "REDSHIFT_PORT": "5439"
+      }
+    }
+  }
+}
+```
+
+### Environment Variables
+| Variable | Required | Description | Default | Example |
+|----------|----------|-------------|---------|---------|
+| `REDSHIFT_HOST` | Yes | Redshift cluster endpoint | - | `your-cluster.redshift.amazonaws.com` |
+| `REDSHIFT_PORT` | No | Redshift port | `5439` | `5439` |
+| `REDSHIFT_DATABASE` | Yes | Database name | - | `mydb` |
+| `REDSHIFT_USER` | Yes | Username | - | `awsuser` |
+| `REDSHIFT_PASSWORD` | Yes | Password | - | `your-password` |
+
+### MCP Tools Available
+Since Redshift is PostgreSQL-compatible, the `--prebuilt` flag automatically loads all PostgreSQL-specific tools, including query execution, schema inspection, and transaction management. These tools work seamlessly with Redshift's SQL dialect.
 
 ---
 
@@ -908,15 +1071,21 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "SPANNER_PROJECT=my-project",
-        "-e", "SPANNER_INSTANCE=my-instance",
-        "-e", "SPANNER_DATABASE=mydb",
-        "-v", "/path/to/service-account.json:/creds/sa.json",
+        "-e", "SPANNER_PROJECT",
+        "-e", "SPANNER_INSTANCE",
+        "-e", "SPANNER_DATABASE",
+        "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
         "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "spanner",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "SPANNER_PROJECT": "my-project",
+        "SPANNER_INSTANCE": "my-instance",
+        "SPANNER_DATABASE": "mydb",
+        "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/service-account.json"
+      }
     }
   }
 }
@@ -962,15 +1131,22 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "SQLSERVER_HOST=localhost",
-        "-e", "SQLSERVER_DATABASE=mydb",
-        "-e", "SQLSERVER_USER=sa",
-        "-e", "SQLSERVER_PASSWORD=your-password",
-        "-e", "SQLSERVER_PORT=1433",
+        "-e", "SQLSERVER_HOST",
+        "-e", "SQLSERVER_DATABASE",
+        "-e", "SQLSERVER_USER",
+        "-e", "SQLSERVER_PASSWORD",
+        "-e", "SQLSERVER_PORT",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "mssql",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "SQLSERVER_HOST": "localhost",
+        "SQLSERVER_DATABASE": "mydb",
+        "SQLSERVER_USER": "sa",
+        "SQLSERVER_PASSWORD": "your-password",
+        "SQLSERVER_PORT": "1433"
+      }
     }
   }
 }
@@ -996,6 +1172,7 @@ The `--prebuilt` flag automatically loads all SQL Server-specific tools, includi
 SQLite is a lightweight, file-based relational database.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-sqlite \
@@ -1017,11 +1194,14 @@ docker run --rm -d \
         "run", "--rm", "-i",
 
         "-v", "/path/to/mydb.sqlite:/data/mydb.sqlite",
-        "-e", "SQLITE_FILE=/data/mydb.sqlite",
+        "-e", "SQLITE_FILE",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "sqlite",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "SQLITE_FILE": "/data/mydb.sqlite"
+      }
     }
   }
 }
@@ -1065,15 +1245,22 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "TIDB_HOST=localhost",
-        "-e", "TIDB_DATABASE=mydb",
-        "-e", "TIDB_USER=root",
-        "-e", "TIDB_PASSWORD=your-password",
-        "-e", "TIDB_PORT=4000",
+        "-e", "TIDB_HOST",
+        "-e", "TIDB_DATABASE",
+        "-e", "TIDB_USER",
+        "-e", "TIDB_PASSWORD",
+        "-e", "TIDB_PORT",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "tidb",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "TIDB_HOST": "localhost",
+        "TIDB_DATABASE": "mydb",
+        "TIDB_USER": "root",
+        "TIDB_PASSWORD": "your-password",
+        "TIDB_PORT": "4000"
+      }
     }
   }
 }
@@ -1118,13 +1305,18 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-e", "VALKEY_HOST=localhost",
-        "-e", "VALKEY_PORT=6379",
-        "-e", "VALKEY_PASSWORD=your-password",
+        "-e", "VALKEY_HOST",
+        "-e", "VALKEY_PORT",
+        "-e", "VALKEY_PASSWORD",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
         "--source", "valkey",
         "--prebuilt"
-      ]
+      ],
+      "env": {
+        "VALKEY_HOST": "localhost",
+        "VALKEY_PORT": "6379",
+        "VALKEY_PASSWORD": "your-password"
+      }
     }
   }
 }
