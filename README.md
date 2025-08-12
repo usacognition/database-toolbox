@@ -15,7 +15,8 @@ Docker images that provide database connectivity through the **Model Context Pro
 ## 🐳 About These Images
 
 All database images use the official Google Database Toolbox as the base:
-```
+
+```bash
 us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest
 ```
 
@@ -57,6 +58,7 @@ Each database configuration runs this image with the appropriate source type and
 AlloyDB for PostgreSQL is a fully-managed, PostgreSQL-compatible database for demanding transactional workloads.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-alloydb \
@@ -74,6 +76,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "alloydb": {
   "command": "docker",
@@ -103,6 +106,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `ALLOYDB_PROJECT` | Yes | GCP project ID | - | `my-project` |
@@ -120,6 +124,7 @@ docker run --rm -d \
 BigQuery is Google Cloud's fully managed, petabyte-scale analytics data warehouse.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-bigquery \
@@ -134,6 +139,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "bigquery": {
   "command": "docker",
@@ -156,6 +162,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `BIGQUERY_PROJECT` | Yes | GCP project ID | - | `my-project` |
@@ -172,6 +179,7 @@ docker run --rm -d \
 Bigtable is a low-latency NoSQL database service for machine learning and operational analytics.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-bigtable \
@@ -187,6 +195,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "bigtable": {
   "command": "docker",
@@ -211,6 +220,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `BIGTABLE_PROJECT` | Yes | GCP project ID | - | `my-project` |
@@ -225,6 +235,7 @@ docker run --rm -d \
 Cloud SQL for MySQL is a fully-managed database service for MySQL.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-cloudsql-mysql \
@@ -241,6 +252,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "cloudsql-mysql": {
   "command": "docker",
@@ -268,6 +280,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `CLOUDSQL_MYSQL_PROJECT` | Yes | GCP project ID | - | `my-project` |
@@ -284,6 +297,7 @@ docker run --rm -d \
 Cloud SQL for PostgreSQL is a fully-managed database service for PostgreSQL.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-cloudsql-postgres \
@@ -300,6 +314,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "cloudsql-postgres": {
   "command": "docker",
@@ -327,6 +342,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `CLOUDSQL_POSTGRES_PROJECT` | Yes | GCP project ID | - | `my-project` |
@@ -343,6 +359,7 @@ docker run --rm -d \
 Cloud SQL for SQL Server is a fully-managed database service for SQL Server.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-cloudsql-sqlserver \
@@ -359,6 +376,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "cloudsql-sqlserver": {
   "command": "docker",
@@ -386,6 +404,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `CLOUDSQL_SQLSERVER_PROJECT` | Yes | GCP project ID | - | `my-project` |
@@ -402,6 +421,7 @@ docker run --rm -d \
 Couchbase is a distributed NoSQL database.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-couchbase \
@@ -416,6 +436,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "couchbase": {
   "command": "docker",
@@ -439,6 +460,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `COUCHBASE_HOST` | Yes | Couchbase host | - | `localhost` |
@@ -454,6 +476,7 @@ docker run --rm -d \
 Dataplex Universal Catalog is a unified governance solution for data and AI assets in Google Cloud.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-dataplex \
@@ -468,6 +491,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "dataplex": {
   "command": "docker",
@@ -490,6 +514,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `DATAPLEX_PROJECT` | Yes | GCP project ID | - | `my-project` |
@@ -503,6 +528,7 @@ docker run --rm -d \
 Dgraph is a distributed graph database built for production.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-dgraph \
@@ -515,6 +541,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "dgraph": {
   "command": "docker",
@@ -534,6 +561,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `DGRAPH_HOST` | Yes | Dgraph host | - | `localhost` |
@@ -547,6 +575,7 @@ docker run --rm -d \
 Firestore is a NoSQL document database built for automatic scaling and ease of development.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-firestore \
@@ -561,6 +590,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "firestore": {
   "command": "docker",
@@ -583,6 +613,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `FIRESTORE_PROJECT` | Yes | GCP project ID | - | `my-project` |
@@ -596,6 +627,7 @@ docker run --rm -d \
 Looker is a business intelligence and data platform.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-looker \
@@ -609,6 +641,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "looker": {
   "command": "docker",
@@ -630,6 +663,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `LOOKER_BASE_URL` | Yes | Looker instance URL | - | `https://mycompany.looker.com` |
@@ -643,6 +677,7 @@ docker run --rm -d \
 MongoDB is a document-oriented NoSQL database.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-mongodb \
@@ -657,6 +692,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "mongodb": {
   "command": "docker",
@@ -680,6 +716,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `MONGODB_URI` | Yes | MongoDB connection URI | - | `mongodb://localhost:27017` |
@@ -694,6 +731,7 @@ docker run --rm -d \
 MySQL is an open-source relational database management system.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-mysql \
@@ -709,6 +747,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "mysql": {
   "command": "docker",
@@ -734,6 +773,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `MYSQL_HOST` | Yes | MySQL host | - | `localhost` |
@@ -749,6 +789,7 @@ docker run --rm -d \
 Neo4j is a graph database management system.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-neo4j \
@@ -763,6 +804,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "neo4j": {
   "command": "docker",
@@ -786,6 +828,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `NEO4J_URI` | Yes | Neo4j connection URI | - | `bolt://localhost:7687` |
@@ -800,6 +843,7 @@ docker run --rm -d \
 PostgreSQL is a powerful, open-source object-relational database system.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-postgres \
@@ -815,6 +859,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "postgres": {
   "command": "docker",
@@ -840,6 +885,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `POSTGRES_HOST` | Yes | PostgreSQL host | - | `localhost` |
@@ -856,6 +902,7 @@ docker run --rm -d \
 Redis is an in-memory data structure store.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-redis \
@@ -869,6 +916,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "redis": {
   "command": "docker",
@@ -890,6 +938,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|  
 | `REDIS_HOST` | Yes | Redis host | - | `localhost` |
@@ -905,6 +954,7 @@ docker run --rm -d \
 Amazon Redshift is a fast, scalable data warehouse that makes it simple and cost-effective to analyze all your data using standard SQL and your existing business intelligence tools.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-redshift \
@@ -920,6 +970,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "redshift": {
   "command": "docker",
@@ -945,6 +996,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `REDSHIFT_HOST` | Yes | Redshift cluster endpoint | - | `your-cluster.redshift.amazonaws.com` |
@@ -960,6 +1012,7 @@ docker run --rm -d \
 Spanner is Google's globally distributed relational database service.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-spanner \
@@ -975,6 +1028,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "spanner": {
   "command": "docker",
@@ -999,6 +1053,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|  
 | `SPANNER_PROJECT` | Yes | GCP project ID | - | `my-project` |
@@ -1013,6 +1068,7 @@ docker run --rm -d \
 Microsoft SQL Server is a relational database management system.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-sqlserver \
@@ -1028,6 +1084,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "sqlserver": {
   "command": "docker",
@@ -1053,6 +1110,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|  
 | `SQLSERVER_HOST` | Yes | SQL Server host | - | `localhost` |
@@ -1083,6 +1141,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "sqlite": {
   "command": "docker",
@@ -1101,6 +1160,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|  
 | `SQLITE_FILE` | Yes | Path to SQLite file | - | `/data/mydb.sqlite` |
@@ -1113,6 +1173,7 @@ docker run --rm -d \
 TiDB is a distributed SQL database.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-tidb \
@@ -1128,6 +1189,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "tidb": {
   "command": "docker",
@@ -1153,6 +1215,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|  
 | `TIDB_HOST` | Yes | TiDB host | - | `localhost` |
@@ -1168,6 +1231,7 @@ docker run --rm -d \
 Valkey is an open-source in-memory data store, forked from Redis.
 
 ### Docker Command
+
 ```bash
 docker run --rm -d \
   --name mcp-valkey \
@@ -1181,6 +1245,7 @@ docker run --rm -d \
 ```
 
 ### MCP Client Configuration
+
 ```json
 "valkey": {
   "command": "docker",
@@ -1202,6 +1267,7 @@ docker run --rm -d \
 ```
 
 ### Environment Variables
+
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|  
 | `VALKEY_HOST` | Yes | Valkey host | - | `localhost` |
