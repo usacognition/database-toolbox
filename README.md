@@ -20,7 +20,7 @@ All database images use the official Google Database Toolbox as the base:
 us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest
 ```
 
-Each database configuration runs this image with the appropriate source type and the `--prebuilt` flag to automatically load the necessary tools.
+Each database configuration runs this image with the `--prebuilt` flag and the appropriate source type to automatically load the necessary tools. For MCP mode, the `--stdio` flag is also required.
 
 ## 📋 Supported Databases
 
@@ -71,8 +71,7 @@ docker run --rm -d \
   -e ALLOYDB_USER=postgres \
   -e ALLOYDB_PASSWORD=your-password \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source alloydb \
-  --prebuilt
+  --prebuilt alloydb
 ```
 
 ### MCP Client Configuration
@@ -90,8 +89,8 @@ docker run --rm -d \
     "-e", "ALLOYDB_USER",
     "-e", "ALLOYDB_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "alloydb",
-    "--prebuilt"
+    "--prebuilt", "alloydb",
+    "--stdio"
   ],
   "env": {
     "ALLOYDB_PROJECT": "my-project",
@@ -134,8 +133,7 @@ docker run --rm -d \
   -e GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
   -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source bigquery \
-  --prebuilt
+  --prebuilt bigquery
 ```
 
 ### MCP Client Configuration
@@ -150,8 +148,8 @@ docker run --rm -d \
     "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
     "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "bigquery",
-    "--prebuilt"
+    "--prebuilt", "bigquery",
+    "--stdio"
   ],
   "env": {
     "BIGQUERY_PROJECT": "my-project",
@@ -190,8 +188,7 @@ docker run --rm -d \
   -e GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
   -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source bigtable \
-  --prebuilt
+  --prebuilt bigtable
 ```
 
 ### MCP Client Configuration
@@ -207,8 +204,8 @@ docker run --rm -d \
     "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
     "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "bigtable",
-    "--prebuilt"
+    "--prebuilt", "bigtable",
+    "--stdio"
   ],
   "env": {
     "BIGTABLE_PROJECT": "my-project",
@@ -247,8 +244,7 @@ docker run --rm -d \
   -e CLOUDSQL_MYSQL_USER=root \
   -e CLOUDSQL_MYSQL_PASSWORD=your-password \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source cloud-sql-mysql \
-  --prebuilt
+  --prebuilt cloud-sql-mysql
 ```
 
 ### MCP Client Configuration
@@ -265,8 +261,8 @@ docker run --rm -d \
     "-e", "CLOUDSQL_MYSQL_USER",
     "-e", "CLOUDSQL_MYSQL_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "cloud-sql-mysql",
-    "--prebuilt"
+    "--prebuilt", "cloud-sql-mysql",
+    "--stdio"
   ],
   "env": {
     "CLOUDSQL_MYSQL_PROJECT": "my-project",
@@ -309,8 +305,7 @@ docker run --rm -d \
   -e CLOUDSQL_POSTGRES_USER=postgres \
   -e CLOUDSQL_POSTGRES_PASSWORD=your-password \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source cloud-sql-postgres \
-  --prebuilt
+  --prebuilt cloud-sql-postgres
 ```
 
 ### MCP Client Configuration
@@ -327,8 +322,8 @@ docker run --rm -d \
     "-e", "CLOUDSQL_POSTGRES_USER",
     "-e", "CLOUDSQL_POSTGRES_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "cloud-sql-postgres",
-    "--prebuilt"
+    "--prebuilt", "cloud-sql-postgres",
+    "--stdio"
   ],
   "env": {
     "CLOUDSQL_POSTGRES_PROJECT": "my-project",
@@ -371,8 +366,7 @@ docker run --rm -d \
   -e CLOUDSQL_SQLSERVER_USER=sqlserver \
   -e CLOUDSQL_SQLSERVER_PASSWORD=your-password \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source cloud-sql-mssql \
-  --prebuilt
+  --prebuilt cloud-sql-mssql
 ```
 
 ### MCP Client Configuration
@@ -389,8 +383,8 @@ docker run --rm -d \
     "-e", "CLOUDSQL_SQLSERVER_USER",
     "-e", "CLOUDSQL_SQLSERVER_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "cloud-sql-mssql",
-    "--prebuilt"
+    "--prebuilt", "cloud-sql-mssql",
+    "--stdio"
   ],
   "env": {
     "CLOUDSQL_SQLSERVER_PROJECT": "my-project",
@@ -431,8 +425,7 @@ docker run --rm -d \
   -e COUCHBASE_USERNAME=Administrator \
   -e COUCHBASE_PASSWORD=your-password \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source couchbase \
-  --prebuilt
+  --prebuilt couchbase
 ```
 
 ### MCP Client Configuration
@@ -447,8 +440,8 @@ docker run --rm -d \
     "-e", "COUCHBASE_USERNAME",
     "-e", "COUCHBASE_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "couchbase",
-    "--prebuilt"
+    "--prebuilt", "couchbase",
+    "--stdio"
   ],
   "env": {
     "COUCHBASE_HOST": "localhost",
@@ -486,8 +479,7 @@ docker run --rm -d \
   -e GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
   -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source dataplex \
-  --prebuilt
+  --prebuilt dataplex
 ```
 
 ### MCP Client Configuration
@@ -502,8 +494,8 @@ docker run --rm -d \
     "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
     "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "dataplex",
-    "--prebuilt"
+    "--prebuilt", "dataplex",
+    "--stdio"
   ],
   "env": {
     "DATAPLEX_PROJECT": "my-project",
@@ -536,8 +528,7 @@ docker run --rm -d \
   -e DGRAPH_HOST=localhost \
   -e DGRAPH_PORT=9080 \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source dgraph \
-  --prebuilt
+  --prebuilt dgraph
 ```
 
 ### MCP Client Configuration
@@ -550,8 +541,8 @@ docker run --rm -d \
     "-e", "DGRAPH_HOST",
     "-e", "DGRAPH_PORT",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "dgraph",
-    "--prebuilt"
+    "--prebuilt", "dgraph",
+    "--stdio"
   ],
   "env": {
     "DGRAPH_HOST": "localhost",
@@ -585,8 +576,7 @@ docker run --rm -d \
   -e GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
   -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source firestore \
-  --prebuilt
+  --prebuilt firestore
 ```
 
 ### MCP Client Configuration
@@ -601,8 +591,8 @@ docker run --rm -d \
     "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
     "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "firestore",
-    "--prebuilt"
+    "--prebuilt", "firestore",
+    "--stdio"
   ],
   "env": {
     "FIRESTORE_PROJECT": "my-project",
@@ -636,8 +626,7 @@ docker run --rm -d \
   -e LOOKER_CLIENT_ID=your-client-id \
   -e LOOKER_CLIENT_SECRET=your-client-secret \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source looker \
-  --prebuilt
+  --prebuilt looker
 ```
 
 ### MCP Client Configuration
@@ -651,8 +640,8 @@ docker run --rm -d \
     "-e", "LOOKER_CLIENT_ID",
     "-e", "LOOKER_CLIENT_SECRET",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "looker",
-    "--prebuilt"
+    "--prebuilt", "looker",
+    "--stdio"
   ],
   "env": {
     "LOOKER_BASE_URL": "https://mycompany.looker.com",
@@ -687,8 +676,7 @@ docker run --rm -d \
   -e MONGODB_USERNAME=admin \
   -e MONGODB_PASSWORD=your-password \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source mongodb \
-  --prebuilt
+  --prebuilt mongodb
 ```
 
 ### MCP Client Configuration
@@ -703,8 +691,8 @@ docker run --rm -d \
     "-e", "MONGODB_USERNAME",
     "-e", "MONGODB_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "mongodb",
-    "--prebuilt"
+    "--prebuilt", "mongodb",
+    "--stdio"
   ],
   "env": {
     "MONGODB_URI": "mongodb://localhost:27017",
@@ -742,8 +730,7 @@ docker run --rm -d \
   -e MYSQL_PASSWORD=your-password \
   -e MYSQL_PORT=3306 \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source mysql \
-  --prebuilt
+  --prebuilt mysql
 ```
 
 ### MCP Client Configuration
@@ -759,8 +746,8 @@ docker run --rm -d \
     "-e", "MYSQL_PASSWORD",
     "-e", "MYSQL_PORT",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "mysql",
-    "--prebuilt"
+    "--prebuilt", "mysql",
+    "--stdio"
   ],
   "env": {
     "MYSQL_HOST": "localhost",
@@ -799,8 +786,7 @@ docker run --rm -d \
   -e NEO4J_PASSWORD=your-password \
   -e NEO4J_DATABASE=neo4j \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source neo4j \
-  --prebuilt
+  --prebuilt neo4j
 ```
 
 ### MCP Client Configuration
@@ -815,8 +801,8 @@ docker run --rm -d \
     "-e", "NEO4J_PASSWORD",
     "-e", "NEO4J_DATABASE",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "neo4j",
-    "--prebuilt"
+    "--prebuilt", "neo4j",
+    "--stdio"
   ],
   "env": {
     "NEO4J_URI": "bolt://localhost:7687",
@@ -854,8 +840,7 @@ docker run --rm -d \
   -e POSTGRES_PASSWORD=your-password \
   -e POSTGRES_PORT=5432 \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source postgres \
-  --prebuilt
+  --prebuilt postgres
 ```
 
 ### MCP Client Configuration
@@ -871,8 +856,8 @@ docker run --rm -d \
     "-e", "POSTGRES_PASSWORD",
     "-e", "POSTGRES_PORT",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "postgres",
-    "--prebuilt"
+    "--prebuilt", "postgres",
+    "--stdio"
   ],
   "env": {
     "POSTGRES_HOST": "localhost",
@@ -911,8 +896,7 @@ docker run --rm -d \
   -e REDIS_PORT=6379 \
   -e REDIS_PASSWORD=your-password \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source redis \
-  --prebuilt
+  --prebuilt redis
 ```
 
 ### MCP Client Configuration
@@ -926,8 +910,8 @@ docker run --rm -d \
     "-e", "REDIS_PORT",
     "-e", "REDIS_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "redis",
-    "--prebuilt"
+    "--prebuilt", "redis",
+    "--stdio"
   ],
   "env": {
     "REDIS_HOST": "localhost",
@@ -965,8 +949,7 @@ docker run --rm -d \
   -e REDSHIFT_PASSWORD=your-password \
   -e REDSHIFT_PORT=5439 \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source postgres \
-  --prebuilt
+  --prebuilt postgres
 ```
 
 ### MCP Client Configuration
@@ -982,8 +965,8 @@ docker run --rm -d \
     "-e", "POSTGRES_PASSWORD=${REDSHIFT_PASSWORD}",
     "-e", "POSTGRES_PORT=${REDSHIFT_PORT}",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "postgres",
-    "--prebuilt"
+    "--prebuilt", "postgres",
+    "--stdio"
   ],
   "env": {
     "REDSHIFT_HOST": "your-cluster.redshift.amazonaws.com",
@@ -1023,8 +1006,7 @@ docker run --rm -d \
   -e GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
   -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source spanner \
-  --prebuilt
+  --prebuilt spanner
 ```
 
 ### MCP Client Configuration
@@ -1040,8 +1022,8 @@ docker run --rm -d \
     "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
     "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "spanner",
-    "--prebuilt"
+    "--prebuilt", "spanner",
+    "--stdio"
   ],
   "env": {
     "SPANNER_PROJECT": "my-project",
@@ -1079,8 +1061,7 @@ docker run --rm -d \
   -e SQLSERVER_PASSWORD=your-password \
   -e SQLSERVER_PORT=1433 \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source mssql \
-  --prebuilt
+  --prebuilt mssql
 ```
 
 ### MCP Client Configuration
@@ -1096,8 +1077,8 @@ docker run --rm -d \
     "-e", "SQLSERVER_PASSWORD",
     "-e", "SQLSERVER_PORT",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "mssql",
-    "--prebuilt"
+    "--prebuilt", "mssql",
+    "--stdio"
   ],
   "env": {
     "SQLSERVER_HOST": "localhost",
@@ -1136,8 +1117,7 @@ docker run --rm -d \
   -v /path/to/mydb.sqlite:/data/mydb.sqlite \
   -e SQLITE_FILE=/data/mydb.sqlite \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source sqlite \
-  --prebuilt
+  --prebuilt sqlite
 ```
 
 ### MCP Client Configuration
@@ -1150,8 +1130,8 @@ docker run --rm -d \
     "-v", "/path/to/mydb.sqlite:/data/mydb.sqlite",
     "-e", "SQLITE_FILE",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "sqlite",
-    "--prebuilt"
+    "--prebuilt", "sqlite",
+    "--stdio"
   ],
   "env": {
     "SQLITE_FILE": "/data/mydb.sqlite"
@@ -1184,8 +1164,7 @@ docker run --rm -d \
   -e TIDB_PASSWORD=your-password \
   -e TIDB_PORT=4000 \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source tidb \
-  --prebuilt
+  --prebuilt tidb
 ```
 
 ### MCP Client Configuration
@@ -1201,8 +1180,8 @@ docker run --rm -d \
     "-e", "TIDB_PASSWORD",
     "-e", "TIDB_PORT",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "tidb",
-    "--prebuilt"
+    "--prebuilt", "tidb",
+    "--stdio"
   ],
   "env": {
     "TIDB_HOST": "localhost",
@@ -1240,8 +1219,7 @@ docker run --rm -d \
   -e VALKEY_PORT=6379 \
   -e VALKEY_PASSWORD=your-password \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --source valkey \
-  --prebuilt
+  --prebuilt valkey
 ```
 
 ### MCP Client Configuration
@@ -1255,8 +1233,8 @@ docker run --rm -d \
     "-e", "VALKEY_PORT",
     "-e", "VALKEY_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--source", "valkey",
-    "--prebuilt"
+    "--prebuilt", "valkey",
+    "--stdio"
   ],
   "env": {
     "VALKEY_HOST": "localhost",
