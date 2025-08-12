@@ -680,9 +680,6 @@ docker run --rm -d \
 | `LOOKER_CLIENT_ID` | Yes | API client ID | - | `your-client-id` |
 | `LOOKER_CLIENT_SECRET` | Yes | API client secret | - | `your-client-secret` |
 
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all Looker-specific tools, including query execution, model exploration, and dashboard operations.
-
 ---
 
 ## MongoDB
@@ -737,9 +734,6 @@ docker run --rm -d \
 | `MONGODB_DATABASE` | Yes | Database name | - | `mydb` |
 | `MONGODB_USERNAME` | No | Username | - | `admin` |
 | `MONGODB_PASSWORD` | No | Password | - | `your-password` |
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all MongoDB-specific tools, including document operations, aggregation, and collection management.
 
 ---
 
@@ -800,9 +794,6 @@ docker run --rm -d \
 | `MYSQL_USER` | Yes | Username | - | `root` |
 | `MYSQL_PASSWORD` | Yes | Password | - | `your-password` |
 
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all MySQL-specific tools, including query execution and schema management.
-
 ---
 
 ## Neo4j
@@ -857,9 +848,6 @@ docker run --rm -d \
 | `NEO4J_USERNAME` | Yes | Username | - | `neo4j` |
 | `NEO4J_PASSWORD` | Yes | Password | - | `your-password` |
 | `NEO4J_DATABASE` | No | Database name | `neo4j` | `neo4j` |
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all Neo4j-specific tools, including Cypher query execution and schema operations.
 
 ---
 
@@ -921,9 +909,6 @@ docker run --rm -d \
 | `POSTGRES_PASSWORD` | Yes | Password | - | `your-password` |
 | `POSTGRES_SSL_MODE` | No | SSL mode | `prefer` | `disable`, `require` |
 
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all PostgreSQL-specific tools, including query execution, schema inspection, and transaction management.
-
 ---
 
 ## Redis
@@ -976,9 +961,6 @@ docker run --rm -d \
 | `REDIS_PASSWORD` | No | Password | - | `your-password` |
 | `REDIS_DB` | No | Database number | `0` | `0` |
 | `REDIS_USERNAME` | No | Username (Redis 6+) | - | `default` |
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all Redis-specific tools, including key-value operations and server management.
 
 ---
 
@@ -1039,9 +1021,6 @@ docker run --rm -d \
 | `REDSHIFT_USER` | Yes | Username | - | `awsuser` |
 | `REDSHIFT_PASSWORD` | Yes | Password | - | `your-password` |
 
-### MCP Tools Available
-Since Redshift is PostgreSQL-compatible, the `--prebuilt` flag automatically loads all PostgreSQL-specific tools, including query execution, schema inspection, and transaction management. These tools work seamlessly with Redshift's SQL dialect.
-
 ---
 
 ## Spanner
@@ -1098,9 +1077,6 @@ docker run --rm -d \
 | `SPANNER_INSTANCE` | Yes | Spanner instance ID | - | `my-instance` |
 | `SPANNER_DATABASE` | Yes | Database name | - | `mydb` |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Yes* | Path to service account JSON | - | `/creds/sa.json` |
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all Spanner-specific tools, including SQL execution and schema management.
 
 ---
 
@@ -1162,9 +1138,6 @@ docker run --rm -d \
 | `SQLSERVER_PASSWORD` | Yes | Password | - | `your-password` |
 | `SQLSERVER_TRUST_CERT` | No | Trust server certificate | `false` | `true`, `false` |
 
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all SQL Server-specific tools, including query execution and schema management.
-
 ---
 
 ## SQLite
@@ -1212,9 +1185,6 @@ docker run --rm -d \
 |----------|----------|-------------|---------|---------|  
 | `SQLITE_FILE` | Yes | Path to SQLite file | - | `/data/mydb.sqlite` |
 | `SQLITE_READONLY` | No | Open in read-only mode | `false` | `true`, `false` |
-
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all SQLite-specific tools, including SQL execution and schema operations.
 
 ---
 
@@ -1275,9 +1245,6 @@ docker run --rm -d \
 | `TIDB_USER` | Yes | Username | - | `root` |
 | `TIDB_PASSWORD` | No | Password | - | `your-password` |
 
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all TiDB-specific tools, including SQL execution and schema management.
-
 ---
 
 ## Valkey
@@ -1331,16 +1298,12 @@ docker run --rm -d \
 | `VALKEY_DB` | No | Database number | `0` | `0` |
 | `VALKEY_USERNAME` | No | Username | - | `default` |
 
-### MCP Tools Available
-The `--prebuilt` flag automatically loads all Valkey-specific tools, including key-value operations and server management.
-
 ---
 
 ## 📚 Additional Resources
 
 - [Google Database Toolbox Documentation](https://googleapis.github.io/genai-toolbox/)
 - [Model Context Protocol Specification](https://modelcontextprotocol.io/)
-- [MCP Server Examples](https://github.com/modelcontextprotocol/servers)
 
 ## 📄 License
 
