@@ -60,16 +60,23 @@ AlloyDB for PostgreSQL is a fully-managed, PostgreSQL-compatible database for de
 ### Docker Command
 
 ```bash
+ALLOYDB_PROJECT=my-project \
+ALLOYDB_REGION=us-central1 \
+ALLOYDB_CLUSTER=my-cluster \
+ALLOYDB_INSTANCE=my-instance \
+ALLOYDB_DATABASE=mydb \
+ALLOYDB_USER=postgres \
+ALLOYDB_PASSWORD=your-password \
 docker run --rm -d \
   --name mcp-alloydb \
   -p 3000:3000 \
-  -e ALLOYDB_PROJECT=my-project \
-  -e ALLOYDB_REGION=us-central1 \
-  -e ALLOYDB_CLUSTER=my-cluster \
-  -e ALLOYDB_INSTANCE=my-instance \
-  -e ALLOYDB_DATABASE=mydb \
-  -e ALLOYDB_USER=postgres \
-  -e ALLOYDB_PASSWORD=your-password \
+  -e ALLOYDB_PROJECT \
+  -e ALLOYDB_REGION \
+  -e ALLOYDB_CLUSTER \
+  -e ALLOYDB_INSTANCE \
+  -e ALLOYDB_DATABASE \
+  -e ALLOYDB_USER \
+  -e ALLOYDB_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt alloydb
 ```
@@ -125,12 +132,15 @@ BigQuery is Google Cloud's fully managed, petabyte-scale analytics data warehous
 ### Docker Command
 
 ```bash
+BIGQUERY_PROJECT=my-project \
+BIGQUERY_DATASET=my_dataset \
+GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
 docker run --rm -d \
   --name mcp-bigquery \
   -p 3000:3000 \
-  -e BIGQUERY_PROJECT=my-project \
-  -e BIGQUERY_DATASET=my_dataset \
-  -e GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
+  -e BIGQUERY_PROJECT \
+  -e BIGQUERY_DATASET \
+  -e GOOGLE_APPLICATION_CREDENTIALS \
   -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt bigquery
@@ -179,13 +189,17 @@ Bigtable is a low-latency NoSQL database service for machine learning and operat
 ### Docker Command
 
 ```bash
+BIGTABLE_PROJECT=my-project \
+BIGTABLE_INSTANCE=my-instance \
+BIGTABLE_TABLE=my-table \
+GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
 docker run --rm -d \
   --name mcp-bigtable \
   -p 3000:3000 \
-  -e BIGTABLE_PROJECT=my-project \
-  -e BIGTABLE_INSTANCE=my-instance \
-  -e BIGTABLE_TABLE=my-table \
-  -e GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
+  -e BIGTABLE_PROJECT \
+  -e BIGTABLE_INSTANCE \
+  -e BIGTABLE_TABLE \
+  -e GOOGLE_APPLICATION_CREDENTIALS \
   -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt bigtable
@@ -234,15 +248,21 @@ Cloud SQL for MySQL is a fully-managed database service for MySQL.
 ### Docker Command
 
 ```bash
+CLOUDSQL_MYSQL_PROJECT=my-project \
+CLOUDSQL_MYSQL_REGION=us-central1 \
+CLOUDSQL_MYSQL_INSTANCE=my-instance \
+CLOUDSQL_MYSQL_DATABASE=mydb \
+CLOUDSQL_MYSQL_USER=root \
+CLOUDSQL_MYSQL_PASSWORD=your-password \
 docker run --rm -d \
   --name mcp-cloudsql-mysql \
   -p 3000:3000 \
-  -e CLOUDSQL_MYSQL_PROJECT=my-project \
-  -e CLOUDSQL_MYSQL_REGION=us-central1 \
-  -e CLOUDSQL_MYSQL_INSTANCE=my-instance \
-  -e CLOUDSQL_MYSQL_DATABASE=mydb \
-  -e CLOUDSQL_MYSQL_USER=root \
-  -e CLOUDSQL_MYSQL_PASSWORD=your-password \
+  -e CLOUDSQL_MYSQL_PROJECT \
+  -e CLOUDSQL_MYSQL_REGION \
+  -e CLOUDSQL_MYSQL_INSTANCE \
+  -e CLOUDSQL_MYSQL_DATABASE \
+  -e CLOUDSQL_MYSQL_USER \
+  -e CLOUDSQL_MYSQL_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt cloud-sql-mysql
 ```
@@ -295,15 +315,21 @@ Cloud SQL for PostgreSQL is a fully-managed database service for PostgreSQL.
 ### Docker Command
 
 ```bash
+CLOUDSQL_POSTGRES_PROJECT=my-project \
+CLOUDSQL_POSTGRES_REGION=us-central1 \
+CLOUDSQL_POSTGRES_INSTANCE=my-instance \
+CLOUDSQL_POSTGRES_DATABASE=mydb \
+CLOUDSQL_POSTGRES_USER=postgres \
+CLOUDSQL_POSTGRES_PASSWORD=your-password \
 docker run --rm -d \
   --name mcp-cloudsql-postgres \
   -p 3000:3000 \
-  -e CLOUDSQL_POSTGRES_PROJECT=my-project \
-  -e CLOUDSQL_POSTGRES_REGION=us-central1 \
-  -e CLOUDSQL_POSTGRES_INSTANCE=my-instance \
-  -e CLOUDSQL_POSTGRES_DATABASE=mydb \
-  -e CLOUDSQL_POSTGRES_USER=postgres \
-  -e CLOUDSQL_POSTGRES_PASSWORD=your-password \
+  -e CLOUDSQL_POSTGRES_PROJECT \
+  -e CLOUDSQL_POSTGRES_REGION \
+  -e CLOUDSQL_POSTGRES_INSTANCE \
+  -e CLOUDSQL_POSTGRES_DATABASE \
+  -e CLOUDSQL_POSTGRES_USER \
+  -e CLOUDSQL_POSTGRES_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt cloud-sql-postgres
 ```
@@ -356,15 +382,21 @@ Cloud SQL for SQL Server is a fully-managed database service for SQL Server.
 ### Docker Command
 
 ```bash
+CLOUDSQL_SQLSERVER_PROJECT=my-project \
+CLOUDSQL_SQLSERVER_REGION=us-central1 \
+CLOUDSQL_SQLSERVER_INSTANCE=my-instance \
+CLOUDSQL_SQLSERVER_DATABASE=mydb \
+CLOUDSQL_SQLSERVER_USER=sqlserver \
+CLOUDSQL_SQLSERVER_PASSWORD=your-password \
 docker run --rm -d \
   --name mcp-cloudsql-sqlserver \
   -p 3000:3000 \
-  -e CLOUDSQL_SQLSERVER_PROJECT=my-project \
-  -e CLOUDSQL_SQLSERVER_REGION=us-central1 \
-  -e CLOUDSQL_SQLSERVER_INSTANCE=my-instance \
-  -e CLOUDSQL_SQLSERVER_DATABASE=mydb \
-  -e CLOUDSQL_SQLSERVER_USER=sqlserver \
-  -e CLOUDSQL_SQLSERVER_PASSWORD=your-password \
+  -e CLOUDSQL_SQLSERVER_PROJECT \
+  -e CLOUDSQL_SQLSERVER_REGION \
+  -e CLOUDSQL_SQLSERVER_INSTANCE \
+  -e CLOUDSQL_SQLSERVER_DATABASE \
+  -e CLOUDSQL_SQLSERVER_USER \
+  -e CLOUDSQL_SQLSERVER_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt cloud-sql-mssql
 ```
@@ -417,13 +449,17 @@ Couchbase is a distributed NoSQL database.
 ### Docker Command
 
 ```bash
+COUCHBASE_HOST=localhost \
+COUCHBASE_BUCKET=my-bucket \
+COUCHBASE_USERNAME=Administrator \
+COUCHBASE_PASSWORD=your-password \
 docker run --rm -d \
   --name mcp-couchbase \
   -p 3000:3000 \
-  -e COUCHBASE_HOST=localhost \
-  -e COUCHBASE_BUCKET=my-bucket \
-  -e COUCHBASE_USERNAME=Administrator \
-  -e COUCHBASE_PASSWORD=your-password \
+  -e COUCHBASE_HOST \
+  -e COUCHBASE_BUCKET \
+  -e COUCHBASE_USERNAME \
+  -e COUCHBASE_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt couchbase
 ```
@@ -471,12 +507,15 @@ Dataplex Universal Catalog is a unified governance solution for data and AI asse
 ### Docker Command
 
 ```bash
+DATAPLEX_PROJECT=my-project \
+DATAPLEX_LOCATION=us-central1 \
+GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
 docker run --rm -d \
   --name mcp-dataplex \
   -p 3000:3000 \
-  -e DATAPLEX_PROJECT=my-project \
-  -e DATAPLEX_LOCATION=us-central1 \
-  -e GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
+  -e DATAPLEX_PROJECT \
+  -e DATAPLEX_LOCATION \
+  -e GOOGLE_APPLICATION_CREDENTIALS \
   -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt dataplex
@@ -522,11 +561,13 @@ Dgraph is a distributed graph database built for production.
 ### Docker Command
 
 ```bash
+DGRAPH_HOST=localhost \
+DGRAPH_PORT=9080 \
 docker run --rm -d \
   --name mcp-dgraph \
   -p 3000:3000 \
-  -e DGRAPH_HOST=localhost \
-  -e DGRAPH_PORT=9080 \
+  -e DGRAPH_HOST \
+  -e DGRAPH_PORT \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt dgraph
 ```
@@ -568,12 +609,15 @@ Firestore is a NoSQL document database built for automatic scaling and ease of d
 ### Docker Command
 
 ```bash
+FIRESTORE_PROJECT=my-project \
+FIRESTORE_DATABASE=(default) \
+GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
 docker run --rm -d \
   --name mcp-firestore \
   -p 3000:3000 \
-  -e FIRESTORE_PROJECT=my-project \
-  -e FIRESTORE_DATABASE=(default) \
-  -e GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
+  -e FIRESTORE_PROJECT \
+  -e FIRESTORE_DATABASE \
+  -e GOOGLE_APPLICATION_CREDENTIALS \
   -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt firestore
@@ -619,12 +663,15 @@ Looker is a business intelligence and data platform.
 ### Docker Command
 
 ```bash
+LOOKER_BASE_URL=https://mycompany.looker.com \
+LOOKER_CLIENT_ID=your-client-id \
+LOOKER_CLIENT_SECRET=your-client-secret \
 docker run --rm -d \
   --name mcp-looker \
   -p 3000:3000 \
-  -e LOOKER_BASE_URL=https://mycompany.looker.com \
-  -e LOOKER_CLIENT_ID=your-client-id \
-  -e LOOKER_CLIENT_SECRET=your-client-secret \
+  -e LOOKER_BASE_URL \
+  -e LOOKER_CLIENT_ID \
+  -e LOOKER_CLIENT_SECRET \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt looker
 ```
@@ -668,13 +715,17 @@ MongoDB is a document-oriented NoSQL database.
 ### Docker Command
 
 ```bash
+MONGODB_URI=mongodb://localhost:27017 \
+MONGODB_DATABASE=mydb \
+MONGODB_USERNAME=admin \
+MONGODB_PASSWORD=your-password \
 docker run --rm -d \
   --name mcp-mongodb \
   -p 3000:3000 \
-  -e MONGODB_URI=mongodb://localhost:27017 \
-  -e MONGODB_DATABASE=mydb \
-  -e MONGODB_USERNAME=admin \
-  -e MONGODB_PASSWORD=your-password \
+  -e MONGODB_URI \
+  -e MONGODB_DATABASE \
+  -e MONGODB_USERNAME \
+  -e MONGODB_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt mongodb
 ```
@@ -721,14 +772,19 @@ MySQL is an open-source relational database management system.
 ### Docker Command
 
 ```bash
+MYSQL_HOST=localhost \
+MYSQL_DATABASE=mydb \
+MYSQL_USER=root \
+MYSQL_PASSWORD=your-password \
+MYSQL_PORT=3306 \
 docker run --rm -d \
   --name mcp-mysql \
   -p 3000:3000 \
-  -e MYSQL_HOST=localhost \
-  -e MYSQL_DATABASE=mydb \
-  -e MYSQL_USER=root \
-  -e MYSQL_PASSWORD=your-password \
-  -e MYSQL_PORT=3306 \
+  -e MYSQL_HOST \
+  -e MYSQL_DATABASE \
+  -e MYSQL_USER \
+  -e MYSQL_PASSWORD \
+  -e MYSQL_PORT \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt mysql
 ```
@@ -778,13 +834,17 @@ Neo4j is a graph database management system.
 ### Docker Command
 
 ```bash
+NEO4J_URI=bolt://localhost:7687 \
+NEO4J_USERNAME=neo4j \
+NEO4J_PASSWORD=your-password \
+NEO4J_DATABASE=neo4j \
 docker run --rm -d \
   --name mcp-neo4j \
   -p 3000:3000 \
-  -e NEO4J_URI=bolt://localhost:7687 \
-  -e NEO4J_USERNAME=neo4j \
-  -e NEO4J_PASSWORD=your-password \
-  -e NEO4J_DATABASE=neo4j \
+  -e NEO4J_URI \
+  -e NEO4J_USERNAME \
+  -e NEO4J_PASSWORD \
+  -e NEO4J_DATABASE \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt neo4j
 ```
@@ -831,14 +891,19 @@ PostgreSQL is a powerful, open-source object-relational database system.
 ### Docker Command
 
 ```bash
+POSTGRES_HOST=localhost \
+POSTGRES_DATABASE=mydb \
+POSTGRES_USER=postgres \
+POSTGRES_PASSWORD=your-password \
+POSTGRES_PORT=5432 \
 docker run --rm -d \
   --name mcp-postgres \
   -p 3000:3000 \
-  -e POSTGRES_HOST=localhost \
-  -e POSTGRES_DATABASE=mydb \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_PASSWORD=your-password \
-  -e POSTGRES_PORT=5432 \
+  -e POSTGRES_HOST \
+  -e POSTGRES_DATABASE \
+  -e POSTGRES_USER \
+  -e POSTGRES_PASSWORD \
+  -e POSTGRES_PORT \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt postgres
 ```
@@ -889,12 +954,15 @@ Redis is an in-memory data structure store.
 ### Docker Command
 
 ```bash
+REDIS_HOST=localhost \
+REDIS_PORT=6379 \
+REDIS_PASSWORD=your-password \
 docker run --rm -d \
   --name mcp-redis \
   -p 3000:3000 \
-  -e REDIS_HOST=localhost \
-  -e REDIS_PORT=6379 \
-  -e REDIS_PASSWORD=your-password \
+  -e REDIS_HOST \
+  -e REDIS_PORT \
+  -e REDIS_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt redis
 ```
@@ -940,14 +1008,19 @@ Amazon Redshift is a fast, scalable data warehouse that makes it simple and cost
 ### Docker Command
 
 ```bash
+REDSHIFT_HOST=your-cluster.redshift.amazonaws.com \
+REDSHIFT_DATABASE=mydb \
+REDSHIFT_USER=awsuser \
+REDSHIFT_PASSWORD=your-password \
+REDSHIFT_PORT=5439 \
 docker run --rm -d \
   --name mcp-redshift \
   -p 3000:3000 \
-  -e REDSHIFT_HOST=your-cluster.redshift.amazonaws.com \
-  -e REDSHIFT_DATABASE=mydb \
-  -e REDSHIFT_USER=awsuser \
-  -e REDSHIFT_PASSWORD=your-password \
-  -e REDSHIFT_PORT=5439 \
+  -e POSTGRES_HOST=$REDSHIFT_HOST \
+  -e POSTGRES_DATABASE=$REDSHIFT_DATABASE \
+  -e POSTGRES_USER=$REDSHIFT_USER \
+  -e POSTGRES_PASSWORD=$REDSHIFT_PASSWORD \
+  -e POSTGRES_PORT=$REDSHIFT_PORT \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt postgres
 ```
@@ -959,21 +1032,21 @@ docker run --rm -d \
   "command": "docker",
   "args": [
     "run", "--rm", "-i",
-    "-e", "POSTGRES_HOST=${REDSHIFT_HOST}",
-    "-e", "POSTGRES_DATABASE=${REDSHIFT_DATABASE}",
-    "-e", "POSTGRES_USER=${REDSHIFT_USER}",
-    "-e", "POSTGRES_PASSWORD=${REDSHIFT_PASSWORD}",
-    "-e", "POSTGRES_PORT=${REDSHIFT_PORT}",
+    "-e", "POSTGRES_HOST",
+    "-e", "POSTGRES_DATABASE",
+    "-e", "POSTGRES_USER",
+    "-e", "POSTGRES_PASSWORD",
+    "-e", "POSTGRES_PORT",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
     "--prebuilt", "postgres",
     "--stdio"
   ],
   "env": {
-    "REDSHIFT_HOST": "your-cluster.redshift.amazonaws.com",
-    "REDSHIFT_DATABASE": "mydb",
-    "REDSHIFT_USER": "awsuser",
-    "REDSHIFT_PASSWORD": "your-password",
-    "REDSHIFT_PORT": "5439"
+    "POSTGRES_HOST": "your-cluster.redshift.amazonaws.com",
+    "POSTGRES_DATABASE": "mydb",
+    "POSTGRES_USER": "awsuser",
+    "POSTGRES_PASSWORD": "your-password",
+    "POSTGRES_PORT": "5439"
   }
 }
 ```
@@ -982,11 +1055,11 @@ docker run --rm -d \
 
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
-| `REDSHIFT_HOST` | Yes | Redshift cluster endpoint | - | `your-cluster.redshift.amazonaws.com` |
-| `REDSHIFT_PORT` | No | Redshift port | `5439` | `5439` |
-| `REDSHIFT_DATABASE` | Yes | Database name | - | `mydb` |
-| `REDSHIFT_USER` | Yes | Username | - | `awsuser` |
-| `REDSHIFT_PASSWORD` | Yes | Password | - | `your-password` |
+| `POSTGRES_HOST` | Yes | Redshift cluster endpoint | - | `your-cluster.redshift.amazonaws.com` |
+| `POSTGRES_PORT` | No | Redshift port | `5439` | `5439` |
+| `POSTGRES_DATABASE` | Yes | Database name | - | `mydb` |
+| `POSTGRES_USER` | Yes | Username | - | `awsuser` |
+| `POSTGRES_PASSWORD` | Yes | Password | - | `your-password` |
 
 ---
 
@@ -997,13 +1070,17 @@ Spanner is Google's globally distributed relational database service.
 ### Docker Command
 
 ```bash
+SPANNER_PROJECT=my-project \
+SPANNER_INSTANCE=my-instance \
+SPANNER_DATABASE=mydb \
+GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
 docker run --rm -d \
   --name mcp-spanner \
   -p 3000:3000 \
-  -e SPANNER_PROJECT=my-project \
-  -e SPANNER_INSTANCE=my-instance \
-  -e SPANNER_DATABASE=mydb \
-  -e GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
+  -e SPANNER_PROJECT \
+  -e SPANNER_INSTANCE \
+  -e SPANNER_DATABASE \
+  -e GOOGLE_APPLICATION_CREDENTIALS \
   -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt spanner
@@ -1052,14 +1129,19 @@ Microsoft SQL Server is a relational database management system.
 ### Docker Command
 
 ```bash
+SQLSERVER_HOST=localhost \
+SQLSERVER_DATABASE=mydb \
+SQLSERVER_USER=sa \
+SQLSERVER_PASSWORD=your-password \
+SQLSERVER_PORT=1433 \
 docker run --rm -d \
   --name mcp-sqlserver \
   -p 3000:3000 \
-  -e SQLSERVER_HOST=localhost \
-  -e SQLSERVER_DATABASE=mydb \
-  -e SQLSERVER_USER=sa \
-  -e SQLSERVER_PASSWORD=your-password \
-  -e SQLSERVER_PORT=1433 \
+  -e SQLSERVER_HOST \
+  -e SQLSERVER_DATABASE \
+  -e SQLSERVER_USER \
+  -e SQLSERVER_PASSWORD \
+  -e SQLSERVER_PORT \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt mssql
 ```
@@ -1110,12 +1192,12 @@ SQLite is a lightweight, file-based relational database.
 ### Docker Command
 
 ```bash
-#!/bin/bash
+SQLITE_FILE=/data/mydb.sqlite \
 docker run --rm -d \
   --name mcp-sqlite \
   -p 3000:3000 \
   -v /path/to/mydb.sqlite:/data/mydb.sqlite \
-  -e SQLITE_FILE=/data/mydb.sqlite \
+  -e SQLITE_FILE \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt sqlite
 ```
@@ -1155,14 +1237,19 @@ TiDB is a distributed SQL database.
 ### Docker Command
 
 ```bash
+TIDB_HOST=localhost \
+TIDB_DATABASE=mydb \
+TIDB_USER=root \
+TIDB_PASSWORD=your-password \
+TIDB_PORT=4000 \
 docker run --rm -d \
   --name mcp-tidb \
   -p 3000:3000 \
-  -e TIDB_HOST=localhost \
-  -e TIDB_DATABASE=mydb \
-  -e TIDB_USER=root \
-  -e TIDB_PASSWORD=your-password \
-  -e TIDB_PORT=4000 \
+  -e TIDB_HOST \
+  -e TIDB_DATABASE \
+  -e TIDB_USER \
+  -e TIDB_PASSWORD \
+  -e TIDB_PORT \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt tidb
 ```
@@ -1212,12 +1299,15 @@ Valkey is an open-source in-memory data store, forked from Redis.
 ### Docker Command
 
 ```bash
+VALKEY_HOST=localhost \
+VALKEY_PORT=6379 \
+VALKEY_PASSWORD=your-password \
 docker run --rm -d \
   --name mcp-valkey \
   -p 3000:3000 \
-  -e VALKEY_HOST=localhost \
-  -e VALKEY_PORT=6379 \
-  -e VALKEY_PASSWORD=your-password \
+  -e VALKEY_HOST \
+  -e VALKEY_PORT \
+  -e VALKEY_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt valkey
 ```
