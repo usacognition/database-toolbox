@@ -1174,6 +1174,7 @@ SQLite is a lightweight, file-based relational database.
 ### Docker Command
 
 ```bash
+#!/bin/bash
 docker run --rm -d \
   --name mcp-sqlite \
   -p 3000:3000 \
@@ -1192,7 +1193,6 @@ docker run --rm -d \
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-
         "-v", "/path/to/mydb.sqlite:/data/mydb.sqlite",
         "-e", "SQLITE_FILE",
         "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
