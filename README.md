@@ -20,7 +20,18 @@ All database images use the official Google Database Toolbox as the base:
 us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest
 ```
 
-Each database configuration runs this image with the `--prebuilt` flag and the appropriate source type to automatically load the necessary tools. For MCP mode, the `--stdio` flag is also required.
+Each database configuration runs this image with either:
+
+- The `--prebuilt` flag for databases with built-in support
+- The `--tools-file` flag for databases requiring custom configuration files
+
+For MCP mode, the `--stdio` flag is also required.
+
+**Databases with prebuilt configurations:**
+AlloyDB, BigQuery, Cloud SQL (MySQL, PostgreSQL, SQL Server), Dataplex, Firestore, Looker, MySQL, PostgreSQL, Spanner, SQL Server
+
+**Databases requiring custom configuration files:**
+Bigtable, Couchbase, Dgraph, MongoDB, Neo4j, Redis, Redshift, SQLite, TiDB, Valkey
 
 ## 📋 Supported Databases
 
@@ -186,6 +197,8 @@ docker run --rm -d \
 
 Bigtable is a low-latency NoSQL database service for machine learning and operational analytics.
 
+> **Note**: Bigtable requires a custom tools configuration file. Create a `bigtable.yaml` file with your specific tools configuration.
+
 ### Docker Command
 
 ```bash
@@ -202,7 +215,8 @@ docker run --rm -d \
   -e GOOGLE_APPLICATION_CREDENTIALS \
   -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt bigtable
+  -v /path/to/bigtable.yaml:/config/bigtable.yaml \
+  --tools-file /config/bigtable.yaml
 ```
 
 ### MCP Client Configuration
@@ -218,7 +232,8 @@ docker run --rm -d \
     "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
     "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--prebuilt", "bigtable",
+    "-v", "/path/to/bigtable.yaml:/config/bigtable.yaml",
+    "--tools-file", "/config/bigtable.yaml",
     "--stdio"
   ],
   "env": {
@@ -446,6 +461,8 @@ docker run --rm -d \
 
 Couchbase is a distributed NoSQL database.
 
+> **Note**: Couchbase requires a custom tools configuration file. Create a `couchbase.yaml` file with your specific tools configuration.
+
 ### Docker Command
 
 ```bash
@@ -461,7 +478,8 @@ docker run --rm -d \
   -e COUCHBASE_USERNAME \
   -e COUCHBASE_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt couchbase
+  -v /path/to/couchbase.yaml:/config/couchbase.yaml \
+  --tools-file /config/couchbase.yaml
 ```
 
 ### MCP Client Configuration
@@ -476,7 +494,8 @@ docker run --rm -d \
     "-e", "COUCHBASE_USERNAME",
     "-e", "COUCHBASE_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--prebuilt", "couchbase",
+    "-v", "/path/to/couchbase.yaml:/config/couchbase.yaml",
+    "--tools-file", "/config/couchbase.yaml",
     "--stdio"
   ],
   "env": {
@@ -558,6 +577,8 @@ docker run --rm -d \
 
 Dgraph is a distributed graph database built for production.
 
+> **Note**: Dgraph requires a custom tools configuration file. Create a `dgraph.yaml` file with your specific tools configuration.
+
 ### Docker Command
 
 ```bash
@@ -569,7 +590,8 @@ docker run --rm -d \
   -e DGRAPH_HOST \
   -e DGRAPH_PORT \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt dgraph
+  -v /path/to/dgraph.yaml:/config/dgraph.yaml \
+  --tools-file /config/dgraph.yaml
 ```
 
 ### MCP Client Configuration
@@ -582,7 +604,8 @@ docker run --rm -d \
     "-e", "DGRAPH_HOST",
     "-e", "DGRAPH_PORT",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--prebuilt", "dgraph",
+    "-v", "/path/to/dgraph.yaml:/config/dgraph.yaml",
+    "--tools-file", "/config/dgraph.yaml",
     "--stdio"
   ],
   "env": {
@@ -712,6 +735,8 @@ docker run --rm -d \
 
 MongoDB is a document-oriented NoSQL database.
 
+> **Note**: MongoDB requires a custom tools configuration file. Create a `mongodb.yaml` file with your specific tools configuration.
+
 ### Docker Command
 
 ```bash
@@ -727,7 +752,8 @@ docker run --rm -d \
   -e MONGODB_USERNAME \
   -e MONGODB_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt mongodb
+  -v /path/to/mongodb.yaml:/config/mongodb.yaml \
+  --tools-file /config/mongodb.yaml
 ```
 
 ### MCP Client Configuration
@@ -742,7 +768,8 @@ docker run --rm -d \
     "-e", "MONGODB_USERNAME",
     "-e", "MONGODB_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--prebuilt", "mongodb",
+    "-v", "/path/to/mongodb.yaml:/config/mongodb.yaml",
+    "--tools-file", "/config/mongodb.yaml",
     "--stdio"
   ],
   "env": {
@@ -831,6 +858,8 @@ docker run --rm -d \
 
 Neo4j is a graph database management system.
 
+> **Note**: Neo4j requires a custom tools configuration file. Create a `neo4j.yaml` file with your specific tools configuration.
+
 ### Docker Command
 
 ```bash
@@ -846,7 +875,8 @@ docker run --rm -d \
   -e NEO4J_PASSWORD \
   -e NEO4J_DATABASE \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt neo4j
+  -v /path/to/neo4j.yaml:/config/neo4j.yaml \
+  --tools-file /config/neo4j.yaml
 ```
 
 ### MCP Client Configuration
@@ -861,7 +891,8 @@ docker run --rm -d \
     "-e", "NEO4J_PASSWORD",
     "-e", "NEO4J_DATABASE",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--prebuilt", "neo4j",
+    "-v", "/path/to/neo4j.yaml:/config/neo4j.yaml",
+    "--tools-file", "/config/neo4j.yaml",
     "--stdio"
   ],
   "env": {
@@ -951,6 +982,8 @@ docker run --rm -d \
 
 Redis is an in-memory data structure store.
 
+> **Note**: Redis requires a custom tools configuration file. Create a `redis.yaml` file with your specific tools configuration.
+
 ### Docker Command
 
 ```bash
@@ -964,7 +997,8 @@ docker run --rm -d \
   -e REDIS_PORT \
   -e REDIS_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt redis
+  -v /path/to/redis.yaml:/config/redis.yaml \
+  --tools-file /config/redis.yaml
 ```
 
 ### MCP Client Configuration
@@ -978,7 +1012,8 @@ docker run --rm -d \
     "-e", "REDIS_PORT",
     "-e", "REDIS_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--prebuilt", "redis",
+    "-v", "/path/to/redis.yaml:/config/redis.yaml",
+    "--tools-file", "/config/redis.yaml",
     "--stdio"
   ],
   "env": {
@@ -1253,6 +1288,8 @@ docker run --rm -d \
 
 SQLite is a lightweight, file-based relational database.
 
+> **Note**: SQLite requires a custom tools configuration file. Create a `sqlite.yaml` file with your specific tools configuration.
+
 ### Docker Command
 
 ```bash
@@ -1263,7 +1300,8 @@ docker run --rm -d \
   -v /path/to/mydb.sqlite:/data/mydb.sqlite \
   -e SQLITE_FILE \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt sqlite
+  -v /path/to/sqlite.yaml:/config/sqlite.yaml \
+  --tools-file /config/sqlite.yaml
 ```
 
 ### MCP Client Configuration
@@ -1276,7 +1314,8 @@ docker run --rm -d \
     "-v", "/path/to/mydb.sqlite:/data/mydb.sqlite",
     "-e", "SQLITE_FILE",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--prebuilt", "sqlite",
+    "-v", "/path/to/sqlite.yaml:/config/sqlite.yaml",
+    "--tools-file", "/config/sqlite.yaml",
     "--stdio"
   ],
   "env": {
@@ -1298,6 +1337,8 @@ docker run --rm -d \
 
 TiDB is a distributed SQL database.
 
+> **Note**: TiDB requires a custom tools configuration file. Create a `tidb.yaml` file with your specific tools configuration.
+
 ### Docker Command
 
 ```bash
@@ -1315,7 +1356,8 @@ docker run --rm -d \
   -e TIDB_PASSWORD \
   -e TIDB_PORT \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt tidb
+  -v /path/to/tidb.yaml:/config/tidb.yaml \
+  --tools-file /config/tidb.yaml
 ```
 
 ### MCP Client Configuration
@@ -1331,7 +1373,8 @@ docker run --rm -d \
     "-e", "TIDB_PASSWORD",
     "-e", "TIDB_PORT",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--prebuilt", "tidb",
+    "-v", "/path/to/tidb.yaml:/config/tidb.yaml",
+    "--tools-file", "/config/tidb.yaml",
     "--stdio"
   ],
   "env": {
@@ -1360,6 +1403,8 @@ docker run --rm -d \
 
 Valkey is an open-source in-memory data store, forked from Redis.
 
+> **Note**: Valkey requires a custom tools configuration file. Create a `valkey.yaml` file with your specific tools configuration.
+
 ### Docker Command
 
 ```bash
@@ -1373,7 +1418,8 @@ docker run --rm -d \
   -e VALKEY_PORT \
   -e VALKEY_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt valkey
+  -v /path/to/valkey.yaml:/config/valkey.yaml \
+  --tools-file /config/valkey.yaml
 ```
 
 ### MCP Client Configuration
@@ -1387,7 +1433,8 @@ docker run --rm -d \
     "-e", "VALKEY_PORT",
     "-e", "VALKEY_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--prebuilt", "valkey",
+    "-v", "/path/to/valkey.yaml:/config/valkey.yaml",
+    "--tools-file", "/config/valkey.yaml",
     "--stdio"
   ],
   "env": {
