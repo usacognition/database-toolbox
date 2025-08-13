@@ -1005,6 +1005,68 @@ docker run --rm -d \
 
 Amazon Redshift is a fast, scalable data warehouse that makes it simple and cost-effective to analyze all your data using standard SQL and your existing business intelligence tools.
 
+> **Note**: Redshift requires a custom tools configuration file because it doesn't support all PostgreSQL features used in the prebuilt tools (e.g., `array_agg` with `ORDER BY`).
+
+### Creating the Redshift Configuration
+
+First, create a file named `redshift.yaml` with the following content:
+
+```yaml
+tools:
+  - name: list_tables
+    description: Lists detailed schema information for tables. If table_names are provided, shows details for those specific tables; otherwise shows all tables in user schemas.
+    parameters:
+      type: object
+      properties:
+        table_names:
+          type: string
+          description: Optional comma-separated list of table names. If empty, details for all tables in user-accessible schemas will be listed.
+      required:
+        - table_names
+    steps:
+      - type: sql
+        query: |
+          SELECT 
+            c.table_schema AS schema_name,
+            c.table_name,
+            c.column_name,
+            c.ordinal_position AS column_position,
+            c.data_type,
+            c.is_nullable,
+            c.column_default
+          FROM 
+            information_schema.columns c
+          WHERE 
+            c.table_schema NOT IN ('pg_catalog', 'information_schema', 'pg_temp_1', 'pg_toast', 'pg_internal')
+            AND (
+              :table_names IS NULL 
+              OR :table_names = ''
+              OR (',' || :table_names || ',') LIKE ('%,' || c.table_name || ',%')
+            )
+          ORDER BY 
+            c.table_schema,
+            c.table_name,
+            c.ordinal_position;
+        params:
+          - name: table_names
+            type: string
+            description: Optional comma-separated list of table names
+
+  - name: execute_sql
+    description: Execute arbitrary SQL queries against the Redshift database.
+    parameters:
+      type: object
+      properties:
+        sql:
+          type: string
+          description: The SQL query to execute.
+      required:
+        - sql
+    steps:
+      - type: sql
+        query: "{{sql}}"
+```
+
 ### Docker Command
 
 ```bash
@@ -1021,8 +1083,9 @@ docker run --rm -d \
   -e POSTGRES_USER=$REDSHIFT_USER \
   -e POSTGRES_PASSWORD=$REDSHIFT_PASSWORD \
   -e POSTGRES_PORT=$REDSHIFT_PORT \
+  -v /path/to/redshift.yaml:/config/redshift.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt postgres
+  --tools-file /config/redshift.yaml
 ```
 
 ### MCP Client Configuration
@@ -1037,8 +1100,9 @@ docker run --rm -d \
     "-e", "POSTGRES_USER",
     "-e", "POSTGRES_PASSWORD",
     "-e", "POSTGRES_PORT",
+    "-v", "/path/to/redshift.yaml:/config/redshift.yaml",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--prebuilt", "postgres",
+    "--tools-file", "/config/redshift.yaml",
     "--stdio"
   ],
   "env": {
