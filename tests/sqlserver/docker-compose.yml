@@ -1,0 +1,17 @@
+services:
+  # SQL Server Database (x86 image - will use emulation on ARM64)
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2025-latest
+    platform: linux/amd64  # Force x86_64 platform
+    container_name: test-sqlserver-db
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: YourStrong!Password123
+      MSSQL_PID: Developer
+    ports:
+      - "1433:1433"
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "YourStrong!Password123", "-Q", "SELECT 1", "-C"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
