@@ -1,0 +1,9 @@
+services:
+  # Firestore Emulator
+  firestore:
+    image: mtlynch/firestore-emulator:latest
+    container_name: test-firestore-emulator
+    ports:
+      - "8080:8080"
+    environment:
+      FIRESTORE_PROJECT_ID: test-project

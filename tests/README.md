@@ -12,6 +12,10 @@ cd postgres/
 # Test MySQL
 cd mysql/
 ./test.sh
+
+# Test Spanner (emulator)
+cd spanner/
+./test.sh
 ```
 
 ## What It Tests
@@ -30,8 +34,12 @@ tests/
 │   ├── docker-compose.yml  # PostgreSQL container only
 │   ├── test.sh            # Test runner script
 │   └── test_mcp.py        # Python script to test MCP protocol
-└── mysql/
-    ├── docker-compose.yml  # MySQL container only
+├── mysql/
+│   ├── docker-compose.yml  # MySQL container only
+│   ├── test.sh            # Test runner script
+│   └── test_mcp.py        # Python script to test MCP protocol
+└── spanner/
+    ├── docker-compose.yml  # Spanner emulator container
     ├── test.sh            # Test runner script
     └── test_mcp.py        # Python script to test MCP protocol
 ```
@@ -55,3 +63,10 @@ tests/
   - Azure SQL Edge (ARM-native): Has TLS certificate issues and missing tools
   - SQL Server 2022/2025 (x86 emulated): Crashes on startup due to SQLPAL compatibility issues
   - Additionally, the MCP server expects `MSSQL_*` environment variables (not `SQLSERVER_*` as documented)
+
+- **Google Cloud Services**: Most `--prebuilt` options are for Google Cloud services that require:
+  - Valid Google Cloud credentials (service account JSON)
+  - Actual cloud resources (projects, instances, databases)
+  - Cannot be tested with local emulators except for Spanner
+  
+- **Firestore Emulator**: The `--prebuilt firestore` option requires Google Cloud credentials even when using the emulator, making local testing impossible
