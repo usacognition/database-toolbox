@@ -206,6 +206,7 @@ BIGTABLE_PROJECT=my-project \
 BIGTABLE_INSTANCE=my-instance \
 BIGTABLE_TABLE=my-table \
 GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
+BIGTABLE_TOOLS_FILE=/path/to/bigtable.yaml \
 docker run --rm -d \
   --name mcp-bigtable \
   -p 3000:3000 \
@@ -214,8 +215,8 @@ docker run --rm -d \
   -e BIGTABLE_TABLE \
   -e GOOGLE_APPLICATION_CREDENTIALS \
   -v /path/to/service-account.json:/creds/sa.json \
+  -v $BIGTABLE_TOOLS_FILE:/config/bigtable.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  -v /path/to/bigtable.yaml:/config/bigtable.yaml \
   --tools-file /config/bigtable.yaml
 ```
 
@@ -231,8 +232,8 @@ docker run --rm -d \
     "-e", "BIGTABLE_TABLE",
     "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
     "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
+    "-v", "${BIGTABLE_TOOLS_FILE}:/config/bigtable.yaml",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "-v", "/path/to/bigtable.yaml:/config/bigtable.yaml",
     "--tools-file", "/config/bigtable.yaml",
     "--stdio"
   ],
@@ -240,7 +241,8 @@ docker run --rm -d \
     "BIGTABLE_PROJECT": "my-project",
     "BIGTABLE_INSTANCE": "my-instance",
     "BIGTABLE_TABLE": "my-table",
-    "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/service-account.json"
+    "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/service-account.json",
+    "BIGTABLE_TOOLS_FILE": "/path/to/bigtable.yaml"
   }
 }
 ```
@@ -253,6 +255,7 @@ docker run --rm -d \
 | `BIGTABLE_INSTANCE` | Yes | Bigtable instance ID | - | `my-instance` |
 | `BIGTABLE_TABLE` | Yes | Bigtable table name | - | `my-table` |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Yes* | Path to service account JSON | - | `/creds/sa.json` |
+| `BIGTABLE_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/bigtable.yaml` |
 
 ---
 
@@ -470,6 +473,7 @@ COUCHBASE_HOST=localhost \
 COUCHBASE_BUCKET=my-bucket \
 COUCHBASE_USERNAME=Administrator \
 COUCHBASE_PASSWORD=your-password \
+COUCHBASE_TOOLS_FILE=/path/to/couchbase.yaml \
 docker run --rm -d \
   --name mcp-couchbase \
   -p 3000:3000 \
@@ -477,8 +481,8 @@ docker run --rm -d \
   -e COUCHBASE_BUCKET \
   -e COUCHBASE_USERNAME \
   -e COUCHBASE_PASSWORD \
+  -v $COUCHBASE_TOOLS_FILE:/config/couchbase.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  -v /path/to/couchbase.yaml:/config/couchbase.yaml \
   --tools-file /config/couchbase.yaml
 ```
 
@@ -493,8 +497,8 @@ docker run --rm -d \
     "-e", "COUCHBASE_BUCKET",
     "-e", "COUCHBASE_USERNAME",
     "-e", "COUCHBASE_PASSWORD",
+    "-v", "${COUCHBASE_TOOLS_FILE}:/config/couchbase.yaml",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "-v", "/path/to/couchbase.yaml:/config/couchbase.yaml",
     "--tools-file", "/config/couchbase.yaml",
     "--stdio"
   ],
@@ -502,7 +506,8 @@ docker run --rm -d \
     "COUCHBASE_HOST": "localhost",
     "COUCHBASE_BUCKET": "my-bucket",
     "COUCHBASE_USERNAME": "Administrator",
-    "COUCHBASE_PASSWORD": "your-password"
+    "COUCHBASE_PASSWORD": "your-password",
+    "COUCHBASE_TOOLS_FILE": "/path/to/couchbase.yaml"
   }
 }
 ```
@@ -516,6 +521,7 @@ docker run --rm -d \
 | `COUCHBASE_BUCKET` | Yes | Bucket name | - | `my-bucket` |
 | `COUCHBASE_USERNAME` | Yes | Username | - | `Administrator` |
 | `COUCHBASE_PASSWORD` | Yes | Password | - | `your-password` |
+| `COUCHBASE_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/couchbase.yaml` |
 
 ---
 
@@ -584,13 +590,14 @@ Dgraph is a distributed graph database built for production.
 ```bash
 DGRAPH_HOST=localhost \
 DGRAPH_PORT=9080 \
+DGRAPH_TOOLS_FILE=/path/to/dgraph.yaml \
 docker run --rm -d \
   --name mcp-dgraph \
   -p 3000:3000 \
   -e DGRAPH_HOST \
   -e DGRAPH_PORT \
+  -v $DGRAPH_TOOLS_FILE:/config/dgraph.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  -v /path/to/dgraph.yaml:/config/dgraph.yaml \
   --tools-file /config/dgraph.yaml
 ```
 
@@ -603,14 +610,15 @@ docker run --rm -d \
     "run", "--rm", "-i",
     "-e", "DGRAPH_HOST",
     "-e", "DGRAPH_PORT",
+    "-v", "${DGRAPH_TOOLS_FILE}:/config/dgraph.yaml",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "-v", "/path/to/dgraph.yaml:/config/dgraph.yaml",
     "--tools-file", "/config/dgraph.yaml",
     "--stdio"
   ],
   "env": {
     "DGRAPH_HOST": "localhost",
-    "DGRAPH_PORT": "9080"
+    "DGRAPH_PORT": "9080",
+    "DGRAPH_TOOLS_FILE": "/path/to/dgraph.yaml"
   }
 }
 ```
@@ -622,6 +630,7 @@ docker run --rm -d \
 | `DGRAPH_HOST` | Yes | Dgraph host | - | `localhost` |
 | `DGRAPH_PORT` | No | Dgraph gRPC port | `9080` | `9080` |
 | `DGRAPH_API_KEY` | No | API key if using Dgraph Cloud | - | `your-api-key` |
+| `DGRAPH_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/dgraph.yaml` |
 
 ---
 
@@ -744,6 +753,7 @@ MONGODB_URI=mongodb://localhost:27017 \
 MONGODB_DATABASE=mydb \
 MONGODB_USERNAME=admin \
 MONGODB_PASSWORD=your-password \
+MONGODB_TOOLS_FILE=/path/to/mongodb.yaml \
 docker run --rm -d \
   --name mcp-mongodb \
   -p 3000:3000 \
@@ -751,8 +761,8 @@ docker run --rm -d \
   -e MONGODB_DATABASE \
   -e MONGODB_USERNAME \
   -e MONGODB_PASSWORD \
+  -v $MONGODB_TOOLS_FILE:/config/mongodb.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  -v /path/to/mongodb.yaml:/config/mongodb.yaml \
   --tools-file /config/mongodb.yaml
 ```
 
@@ -767,8 +777,8 @@ docker run --rm -d \
     "-e", "MONGODB_DATABASE",
     "-e", "MONGODB_USERNAME",
     "-e", "MONGODB_PASSWORD",
+    "-v", "${MONGODB_TOOLS_FILE}:/config/mongodb.yaml",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "-v", "/path/to/mongodb.yaml:/config/mongodb.yaml",
     "--tools-file", "/config/mongodb.yaml",
     "--stdio"
   ],
@@ -776,7 +786,8 @@ docker run --rm -d \
     "MONGODB_URI": "mongodb://localhost:27017",
     "MONGODB_DATABASE": "mydb",
     "MONGODB_USERNAME": "admin",
-    "MONGODB_PASSWORD": "your-password"
+    "MONGODB_PASSWORD": "your-password",
+    "MONGODB_TOOLS_FILE": "/path/to/mongodb.yaml"
   }
 }
 ```
@@ -789,6 +800,7 @@ docker run --rm -d \
 | `MONGODB_DATABASE` | Yes | Database name | - | `mydb` |
 | `MONGODB_USERNAME` | No | Username | - | `admin` |
 | `MONGODB_PASSWORD` | No | Password | - | `your-password` |
+| `MONGODB_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/mongodb.yaml` |
 
 ---
 
@@ -867,6 +879,7 @@ NEO4J_URI=bolt://localhost:7687 \
 NEO4J_USERNAME=neo4j \
 NEO4J_PASSWORD=your-password \
 NEO4J_DATABASE=neo4j \
+NEO4J_TOOLS_FILE=/path/to/neo4j.yaml \
 docker run --rm -d \
   --name mcp-neo4j \
   -p 3000:3000 \
@@ -874,8 +887,8 @@ docker run --rm -d \
   -e NEO4J_USERNAME \
   -e NEO4J_PASSWORD \
   -e NEO4J_DATABASE \
+  -v $NEO4J_TOOLS_FILE:/config/neo4j.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  -v /path/to/neo4j.yaml:/config/neo4j.yaml \
   --tools-file /config/neo4j.yaml
 ```
 
@@ -890,8 +903,8 @@ docker run --rm -d \
     "-e", "NEO4J_USERNAME",
     "-e", "NEO4J_PASSWORD",
     "-e", "NEO4J_DATABASE",
+    "-v", "${NEO4J_TOOLS_FILE}:/config/neo4j.yaml",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "-v", "/path/to/neo4j.yaml:/config/neo4j.yaml",
     "--tools-file", "/config/neo4j.yaml",
     "--stdio"
   ],
@@ -899,7 +912,8 @@ docker run --rm -d \
     "NEO4J_URI": "bolt://localhost:7687",
     "NEO4J_USERNAME": "neo4j",
     "NEO4J_PASSWORD": "your-password",
-    "NEO4J_DATABASE": "neo4j"
+    "NEO4J_DATABASE": "neo4j",
+    "NEO4J_TOOLS_FILE": "/path/to/neo4j.yaml"
   }
 }
 ```
@@ -912,6 +926,7 @@ docker run --rm -d \
 | `NEO4J_USERNAME` | Yes | Username | - | `neo4j` |
 | `NEO4J_PASSWORD` | Yes | Password | - | `your-password` |
 | `NEO4J_DATABASE` | No | Database name | `neo4j` | `neo4j` |
+| `NEO4J_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/neo4j.yaml` |
 
 ---
 
@@ -990,14 +1005,15 @@ Redis is an in-memory data structure store.
 REDIS_HOST=localhost \
 REDIS_PORT=6379 \
 REDIS_PASSWORD=your-password \
+REDIS_TOOLS_FILE=/path/to/redis.yaml \
 docker run --rm -d \
   --name mcp-redis \
   -p 3000:3000 \
   -e REDIS_HOST \
   -e REDIS_PORT \
   -e REDIS_PASSWORD \
+  -v $REDIS_TOOLS_FILE:/config/redis.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  -v /path/to/redis.yaml:/config/redis.yaml \
   --tools-file /config/redis.yaml
 ```
 
@@ -1011,15 +1027,16 @@ docker run --rm -d \
     "-e", "REDIS_HOST",
     "-e", "REDIS_PORT",
     "-e", "REDIS_PASSWORD",
+    "-v", "${REDIS_TOOLS_FILE}:/config/redis.yaml",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "-v", "/path/to/redis.yaml:/config/redis.yaml",
     "--tools-file", "/config/redis.yaml",
     "--stdio"
   ],
   "env": {
     "REDIS_HOST": "localhost",
     "REDIS_PORT": "6379",
-    "REDIS_PASSWORD": "your-password"
+    "REDIS_PASSWORD": "your-password",
+    "REDIS_TOOLS_FILE": "/path/to/redis.yaml"
   }
 }
 ```
@@ -1033,6 +1050,7 @@ docker run --rm -d \
 | `REDIS_PASSWORD` | No | Password | - | `your-password` |
 | `REDIS_DB` | No | Database number | `0` | `0` |
 | `REDIS_USERNAME` | No | Username (Redis 6+) | - | `default` |
+| `REDIS_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/redis.yaml` |
 
 ---
 
@@ -1110,6 +1128,7 @@ REDSHIFT_DATABASE=mydb \
 REDSHIFT_USER=awsuser \
 REDSHIFT_PASSWORD=your-password \
 REDSHIFT_PORT=5439 \
+REDSHIFT_TOOLS_FILE=/path/to/redshift.yaml \
 docker run --rm -d \
   --name mcp-redshift \
   -p 3000:3000 \
@@ -1118,7 +1137,7 @@ docker run --rm -d \
   -e POSTGRES_USER=$REDSHIFT_USER \
   -e POSTGRES_PASSWORD=$REDSHIFT_PASSWORD \
   -e POSTGRES_PORT=$REDSHIFT_PORT \
-  -v /path/to/redshift.yaml:/config/redshift.yaml \
+  -v $REDSHIFT_TOOLS_FILE:/config/redshift.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --tools-file /config/redshift.yaml
 ```
@@ -1135,7 +1154,7 @@ docker run --rm -d \
     "-e", "POSTGRES_USER",
     "-e", "POSTGRES_PASSWORD",
     "-e", "POSTGRES_PORT",
-    "-v", "/path/to/redshift.yaml:/config/redshift.yaml",
+    "-v", "${REDSHIFT_TOOLS_FILE}:/config/redshift.yaml",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
     "--tools-file", "/config/redshift.yaml",
     "--stdio"
@@ -1145,7 +1164,8 @@ docker run --rm -d \
     "POSTGRES_DATABASE": "mydb",
     "POSTGRES_USER": "awsuser",
     "POSTGRES_PASSWORD": "your-password",
-    "POSTGRES_PORT": "5439"
+    "POSTGRES_PORT": "5439",
+    "REDSHIFT_TOOLS_FILE": "/path/to/redshift.yaml"
   }
 }
 ```
@@ -1159,6 +1179,7 @@ docker run --rm -d \
 | `POSTGRES_DATABASE` | Yes | Database name | - | `mydb` |
 | `POSTGRES_USER` | Yes | Username | - | `awsuser` |
 | `POSTGRES_PASSWORD` | Yes | Password | - | `your-password` |
+| `REDSHIFT_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/redshift.yaml` |
 
 ---
 
@@ -1294,13 +1315,14 @@ SQLite is a lightweight, file-based relational database.
 
 ```bash
 SQLITE_FILE=/data/mydb.sqlite \
+SQLITE_TOOLS_FILE=/path/to/sqlite.yaml \
 docker run --rm -d \
   --name mcp-sqlite \
   -p 3000:3000 \
   -v /path/to/mydb.sqlite:/data/mydb.sqlite \
   -e SQLITE_FILE \
+  -v $SQLITE_TOOLS_FILE:/config/sqlite.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  -v /path/to/sqlite.yaml:/config/sqlite.yaml \
   --tools-file /config/sqlite.yaml
 ```
 
@@ -1313,13 +1335,14 @@ docker run --rm -d \
     "run", "--rm", "-i",
     "-v", "/path/to/mydb.sqlite:/data/mydb.sqlite",
     "-e", "SQLITE_FILE",
+    "-v", "${SQLITE_TOOLS_FILE}:/config/sqlite.yaml",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "-v", "/path/to/sqlite.yaml:/config/sqlite.yaml",
     "--tools-file", "/config/sqlite.yaml",
     "--stdio"
   ],
   "env": {
-    "SQLITE_FILE": "/data/mydb.sqlite"
+    "SQLITE_FILE": "/data/mydb.sqlite",
+    "SQLITE_TOOLS_FILE": "/path/to/sqlite.yaml"
   }
 }
 ```
@@ -1330,6 +1353,7 @@ docker run --rm -d \
 |----------|----------|-------------|---------|---------|  
 | `SQLITE_FILE` | Yes | Path to SQLite file | - | `/data/mydb.sqlite` |
 | `SQLITE_READONLY` | No | Open in read-only mode | `false` | `true`, `false` |
+| `SQLITE_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/sqlite.yaml` |
 
 ---
 
@@ -1347,6 +1371,7 @@ TIDB_DATABASE=mydb \
 TIDB_USER=root \
 TIDB_PASSWORD=your-password \
 TIDB_PORT=4000 \
+TIDB_TOOLS_FILE=/path/to/tidb.yaml \
 docker run --rm -d \
   --name mcp-tidb \
   -p 3000:3000 \
@@ -1355,8 +1380,8 @@ docker run --rm -d \
   -e TIDB_USER \
   -e TIDB_PASSWORD \
   -e TIDB_PORT \
+  -v $TIDB_TOOLS_FILE:/config/tidb.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  -v /path/to/tidb.yaml:/config/tidb.yaml \
   --tools-file /config/tidb.yaml
 ```
 
@@ -1372,8 +1397,8 @@ docker run --rm -d \
     "-e", "TIDB_USER",
     "-e", "TIDB_PASSWORD",
     "-e", "TIDB_PORT",
+    "-v", "${TIDB_TOOLS_FILE}:/config/tidb.yaml",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "-v", "/path/to/tidb.yaml:/config/tidb.yaml",
     "--tools-file", "/config/tidb.yaml",
     "--stdio"
   ],
@@ -1382,7 +1407,8 @@ docker run --rm -d \
     "TIDB_DATABASE": "mydb",
     "TIDB_USER": "root",
     "TIDB_PASSWORD": "your-password",
-    "TIDB_PORT": "4000"
+    "TIDB_PORT": "4000",
+    "TIDB_TOOLS_FILE": "/path/to/tidb.yaml"
   }
 }
 ```
@@ -1396,6 +1422,7 @@ docker run --rm -d \
 | `TIDB_DATABASE` | Yes | Database name | - | `mydb` |
 | `TIDB_USER` | Yes | Username | - | `root` |
 | `TIDB_PASSWORD` | No | Password | - | `your-password` |
+| `TIDB_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/tidb.yaml` |
 
 ---
 
@@ -1411,14 +1438,15 @@ Valkey is an open-source in-memory data store, forked from Redis.
 VALKEY_HOST=localhost \
 VALKEY_PORT=6379 \
 VALKEY_PASSWORD=your-password \
+VALKEY_TOOLS_FILE=/path/to/valkey.yaml \
 docker run --rm -d \
   --name mcp-valkey \
   -p 3000:3000 \
   -e VALKEY_HOST \
   -e VALKEY_PORT \
   -e VALKEY_PASSWORD \
+  -v $VALKEY_TOOLS_FILE:/config/valkey.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  -v /path/to/valkey.yaml:/config/valkey.yaml \
   --tools-file /config/valkey.yaml
 ```
 
@@ -1432,15 +1460,16 @@ docker run --rm -d \
     "-e", "VALKEY_HOST",
     "-e", "VALKEY_PORT",
     "-e", "VALKEY_PASSWORD",
+    "-v", "${VALKEY_TOOLS_FILE}:/config/valkey.yaml",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "-v", "/path/to/valkey.yaml:/config/valkey.yaml",
     "--tools-file", "/config/valkey.yaml",
     "--stdio"
   ],
   "env": {
     "VALKEY_HOST": "localhost",
     "VALKEY_PORT": "6379",
-    "VALKEY_PASSWORD": "your-password"
+    "VALKEY_PASSWORD": "your-password",
+    "VALKEY_TOOLS_FILE": "/path/to/valkey.yaml"
   }
 }
 ```
@@ -1454,6 +1483,7 @@ docker run --rm -d \
 | `VALKEY_PASSWORD` | No | Password | - | `your-password` |
 | `VALKEY_DB` | No | Database number | `0` | `0` |
 | `VALKEY_USERNAME` | No | Username | - | `default` |
+| `VALKEY_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/valkey.yaml` |
 
 ---
 
