@@ -70,3 +70,23 @@ tests/
   - Cannot be tested with local emulators except for Spanner
   
 - **Firestore Emulator**: The `--prebuilt firestore` option requires Google Cloud credentials even when using the emulator, making local testing impossible
+
+## Complete List of --prebuilt Databases
+
+### Successfully Tested ✅
+- **postgres** - Works with local PostgreSQL Docker container
+- **mysql** - Works with local MySQL Docker container
+- **spanner** - Works with Google's official Spanner emulator
+
+### Failed on ARM64 ❌
+- **mssql** (SQL Server) - No ARM64 support, emulation fails
+
+### Require Real Cloud Resources 🚫
+- **alloydb** - Google Cloud AlloyDB (no local emulator)
+- **bigquery** - BigQuery emulator exists but only for x86_64, MCP requires real credentials
+- **cloud-sql-mysql** - Requires actual Google Cloud SQL instance
+- **cloud-sql-postgres** - Requires actual Google Cloud SQL instance  
+- **cloud-sql-mssql** - Requires actual Google Cloud SQL instance
+- **dataplex** - Google Cloud data management service
+- **firestore** - Emulator exists but MCP server requires real credentials
+- **looker** - Business intelligence platform, not a database
