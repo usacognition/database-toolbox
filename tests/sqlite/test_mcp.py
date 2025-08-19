@@ -131,6 +131,33 @@ def test_mcp_sqlite() -> bool:
         tool_names = [tool.get("name", "unknown") for tool in tools]
         print("✓ Available tools: " + ", ".join(tool_names))
 
+        # Execute a simple query to validate tool calls
+        if "execute_sql" in tool_names:
+            execute_sql_request = {
+                "jsonrpc": "2.0",
+                "method": "tools/call",
+                "params": {
+                    "name": "execute_sql",
+                    "arguments": {"sql": "SELECT 1 AS one"},
+                },
+                "id": 3,
+            }
+            process.stdin.write(json.dumps(execute_sql_request) + "\n")
+            process.stdin.flush()
+
+            exec_line = process.stdout.readline()
+            if exec_line:
+                try:
+                    exec_resp = json.loads(exec_line)
+                    if "result" in exec_resp:
+                        print("✓ execute_sql call successful")
+                    else:
+                        print(f"✗ execute_sql call failed: {exec_resp.get('error', 'Unknown error')}")
+                        return False
+                except json.JSONDecodeError:
+                    print(f"✗ execute_sql returned non-JSON: {exec_line[:200]}")
+                    return False
+
         return len(tools) > 0
 
     except Exception as e:
