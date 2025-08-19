@@ -35,12 +35,12 @@ def test_mcp_redshift() -> bool:
     env_path = script_dir / ".env"
     env_file = load_env_file(env_path)
 
-    # Required configuration
-    redshift_host = env_file.get("REDSHIFT_HOST", "").strip()
-    redshift_database = env_file.get("REDSHIFT_DATABASE", "").strip()
-    redshift_user = env_file.get("REDSHIFT_USER", "").strip()
-    redshift_password = env_file.get("REDSHIFT_PASSWORD", "").strip()
-    redshift_port = env_file.get("REDSHIFT_PORT", "5439").strip() or "5439"
+    # Allow POSTGRES_* aliases for local testing
+    redshift_host = (env_file.get("REDSHIFT_HOST") or env_file.get("POSTGRES_HOST") or "").strip()
+    redshift_database = (env_file.get("REDSHIFT_DATABASE") or env_file.get("POSTGRES_DATABASE") or "").strip()
+    redshift_user = (env_file.get("REDSHIFT_USER") or env_file.get("POSTGRES_USER") or "").strip()
+    redshift_password = (env_file.get("REDSHIFT_PASSWORD") or env_file.get("POSTGRES_PASSWORD") or "").strip()
+    redshift_port = (env_file.get("REDSHIFT_PORT") or env_file.get("POSTGRES_PORT") or "5439").strip() or "5439"
     redshift_tools_file = env_file.get("REDSHIFT_TOOLS_FILE", "").strip()
 
     missing = [name for name, val in [

@@ -8,7 +8,7 @@ cd "$SCRIPT_DIR"
 echo "=== Redshift MCP Server Test ==="
 echo
 
-echo "1. Testing MCP server (stdio) using tools file and .env..."
+echo "1. Testing MCP server (stdio) using tools file and .env (real Redshift)..."
 python3 test_mcp.py
 
 echo -e "\n2. Test completed!"
