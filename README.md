@@ -78,9 +78,8 @@ ALLOYDB_INSTANCE=my-instance \
 ALLOYDB_DATABASE=mydb \
 ALLOYDB_USER=postgres \
 ALLOYDB_PASSWORD=your-password \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-alloydb \
-  -p 3000:3000 \
   -e ALLOYDB_PROJECT \
   -e ALLOYDB_REGION \
   -e ALLOYDB_CLUSTER \
@@ -89,7 +88,8 @@ docker run --rm -d \
   -e ALLOYDB_USER \
   -e ALLOYDB_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt alloydb
+  --prebuilt alloydb \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -146,15 +146,15 @@ BigQuery is Google Cloud's fully managed, petabyte-scale analytics data warehous
 BIGQUERY_PROJECT=my-project \
 BIGQUERY_DATASET=my_dataset \
 GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-bigquery \
-  -p 3000:3000 \
   -e BIGQUERY_PROJECT \
   -e BIGQUERY_DATASET \
   -e GOOGLE_APPLICATION_CREDENTIALS \
   -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt bigquery
+  --prebuilt bigquery \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -207,9 +207,8 @@ BIGTABLE_INSTANCE=my-instance \
 BIGTABLE_TABLE=my-table \
 GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
 BIGTABLE_TOOLS_FILE=/path/to/bigtable.yaml \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-bigtable \
-  -p 3000:3000 \
   -e BIGTABLE_PROJECT \
   -e BIGTABLE_INSTANCE \
   -e BIGTABLE_TABLE \
@@ -217,7 +216,8 @@ docker run --rm -d \
   -v /path/to/service-account.json:/creds/sa.json \
   -v $BIGTABLE_TOOLS_FILE:/config/bigtable.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --tools-file /config/bigtable.yaml
+  --tools-file /config/bigtable.yaml \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -271,18 +271,20 @@ CLOUDSQL_MYSQL_REGION=us-central1 \
 CLOUDSQL_MYSQL_INSTANCE=my-instance \
 CLOUDSQL_MYSQL_DATABASE=mydb \
 CLOUDSQL_MYSQL_USER=root \
+CLOUDSQL_MYSQL_IP_ADDRESS=34.133.171.252 \
 CLOUDSQL_MYSQL_PASSWORD=your-password \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-cloudsql-mysql \
-  -p 3000:3000 \
   -e CLOUDSQL_MYSQL_PROJECT \
   -e CLOUDSQL_MYSQL_REGION \
   -e CLOUDSQL_MYSQL_INSTANCE \
   -e CLOUDSQL_MYSQL_DATABASE \
   -e CLOUDSQL_MYSQL_USER \
+  -e CLOUDSQL_MYSQL_IP_ADDRESS \
   -e CLOUDSQL_MYSQL_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt cloud-sql-mysql
+  --prebuilt cloud-sql-mysql \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -297,6 +299,7 @@ docker run --rm -d \
     "-e", "CLOUDSQL_MYSQL_INSTANCE",
     "-e", "CLOUDSQL_MYSQL_DATABASE",
     "-e", "CLOUDSQL_MYSQL_USER",
+    "-e", "CLOUDSQL_MYSQL_IP_ADDRESS",
     "-e", "CLOUDSQL_MYSQL_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
     "--prebuilt", "cloud-sql-mysql",
@@ -308,6 +311,7 @@ docker run --rm -d \
     "CLOUDSQL_MYSQL_INSTANCE": "my-instance",
     "CLOUDSQL_MYSQL_DATABASE": "mydb",
     "CLOUDSQL_MYSQL_USER": "root",
+    "CLOUDSQL_MYSQL_IP_ADDRESS": "34.133.171.252",
     "CLOUDSQL_MYSQL_PASSWORD": "your-password"
   }
 }
@@ -322,6 +326,7 @@ docker run --rm -d \
 | `CLOUDSQL_MYSQL_INSTANCE` | Yes | Cloud SQL instance name | - | `my-instance` |
 | `CLOUDSQL_MYSQL_DATABASE` | Yes | Database name | - | `mydb` |
 | `CLOUDSQL_MYSQL_USER` | Yes | Database username | - | `root` |
+| `CLOUDSQL_MYSQL_IP_ADDRESS` | Yes | Public IP address of the Cloud SQL instance | - | `34.133.171.252` |
 | `CLOUDSQL_MYSQL_PASSWORD` | Yes | Database password | - | `your-password` |
 
 ---
@@ -338,18 +343,20 @@ CLOUDSQL_POSTGRES_REGION=us-central1 \
 CLOUDSQL_POSTGRES_INSTANCE=my-instance \
 CLOUDSQL_POSTGRES_DATABASE=mydb \
 CLOUDSQL_POSTGRES_USER=postgres \
+CLOUDSQL_POSTGRES_IP_ADDRESS=34.133.171.252 \
 CLOUDSQL_POSTGRES_PASSWORD=your-password \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-cloudsql-postgres \
-  -p 3000:3000 \
   -e CLOUDSQL_POSTGRES_PROJECT \
   -e CLOUDSQL_POSTGRES_REGION \
   -e CLOUDSQL_POSTGRES_INSTANCE \
   -e CLOUDSQL_POSTGRES_DATABASE \
   -e CLOUDSQL_POSTGRES_USER \
+  -e CLOUDSQL_POSTGRES_IP_ADDRESS \
   -e CLOUDSQL_POSTGRES_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt cloud-sql-postgres
+  --prebuilt cloud-sql-postgres \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -364,6 +371,7 @@ docker run --rm -d \
     "-e", "CLOUDSQL_POSTGRES_INSTANCE",
     "-e", "CLOUDSQL_POSTGRES_DATABASE",
     "-e", "CLOUDSQL_POSTGRES_USER",
+    "-e", "CLOUDSQL_POSTGRES_IP_ADDRESS",
     "-e", "CLOUDSQL_POSTGRES_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
     "--prebuilt", "cloud-sql-postgres",
@@ -375,6 +383,7 @@ docker run --rm -d \
     "CLOUDSQL_POSTGRES_INSTANCE": "my-instance",
     "CLOUDSQL_POSTGRES_DATABASE": "mydb",
     "CLOUDSQL_POSTGRES_USER": "postgres",
+    "CLOUDSQL_POSTGRES_IP_ADDRESS": "34.133.171.252",
     "CLOUDSQL_POSTGRES_PASSWORD": "your-password"
   }
 }
@@ -389,6 +398,7 @@ docker run --rm -d \
 | `CLOUDSQL_POSTGRES_INSTANCE` | Yes | Cloud SQL instance name | - | `my-instance` |
 | `CLOUDSQL_POSTGRES_DATABASE` | Yes | Database name | - | `mydb` |
 | `CLOUDSQL_POSTGRES_USER` | Yes | Database username | - | `postgres` |
+| `CLOUDSQL_POSTGRES_IP_ADDRESS` | Yes | Public IP address of the Cloud SQL instance | - | `34.133.171.252` |
 | `CLOUDSQL_POSTGRES_PASSWORD` | Yes | Database password | - | `your-password` |
 
 ---
@@ -405,18 +415,20 @@ CLOUDSQL_SQLSERVER_REGION=us-central1 \
 CLOUDSQL_SQLSERVER_INSTANCE=my-instance \
 CLOUDSQL_SQLSERVER_DATABASE=mydb \
 CLOUDSQL_SQLSERVER_USER=sqlserver \
+CLOUDSQL_SQLSERVER_IP_ADDRESS=34.133.171.252 \
 CLOUDSQL_SQLSERVER_PASSWORD=your-password \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-cloudsql-sqlserver \
-  -p 3000:3000 \
   -e CLOUDSQL_SQLSERVER_PROJECT \
   -e CLOUDSQL_SQLSERVER_REGION \
   -e CLOUDSQL_SQLSERVER_INSTANCE \
   -e CLOUDSQL_SQLSERVER_DATABASE \
   -e CLOUDSQL_SQLSERVER_USER \
+  -e CLOUDSQL_SQLSERVER_IP_ADDRESS \
   -e CLOUDSQL_SQLSERVER_PASSWORD \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt cloud-sql-mssql
+  --prebuilt cloud-sql-mssql \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -431,6 +443,7 @@ docker run --rm -d \
     "-e", "CLOUDSQL_SQLSERVER_INSTANCE",
     "-e", "CLOUDSQL_SQLSERVER_DATABASE",
     "-e", "CLOUDSQL_SQLSERVER_USER",
+    "-e", "CLOUDSQL_SQLSERVER_IP_ADDRESS",
     "-e", "CLOUDSQL_SQLSERVER_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
     "--prebuilt", "cloud-sql-mssql",
@@ -442,6 +455,7 @@ docker run --rm -d \
     "CLOUDSQL_SQLSERVER_INSTANCE": "my-instance",
     "CLOUDSQL_SQLSERVER_DATABASE": "mydb",
     "CLOUDSQL_SQLSERVER_USER": "sqlserver",
+    "CLOUDSQL_SQLSERVER_IP_ADDRESS": "34.133.171.252",
     "CLOUDSQL_SQLSERVER_PASSWORD": "your-password"
   }
 }
@@ -456,6 +470,7 @@ docker run --rm -d \
 | `CLOUDSQL_SQLSERVER_INSTANCE` | Yes | Cloud SQL instance name | - | `my-instance` |
 | `CLOUDSQL_SQLSERVER_DATABASE` | Yes | Database name | - | `mydb` |
 | `CLOUDSQL_SQLSERVER_USER` | Yes | Database username | - | `sqlserver` |
+| `CLOUDSQL_SQLSERVER_IP_ADDRESS` | Yes | Public IP address of the Cloud SQL instance | - | `34.133.171.252` |
 | `CLOUDSQL_SQLSERVER_PASSWORD` | Yes | Database password | - | `your-password` |
 
 ---
@@ -474,16 +489,16 @@ COUCHBASE_BUCKET=my-bucket \
 COUCHBASE_USERNAME=Administrator \
 COUCHBASE_PASSWORD=your-password \
 COUCHBASE_TOOLS_FILE=/path/to/couchbase.yaml \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-couchbase \
-  -p 3000:3000 \
   -e COUCHBASE_HOST \
   -e COUCHBASE_BUCKET \
   -e COUCHBASE_USERNAME \
   -e COUCHBASE_PASSWORD \
   -v $COUCHBASE_TOOLS_FILE:/config/couchbase.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --tools-file /config/couchbase.yaml
+  --tools-file /config/couchbase.yaml \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -534,16 +549,18 @@ Dataplex Universal Catalog is a unified governance solution for data and AI asse
 ```bash
 DATAPLEX_PROJECT=my-project \
 DATAPLEX_LOCATION=us-central1 \
-GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
-docker run --rm -d \
+DATAPLEX_CREDENTIALS_JSON='{"type":"service_account","project_id":"my-project",...}' \
+CREDS_HOST_FILE=$(mktemp) && \
+printf '%s' "$DATAPLEX_CREDENTIALS_JSON" > "$CREDS_HOST_FILE" && \
+docker run --rm -i \
   --name mcp-dataplex \
-  -p 3000:3000 \
   -e DATAPLEX_PROJECT \
   -e DATAPLEX_LOCATION \
-  -e GOOGLE_APPLICATION_CREDENTIALS \
-  -v /path/to/service-account.json:/creds/sa.json \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
+  -v "$CREDS_HOST_FILE":/creds/sa.json:ro \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt dataplex
+  --prebuilt dataplex \
+  --stdio;
 ```
 
 ### MCP Client Configuration
@@ -577,6 +594,8 @@ docker run --rm -d \
 | `DATAPLEX_LOCATION` | Yes | Dataplex location | - | `us-central1` |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Yes* | Path to service account JSON | - | `/creds/sa.json` |
 
+> Alternatively, mount a file directly: set `GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json` and bind `-v /absolute/path/to/service-account.json:/creds/sa.json:ro`.
+
 ---
 
 ## Dgraph
@@ -591,14 +610,14 @@ Dgraph is a distributed graph database built for production.
 DGRAPH_HOST=localhost \
 DGRAPH_PORT=9080 \
 DGRAPH_TOOLS_FILE=/path/to/dgraph.yaml \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-dgraph \
-  -p 3000:3000 \
   -e DGRAPH_HOST \
   -e DGRAPH_PORT \
   -v $DGRAPH_TOOLS_FILE:/config/dgraph.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --tools-file /config/dgraph.yaml
+  --tools-file /config/dgraph.yaml \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -618,6 +637,7 @@ docker run --rm -d \
   "env": {
     "DGRAPH_HOST": "localhost",
     "DGRAPH_PORT": "9080",
+    "DGRAPH_API_KEY": "your-api-key",
     "DGRAPH_TOOLS_FILE": "/path/to/dgraph.yaml"
   }
 }
@@ -644,15 +664,15 @@ Firestore is a NoSQL document database built for automatic scaling and ease of d
 FIRESTORE_PROJECT=my-project \
 FIRESTORE_DATABASE=(default) \
 GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-firestore \
-  -p 3000:3000 \
   -e FIRESTORE_PROJECT \
   -e FIRESTORE_DATABASE \
   -e GOOGLE_APPLICATION_CREDENTIALS \
   -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt firestore
+  --prebuilt firestore \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -698,14 +718,14 @@ Looker is a business intelligence and data platform.
 LOOKER_BASE_URL=https://mycompany.looker.com \
 LOOKER_CLIENT_ID=your-client-id \
 LOOKER_CLIENT_SECRET=your-client-secret \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-looker \
-  -p 3000:3000 \
   -e LOOKER_BASE_URL \
   -e LOOKER_CLIENT_ID \
   -e LOOKER_CLIENT_SECRET \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt looker
+  --prebuilt looker \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -754,16 +774,16 @@ MONGODB_DATABASE=mydb \
 MONGODB_USERNAME=admin \
 MONGODB_PASSWORD=your-password \
 MONGODB_TOOLS_FILE=/path/to/mongodb.yaml \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-mongodb \
-  -p 3000:3000 \
   -e MONGODB_URI \
   -e MONGODB_DATABASE \
   -e MONGODB_USERNAME \
   -e MONGODB_PASSWORD \
   -v $MONGODB_TOOLS_FILE:/config/mongodb.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --tools-file /config/mongodb.yaml
+  --tools-file /config/mongodb.yaml \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -816,16 +836,16 @@ MYSQL_DATABASE=mydb \
 MYSQL_USER=root \
 MYSQL_PASSWORD=your-password \
 MYSQL_PORT=3306 \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-mysql \
-  -p 3000:3000 \
   -e MYSQL_HOST \
   -e MYSQL_DATABASE \
   -e MYSQL_USER \
   -e MYSQL_PASSWORD \
   -e MYSQL_PORT \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt mysql
+  --prebuilt mysql \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -880,16 +900,16 @@ NEO4J_USERNAME=neo4j \
 NEO4J_PASSWORD=your-password \
 NEO4J_DATABASE=neo4j \
 NEO4J_TOOLS_FILE=/path/to/neo4j.yaml \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-neo4j \
-  -p 3000:3000 \
   -e NEO4J_URI \
   -e NEO4J_USERNAME \
   -e NEO4J_PASSWORD \
   -e NEO4J_DATABASE \
   -v $NEO4J_TOOLS_FILE:/config/neo4j.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --tools-file /config/neo4j.yaml
+  --tools-file /config/neo4j.yaml \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -942,16 +962,16 @@ POSTGRES_DATABASE=mydb \
 POSTGRES_USER=postgres \
 POSTGRES_PASSWORD=your-password \
 POSTGRES_PORT=5432 \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-postgres \
-  -p 3000:3000 \
   -e POSTGRES_HOST \
   -e POSTGRES_DATABASE \
   -e POSTGRES_USER \
   -e POSTGRES_PASSWORD \
   -e POSTGRES_PORT \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt postgres
+  --prebuilt postgres \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -1006,15 +1026,15 @@ REDIS_HOST=localhost \
 REDIS_PORT=6379 \
 REDIS_PASSWORD=your-password \
 REDIS_TOOLS_FILE=/path/to/redis.yaml \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-redis \
-  -p 3000:3000 \
   -e REDIS_HOST \
   -e REDIS_PORT \
   -e REDIS_PASSWORD \
   -v $REDIS_TOOLS_FILE:/config/redis.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --tools-file /config/redis.yaml
+  --tools-file /config/redis.yaml \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -1036,6 +1056,8 @@ docker run --rm -d \
     "REDIS_HOST": "localhost",
     "REDIS_PORT": "6379",
     "REDIS_PASSWORD": "your-password",
+    "REDIS_DB": "0",
+    "REDIS_USERNAME": "default",
     "REDIS_TOOLS_FILE": "/path/to/redis.yaml"
   }
 }
@@ -1129,9 +1151,8 @@ REDSHIFT_USER=awsuser \
 REDSHIFT_PASSWORD=your-password \
 REDSHIFT_PORT=5439 \
 REDSHIFT_TOOLS_FILE=/path/to/redshift.yaml \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-redshift \
-  -p 3000:3000 \
   -e POSTGRES_HOST=$REDSHIFT_HOST \
   -e POSTGRES_DATABASE=$REDSHIFT_DATABASE \
   -e POSTGRES_USER=$REDSHIFT_USER \
@@ -1139,7 +1160,8 @@ docker run --rm -d \
   -e POSTGRES_PORT=$REDSHIFT_PORT \
   -v $REDSHIFT_TOOLS_FILE:/config/redshift.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --tools-file /config/redshift.yaml
+  --tools-file /config/redshift.yaml \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -1194,16 +1216,16 @@ SPANNER_PROJECT=my-project \
 SPANNER_INSTANCE=my-instance \
 SPANNER_DATABASE=mydb \
 GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-spanner \
-  -p 3000:3000 \
   -e SPANNER_PROJECT \
   -e SPANNER_INSTANCE \
   -e SPANNER_DATABASE \
   -e GOOGLE_APPLICATION_CREDENTIALS \
   -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt spanner
+  --prebuilt spanner \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -1254,16 +1276,16 @@ SQLSERVER_DATABASE=mydb \
 SQLSERVER_USER=sa \
 SQLSERVER_PASSWORD=your-password \
 SQLSERVER_PORT=1433 \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-sqlserver \
-  -p 3000:3000 \
   -e SQLSERVER_HOST \
   -e SQLSERVER_DATABASE \
   -e SQLSERVER_USER \
   -e SQLSERVER_PASSWORD \
   -e SQLSERVER_PORT \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt mssql
+  --prebuilt mssql \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -1316,14 +1338,14 @@ SQLite is a lightweight, file-based relational database.
 ```bash
 SQLITE_FILE=/data/mydb.sqlite \
 SQLITE_TOOLS_FILE=/path/to/sqlite.yaml \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-sqlite \
-  -p 3000:3000 \
   -v /path/to/mydb.sqlite:/data/mydb.sqlite \
   -e SQLITE_FILE \
   -v $SQLITE_TOOLS_FILE:/config/sqlite.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --tools-file /config/sqlite.yaml
+  --tools-file /config/sqlite.yaml \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -1342,6 +1364,7 @@ docker run --rm -d \
   ],
   "env": {
     "SQLITE_FILE": "/data/mydb.sqlite",
+    "SQLITE_READONLY": "false",
     "SQLITE_TOOLS_FILE": "/path/to/sqlite.yaml"
   }
 }
@@ -1372,9 +1395,8 @@ TIDB_USER=root \
 TIDB_PASSWORD=your-password \
 TIDB_PORT=4000 \
 TIDB_TOOLS_FILE=/path/to/tidb.yaml \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-tidb \
-  -p 3000:3000 \
   -e TIDB_HOST \
   -e TIDB_DATABASE \
   -e TIDB_USER \
@@ -1382,7 +1404,8 @@ docker run --rm -d \
   -e TIDB_PORT \
   -v $TIDB_TOOLS_FILE:/config/tidb.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --tools-file /config/tidb.yaml
+  --tools-file /config/tidb.yaml \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -1439,15 +1462,15 @@ VALKEY_HOST=localhost \
 VALKEY_PORT=6379 \
 VALKEY_PASSWORD=your-password \
 VALKEY_TOOLS_FILE=/path/to/valkey.yaml \
-docker run --rm -d \
+docker run --rm -i \
   --name mcp-valkey \
-  -p 3000:3000 \
   -e VALKEY_HOST \
   -e VALKEY_PORT \
   -e VALKEY_PASSWORD \
   -v $VALKEY_TOOLS_FILE:/config/valkey.yaml \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --tools-file /config/valkey.yaml
+  --tools-file /config/valkey.yaml \
+  --stdio
 ```
 
 ### MCP Client Configuration
@@ -1469,6 +1492,8 @@ docker run --rm -d \
     "VALKEY_HOST": "localhost",
     "VALKEY_PORT": "6379",
     "VALKEY_PASSWORD": "your-password",
+    "VALKEY_DB": "0",
+    "VALKEY_USERNAME": "default",
     "VALKEY_TOOLS_FILE": "/path/to/valkey.yaml"
   }
 }
