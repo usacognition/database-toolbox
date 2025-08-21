@@ -71,24 +71,27 @@ AlloyDB for PostgreSQL is a fully-managed, PostgreSQL-compatible database for de
 ### Docker Command
 
 ```bash
-ALLOYDB_PROJECT=my-project \
-ALLOYDB_REGION=us-central1 \
-ALLOYDB_CLUSTER=my-cluster \
-ALLOYDB_INSTANCE=my-instance \
-ALLOYDB_DATABASE=mydb \
-ALLOYDB_USER=postgres \
-ALLOYDB_PASSWORD=your-password \
+ALLOYDB_POSTGRES_PROJECT=my-project \
+ALLOYDB_POSTGRES_REGION=us-central1 \
+ALLOYDB_POSTGRES_CLUSTER=my-cluster \
+ALLOYDB_POSTGRES_INSTANCE=my-instance \
+ALLOYDB_POSTGRES_DATABASE=mydb \
+ALLOYDB_POSTGRES_USER=postgres \
+ALLOYDB_POSTGRES_PASSWORD=your-password \
+GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
 docker run --rm -i \
   --name mcp-alloydb \
-  -e ALLOYDB_PROJECT \
-  -e ALLOYDB_REGION \
-  -e ALLOYDB_CLUSTER \
-  -e ALLOYDB_INSTANCE \
-  -e ALLOYDB_DATABASE \
-  -e ALLOYDB_USER \
-  -e ALLOYDB_PASSWORD \
+  -e ALLOYDB_POSTGRES_PROJECT \
+  -e ALLOYDB_POSTGRES_REGION \
+  -e ALLOYDB_POSTGRES_CLUSTER \
+  -e ALLOYDB_POSTGRES_INSTANCE \
+  -e ALLOYDB_POSTGRES_DATABASE \
+  -e ALLOYDB_POSTGRES_USER \
+  -e ALLOYDB_POSTGRES_PASSWORD \
+  -e GOOGLE_APPLICATION_CREDENTIALS \
+  -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt alloydb \
+  --prebuilt alloydb-postgres \
   --stdio
 ```
 
@@ -99,25 +102,28 @@ docker run --rm -i \
   "command": "docker",
   "args": [
     "run", "--rm", "-i",
-    "-e", "ALLOYDB_PROJECT",
-    "-e", "ALLOYDB_REGION", 
-    "-e", "ALLOYDB_CLUSTER",
-    "-e", "ALLOYDB_INSTANCE",
-    "-e", "ALLOYDB_DATABASE",
-    "-e", "ALLOYDB_USER",
-    "-e", "ALLOYDB_PASSWORD",
+    "-v", "${GOOGLE_APPLICATION_CREDENTIALS_PATH}:/creds/sa.json",
+    "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
+    "-e", "ALLOYDB_POSTGRES_PROJECT",
+    "-e", "ALLOYDB_POSTGRES_REGION", 
+    "-e", "ALLOYDB_POSTGRES_CLUSTER",
+    "-e", "ALLOYDB_POSTGRES_INSTANCE",
+    "-e", "ALLOYDB_POSTGRES_DATABASE",
+    "-e", "ALLOYDB_POSTGRES_USER",
+    "-e", "ALLOYDB_POSTGRES_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
-    "--prebuilt", "alloydb",
+    "--prebuilt", "alloydb-postgres",
     "--stdio"
   ],
   "env": {
-    "ALLOYDB_PROJECT": "my-project",
-    "ALLOYDB_REGION": "us-central1",
-    "ALLOYDB_CLUSTER": "my-cluster",
-    "ALLOYDB_INSTANCE": "my-instance",
-    "ALLOYDB_DATABASE": "mydb",
-    "ALLOYDB_USER": "postgres",
-    "ALLOYDB_PASSWORD": "your-password"
+    "ALLOYDB_POSTGRES_PROJECT": "my-project",
+    "ALLOYDB_POSTGRES_REGION": "us-central1",
+    "ALLOYDB_POSTGRES_CLUSTER": "my-cluster",
+    "ALLOYDB_POSTGRES_INSTANCE": "my-instance",
+    "ALLOYDB_POSTGRES_DATABASE": "mydb",
+    "ALLOYDB_POSTGRES_USER": "postgres",
+    "ALLOYDB_POSTGRES_PASSWORD": "your-password",
+    "GOOGLE_APPLICATION_CREDENTIALS_PATH": "/path/to/service-account.json"
   }
 }
 ```
@@ -126,13 +132,14 @@ docker run --rm -i \
 
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
-| `ALLOYDB_PROJECT` | Yes | GCP project ID | - | `my-project` |
-| `ALLOYDB_REGION` | Yes | GCP region | - | `us-central1` |
-| `ALLOYDB_CLUSTER` | Yes | AlloyDB cluster ID | - | `my-cluster` |
-| `ALLOYDB_INSTANCE` | Yes | AlloyDB instance ID | - | `my-instance` |
-| `ALLOYDB_DATABASE` | Yes | Database name | - | `mydb` |
-| `ALLOYDB_USER` | Yes | Database username | - | `postgres` |
-| `ALLOYDB_PASSWORD` | Yes | Database password | - | `your-password` |
+| `ALLOYDB_POSTGRES_PROJECT` | Yes | GCP project ID | - | `my-project` |
+| `ALLOYDB_POSTGRES_REGION` | Yes | GCP region | - | `us-central1` |
+| `ALLOYDB_POSTGRES_CLUSTER` | Yes | AlloyDB cluster ID | - | `my-cluster` |
+| `ALLOYDB_POSTGRES_INSTANCE` | Yes | AlloyDB instance ID | - | `my-instance` |
+| `ALLOYDB_POSTGRES_DATABASE` | Yes | Database name | - | `mydb` |
+| `ALLOYDB_POSTGRES_USER` | Yes | Database username | - | `postgres` |
+| `ALLOYDB_POSTGRES_PASSWORD` | Yes | Database password | - | `your-password` |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
 
 ---
 
@@ -164,10 +171,10 @@ docker run --rm -i \
   "command": "docker",
   "args": [
     "run", "--rm", "-i",
+    "-v", "${GOOGLE_APPLICATION_CREDENTIALS_PATH}:/creds/sa.json",
+    "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "-e", "BIGQUERY_PROJECT",
     "-e", "BIGQUERY_DATASET",
-    "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
-    "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
     "--prebuilt", "bigquery",
     "--stdio"
@@ -175,7 +182,7 @@ docker run --rm -i \
   "env": {
     "BIGQUERY_PROJECT": "my-project",
     "BIGQUERY_DATASET": "my_dataset",
-    "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/service-account.json"
+    "GOOGLE_APPLICATION_CREDENTIALS_PATH": "/path/to/service-account.json"
   }
 }
 ```
@@ -187,9 +194,7 @@ docker run --rm -i \
 | `BIGQUERY_PROJECT` | Yes | GCP project ID | - | `my-project` |
 | `BIGQUERY_DATASET` | No | Default dataset | - | `my_dataset` |
 | `BIGQUERY_LOCATION` | No | BigQuery location | `US` | `US`, `EU` |
-| `GOOGLE_APPLICATION_CREDENTIALS` | Yes* | Path to service account JSON | - | `/creds/sa.json` |
-
-*Either provide `GOOGLE_APPLICATION_CREDENTIALS` or ensure the container has access to GCP credentials through other means.
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
 
 ---
 
@@ -227,11 +232,11 @@ docker run --rm -i \
   "command": "docker",
   "args": [
     "run", "--rm", "-i",
+    "-v", "${GOOGLE_APPLICATION_CREDENTIALS_PATH}:/creds/sa.json",
+    "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "-e", "BIGTABLE_PROJECT",
     "-e", "BIGTABLE_INSTANCE",
     "-e", "BIGTABLE_TABLE",
-    "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
-    "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "-v", "${BIGTABLE_TOOLS_FILE}:/config/bigtable.yaml",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
     "--tools-file", "/config/bigtable.yaml",
@@ -241,7 +246,7 @@ docker run --rm -i \
     "BIGTABLE_PROJECT": "my-project",
     "BIGTABLE_INSTANCE": "my-instance",
     "BIGTABLE_TABLE": "my-table",
-    "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/service-account.json",
+    "GOOGLE_APPLICATION_CREDENTIALS_PATH": "/path/to/service-account.json",
     "BIGTABLE_TOOLS_FILE": "/path/to/bigtable.yaml"
   }
 }
@@ -254,7 +259,7 @@ docker run --rm -i \
 | `BIGTABLE_PROJECT` | Yes | GCP project ID | - | `my-project` |
 | `BIGTABLE_INSTANCE` | Yes | Bigtable instance ID | - | `my-instance` |
 | `BIGTABLE_TABLE` | Yes | Bigtable table name | - | `my-table` |
-| `GOOGLE_APPLICATION_CREDENTIALS` | Yes* | Path to service account JSON | - | `/creds/sa.json` |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
 | `BIGTABLE_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/bigtable.yaml` |
 
 ---
@@ -266,22 +271,25 @@ Cloud SQL for MySQL is a fully-managed database service for MySQL.
 ### Docker Command
 
 ```bash
-CLOUDSQL_MYSQL_PROJECT=my-project \
-CLOUDSQL_MYSQL_REGION=us-central1 \
-CLOUDSQL_MYSQL_INSTANCE=my-instance \
-CLOUDSQL_MYSQL_DATABASE=mydb \
-CLOUDSQL_MYSQL_USER=root \
-CLOUDSQL_MYSQL_IP_ADDRESS=34.133.171.252 \
-CLOUDSQL_MYSQL_PASSWORD=your-password \
+CLOUD_SQL_MYSQL_PROJECT=my-project \
+CLOUD_SQL_MYSQL_REGION=us-central1 \
+CLOUD_SQL_MYSQL_INSTANCE=my-instance \
+CLOUD_SQL_MYSQL_DATABASE=mydb \
+CLOUD_SQL_MYSQL_USER=root \
+CLOUD_SQL_MYSQL_IP_ADDRESS=34.133.171.252 \
+CLOUD_SQL_MYSQL_PASSWORD=your-password \
+GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
 docker run --rm -i \
   --name mcp-cloudsql-mysql \
-  -e CLOUDSQL_MYSQL_PROJECT \
-  -e CLOUDSQL_MYSQL_REGION \
-  -e CLOUDSQL_MYSQL_INSTANCE \
-  -e CLOUDSQL_MYSQL_DATABASE \
-  -e CLOUDSQL_MYSQL_USER \
-  -e CLOUDSQL_MYSQL_IP_ADDRESS \
-  -e CLOUDSQL_MYSQL_PASSWORD \
+  -e CLOUD_SQL_MYSQL_PROJECT \
+  -e CLOUD_SQL_MYSQL_REGION \
+  -e CLOUD_SQL_MYSQL_INSTANCE \
+  -e CLOUD_SQL_MYSQL_DATABASE \
+  -e CLOUD_SQL_MYSQL_USER \
+  -e CLOUD_SQL_MYSQL_IP_ADDRESS \
+  -e CLOUD_SQL_MYSQL_PASSWORD \
+  -e GOOGLE_APPLICATION_CREDENTIALS \
+  -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt cloud-sql-mysql \
   --stdio
@@ -294,25 +302,28 @@ docker run --rm -i \
   "command": "docker",
   "args": [
     "run", "--rm", "-i",
-    "-e", "CLOUDSQL_MYSQL_PROJECT",
-    "-e", "CLOUDSQL_MYSQL_REGION",
-    "-e", "CLOUDSQL_MYSQL_INSTANCE",
-    "-e", "CLOUDSQL_MYSQL_DATABASE",
-    "-e", "CLOUDSQL_MYSQL_USER",
-    "-e", "CLOUDSQL_MYSQL_IP_ADDRESS",
-    "-e", "CLOUDSQL_MYSQL_PASSWORD",
+    "-v", "${GOOGLE_APPLICATION_CREDENTIALS_PATH}:/creds/sa.json",
+    "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
+    "-e", "CLOUD_SQL_MYSQL_PROJECT",
+    "-e", "CLOUD_SQL_MYSQL_REGION",
+    "-e", "CLOUD_SQL_MYSQL_INSTANCE",
+    "-e", "CLOUD_SQL_MYSQL_DATABASE",
+    "-e", "CLOUD_SQL_MYSQL_USER",
+    "-e", "CLOUD_SQL_MYSQL_IP_ADDRESS",
+    "-e", "CLOUD_SQL_MYSQL_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
     "--prebuilt", "cloud-sql-mysql",
     "--stdio"
   ],
   "env": {
-    "CLOUDSQL_MYSQL_PROJECT": "my-project",
-    "CLOUDSQL_MYSQL_REGION": "us-central1",
-    "CLOUDSQL_MYSQL_INSTANCE": "my-instance",
-    "CLOUDSQL_MYSQL_DATABASE": "mydb",
-    "CLOUDSQL_MYSQL_USER": "root",
-    "CLOUDSQL_MYSQL_IP_ADDRESS": "34.133.171.252",
-    "CLOUDSQL_MYSQL_PASSWORD": "your-password"
+    "CLOUD_SQL_MYSQL_PROJECT": "my-project",
+    "CLOUD_SQL_MYSQL_REGION": "us-central1",
+    "CLOUD_SQL_MYSQL_INSTANCE": "my-instance",
+    "CLOUD_SQL_MYSQL_DATABASE": "mydb",
+    "CLOUD_SQL_MYSQL_USER": "root",
+    "CLOUD_SQL_MYSQL_IP_ADDRESS": "34.133.171.252",
+    "CLOUD_SQL_MYSQL_PASSWORD": "your-password",
+    "GOOGLE_APPLICATION_CREDENTIALS_PATH": "/path/to/service-account.json"
   }
 }
 ```
@@ -321,13 +332,14 @@ docker run --rm -i \
 
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
-| `CLOUDSQL_MYSQL_PROJECT` | Yes | GCP project ID | - | `my-project` |
-| `CLOUDSQL_MYSQL_REGION` | Yes | GCP region | - | `us-central1` |
-| `CLOUDSQL_MYSQL_INSTANCE` | Yes | Cloud SQL instance name | - | `my-instance` |
-| `CLOUDSQL_MYSQL_DATABASE` | Yes | Database name | - | `mydb` |
-| `CLOUDSQL_MYSQL_USER` | Yes | Database username | - | `root` |
-| `CLOUDSQL_MYSQL_IP_ADDRESS` | Yes | Public IP address of the Cloud SQL instance | - | `34.133.171.252` |
-| `CLOUDSQL_MYSQL_PASSWORD` | Yes | Database password | - | `your-password` |
+| `CLOUD_SQL_MYSQL_PROJECT` | Yes | GCP project ID | - | `my-project` |
+| `CLOUD_SQL_MYSQL_REGION` | Yes | GCP region | - | `us-central1` |
+| `CLOUD_SQL_MYSQL_INSTANCE` | Yes | Cloud SQL instance name | - | `my-instance` |
+| `CLOUD_SQL_MYSQL_DATABASE` | Yes | Database name | - | `mydb` |
+| `CLOUD_SQL_MYSQL_USER` | Yes | Database username | - | `root` |
+| `CLOUD_SQL_MYSQL_IP_ADDRESS` | Yes | Public IP address of the Cloud SQL instance | - | `34.133.171.252` |
+| `CLOUD_SQL_MYSQL_PASSWORD` | Yes | Database password | - | `your-password` |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
 
 ---
 
@@ -338,22 +350,25 @@ Cloud SQL for PostgreSQL is a fully-managed database service for PostgreSQL.
 ### Docker Command
 
 ```bash
-CLOUDSQL_POSTGRES_PROJECT=my-project \
-CLOUDSQL_POSTGRES_REGION=us-central1 \
-CLOUDSQL_POSTGRES_INSTANCE=my-instance \
-CLOUDSQL_POSTGRES_DATABASE=mydb \
-CLOUDSQL_POSTGRES_USER=postgres \
-CLOUDSQL_POSTGRES_IP_ADDRESS=34.133.171.252 \
-CLOUDSQL_POSTGRES_PASSWORD=your-password \
+CLOUD_SQL_POSTGRES_PROJECT=my-project \
+CLOUD_SQL_POSTGRES_REGION=us-central1 \
+CLOUD_SQL_POSTGRES_INSTANCE=my-instance \
+CLOUD_SQL_POSTGRES_DATABASE=mydb \
+CLOUD_SQL_POSTGRES_USER=postgres \
+CLOUD_SQL_POSTGRES_IP_ADDRESS=34.133.171.252 \
+CLOUD_SQL_POSTGRES_PASSWORD=your-password \
+GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
 docker run --rm -i \
   --name mcp-cloudsql-postgres \
-  -e CLOUDSQL_POSTGRES_PROJECT \
-  -e CLOUDSQL_POSTGRES_REGION \
-  -e CLOUDSQL_POSTGRES_INSTANCE \
-  -e CLOUDSQL_POSTGRES_DATABASE \
-  -e CLOUDSQL_POSTGRES_USER \
-  -e CLOUDSQL_POSTGRES_IP_ADDRESS \
-  -e CLOUDSQL_POSTGRES_PASSWORD \
+  -e CLOUD_SQL_POSTGRES_PROJECT \
+  -e CLOUD_SQL_POSTGRES_REGION \
+  -e CLOUD_SQL_POSTGRES_INSTANCE \
+  -e CLOUD_SQL_POSTGRES_DATABASE \
+  -e CLOUD_SQL_POSTGRES_USER \
+  -e CLOUD_SQL_POSTGRES_IP_ADDRESS \
+  -e CLOUD_SQL_POSTGRES_PASSWORD \
+  -e GOOGLE_APPLICATION_CREDENTIALS \
+  -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt cloud-sql-postgres \
   --stdio
@@ -366,25 +381,28 @@ docker run --rm -i \
   "command": "docker",
   "args": [
     "run", "--rm", "-i",
-    "-e", "CLOUDSQL_POSTGRES_PROJECT",
-    "-e", "CLOUDSQL_POSTGRES_REGION",
-    "-e", "CLOUDSQL_POSTGRES_INSTANCE",
-    "-e", "CLOUDSQL_POSTGRES_DATABASE",
-    "-e", "CLOUDSQL_POSTGRES_USER",
-    "-e", "CLOUDSQL_POSTGRES_IP_ADDRESS",
-    "-e", "CLOUDSQL_POSTGRES_PASSWORD",
+    "-v", "${GOOGLE_APPLICATION_CREDENTIALS_PATH}:/creds/sa.json",
+    "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
+    "-e", "CLOUD_SQL_POSTGRES_PROJECT",
+    "-e", "CLOUD_SQL_POSTGRES_REGION",
+    "-e", "CLOUD_SQL_POSTGRES_INSTANCE",
+    "-e", "CLOUD_SQL_POSTGRES_DATABASE",
+    "-e", "CLOUD_SQL_POSTGRES_USER",
+    "-e", "CLOUD_SQL_POSTGRES_IP_ADDRESS",
+    "-e", "CLOUD_SQL_POSTGRES_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
     "--prebuilt", "cloud-sql-postgres",
     "--stdio"
   ],
   "env": {
-    "CLOUDSQL_POSTGRES_PROJECT": "my-project",
-    "CLOUDSQL_POSTGRES_REGION": "us-central1",
-    "CLOUDSQL_POSTGRES_INSTANCE": "my-instance",
-    "CLOUDSQL_POSTGRES_DATABASE": "mydb",
-    "CLOUDSQL_POSTGRES_USER": "postgres",
-    "CLOUDSQL_POSTGRES_IP_ADDRESS": "34.133.171.252",
-    "CLOUDSQL_POSTGRES_PASSWORD": "your-password"
+    "CLOUD_SQL_POSTGRES_PROJECT": "my-project",
+    "CLOUD_SQL_POSTGRES_REGION": "us-central1",
+    "CLOUD_SQL_POSTGRES_INSTANCE": "my-instance",
+    "CLOUD_SQL_POSTGRES_DATABASE": "mydb",
+    "CLOUD_SQL_POSTGRES_USER": "postgres",
+    "CLOUD_SQL_POSTGRES_IP_ADDRESS": "34.133.171.252",
+    "CLOUD_SQL_POSTGRES_PASSWORD": "your-password",
+    "GOOGLE_APPLICATION_CREDENTIALS_PATH": "/path/to/service-account.json"
   }
 }
 ```
@@ -393,13 +411,14 @@ docker run --rm -i \
 
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
-| `CLOUDSQL_POSTGRES_PROJECT` | Yes | GCP project ID | - | `my-project` |
-| `CLOUDSQL_POSTGRES_REGION` | Yes | GCP region | - | `us-central1` |
-| `CLOUDSQL_POSTGRES_INSTANCE` | Yes | Cloud SQL instance name | - | `my-instance` |
-| `CLOUDSQL_POSTGRES_DATABASE` | Yes | Database name | - | `mydb` |
-| `CLOUDSQL_POSTGRES_USER` | Yes | Database username | - | `postgres` |
-| `CLOUDSQL_POSTGRES_IP_ADDRESS` | Yes | Public IP address of the Cloud SQL instance | - | `34.133.171.252` |
-| `CLOUDSQL_POSTGRES_PASSWORD` | Yes | Database password | - | `your-password` |
+| `CLOUD_SQL_POSTGRES_PROJECT` | Yes | GCP project ID | - | `my-project` |
+| `CLOUD_SQL_POSTGRES_REGION` | Yes | GCP region | - | `us-central1` |
+| `CLOUD_SQL_POSTGRES_INSTANCE` | Yes | Cloud SQL instance name | - | `my-instance` |
+| `CLOUD_SQL_POSTGRES_DATABASE` | Yes | Database name | - | `mydb` |
+| `CLOUD_SQL_POSTGRES_USER` | Yes | Database username | - | `postgres` |
+| `CLOUD_SQL_POSTGRES_PASSWORD` | Yes | Database password | - | `your-password` |
+| `CLOUD_SQL_POSTGRES_IP_ADDRESS` | Yes | Public IP address of the Cloud SQL instance | - | `34.133.171.252` |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
 
 ---
 
@@ -410,22 +429,25 @@ Cloud SQL for SQL Server is a fully-managed database service for SQL Server.
 ### Docker Command
 
 ```bash
-CLOUDSQL_SQLSERVER_PROJECT=my-project \
-CLOUDSQL_SQLSERVER_REGION=us-central1 \
-CLOUDSQL_SQLSERVER_INSTANCE=my-instance \
-CLOUDSQL_SQLSERVER_DATABASE=mydb \
-CLOUDSQL_SQLSERVER_USER=sqlserver \
-CLOUDSQL_SQLSERVER_IP_ADDRESS=34.133.171.252 \
-CLOUDSQL_SQLSERVER_PASSWORD=your-password \
+CLOUD_SQL_MSSQL_PROJECT=my-project \
+CLOUD_SQL_MSSQL_REGION=us-central1 \
+CLOUD_SQL_MSSQL_INSTANCE=my-instance \
+CLOUD_SQL_MSSQL_DATABASE=mydb \
+CLOUD_SQL_MSSQL_USER=sqlserver \
+CLOUD_SQL_MSSQL_IP_ADDRESS=34.133.171.252 \
+CLOUD_SQL_MSSQL_PASSWORD=your-password \
+GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json \
 docker run --rm -i \
-  --name mcp-cloudsql-sqlserver \
-  -e CLOUDSQL_SQLSERVER_PROJECT \
-  -e CLOUDSQL_SQLSERVER_REGION \
-  -e CLOUDSQL_SQLSERVER_INSTANCE \
-  -e CLOUDSQL_SQLSERVER_DATABASE \
-  -e CLOUDSQL_SQLSERVER_USER \
-  -e CLOUDSQL_SQLSERVER_IP_ADDRESS \
-  -e CLOUDSQL_SQLSERVER_PASSWORD \
+  --name mcp-cloudsql-mssql \
+  -e CLOUD_SQL_MSSQL_PROJECT \
+  -e CLOUD_SQL_MSSQL_REGION \
+  -e CLOUD_SQL_MSSQL_INSTANCE \
+  -e CLOUD_SQL_MSSQL_DATABASE \
+  -e CLOUD_SQL_MSSQL_USER \
+  -e CLOUD_SQL_MSSQL_IP_ADDRESS \
+  -e CLOUD_SQL_MSSQL_PASSWORD \
+  -e GOOGLE_APPLICATION_CREDENTIALS \
+  -v /path/to/service-account.json:/creds/sa.json \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt cloud-sql-mssql \
   --stdio
@@ -434,29 +456,32 @@ docker run --rm -i \
 ### MCP Client Configuration
 
 ```json
-"cloudsql-sqlserver": {
+"cloudsql-mssql": {
   "command": "docker",
   "args": [
     "run", "--rm", "-i",
-    "-e", "CLOUDSQL_SQLSERVER_PROJECT",
-    "-e", "CLOUDSQL_SQLSERVER_REGION",
-    "-e", "CLOUDSQL_SQLSERVER_INSTANCE",
-    "-e", "CLOUDSQL_SQLSERVER_DATABASE",
-    "-e", "CLOUDSQL_SQLSERVER_USER",
-    "-e", "CLOUDSQL_SQLSERVER_IP_ADDRESS",
-    "-e", "CLOUDSQL_SQLSERVER_PASSWORD",
+    "-v", "${GOOGLE_APPLICATION_CREDENTIALS_PATH}:/creds/sa.json",
+    "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
+    "-e", "CLOUD_SQL_MSSQL_PROJECT",
+    "-e", "CLOUD_SQL_MSSQL_REGION",
+    "-e", "CLOUD_SQL_MSSQL_INSTANCE",
+    "-e", "CLOUD_SQL_MSSQL_DATABASE",
+    "-e", "CLOUD_SQL_MSSQL_USER",
+    "-e", "CLOUD_SQL_MSSQL_IP_ADDRESS",
+    "-e", "CLOUD_SQL_MSSQL_PASSWORD",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
     "--prebuilt", "cloud-sql-mssql",
     "--stdio"
   ],
   "env": {
-    "CLOUDSQL_SQLSERVER_PROJECT": "my-project",
-    "CLOUDSQL_SQLSERVER_REGION": "us-central1",
-    "CLOUDSQL_SQLSERVER_INSTANCE": "my-instance",
-    "CLOUDSQL_SQLSERVER_DATABASE": "mydb",
-    "CLOUDSQL_SQLSERVER_USER": "sqlserver",
-    "CLOUDSQL_SQLSERVER_IP_ADDRESS": "34.133.171.252",
-    "CLOUDSQL_SQLSERVER_PASSWORD": "your-password"
+    "CLOUD_SQL_MSSQL_PROJECT": "my-project",
+    "CLOUD_SQL_MSSQL_REGION": "us-central1",
+    "CLOUD_SQL_MSSQL_INSTANCE": "my-instance",
+    "CLOUD_SQL_MSSQL_DATABASE": "mydb",
+    "CLOUD_SQL_MSSQL_USER": "sqlserver",
+    "CLOUD_SQL_MSSQL_IP_ADDRESS": "34.133.171.252",
+    "CLOUD_SQL_MSSQL_PASSWORD": "your-password",
+    "GOOGLE_APPLICATION_CREDENTIALS_PATH": "/path/to/service-account.json"
   }
 }
 ```
@@ -465,13 +490,14 @@ docker run --rm -i \
 
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
-| `CLOUDSQL_SQLSERVER_PROJECT` | Yes | GCP project ID | - | `my-project` |
-| `CLOUDSQL_SQLSERVER_REGION` | Yes | GCP region | - | `us-central1` |
-| `CLOUDSQL_SQLSERVER_INSTANCE` | Yes | Cloud SQL instance name | - | `my-instance` |
-| `CLOUDSQL_SQLSERVER_DATABASE` | Yes | Database name | - | `mydb` |
-| `CLOUDSQL_SQLSERVER_USER` | Yes | Database username | - | `sqlserver` |
-| `CLOUDSQL_SQLSERVER_IP_ADDRESS` | Yes | Public IP address of the Cloud SQL instance | - | `34.133.171.252` |
-| `CLOUDSQL_SQLSERVER_PASSWORD` | Yes | Database password | - | `your-password` |
+| `CLOUD_SQL_MSSQL_PROJECT` | Yes | GCP project ID | - | `my-project` |
+| `CLOUD_SQL_MSSQL_REGION` | Yes | GCP region | - | `us-central1` |
+| `CLOUD_SQL_MSSQL_INSTANCE` | Yes | Cloud SQL instance name | - | `my-instance` |
+| `CLOUD_SQL_MSSQL_DATABASE` | Yes | Database name | - | `mydb` |
+| `CLOUD_SQL_MSSQL_USER` | Yes | Database username | - | `sqlserver` |
+| `CLOUD_SQL_MSSQL_IP_ADDRESS` | Yes | Public IP address of the Cloud SQL instance | - | `34.133.171.252` |
+| `CLOUD_SQL_MSSQL_PASSWORD` | Yes | Database password | - | `your-password` |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
 
 ---
 
@@ -570,10 +596,10 @@ docker run --rm -i \
   "command": "docker",
   "args": [
     "run", "--rm", "-i",
+    "-v", "${GOOGLE_APPLICATION_CREDENTIALS_PATH}:/creds/sa.json",
+    "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "-e", "DATAPLEX_PROJECT",
     "-e", "DATAPLEX_LOCATION",
-    "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
-    "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
     "--prebuilt", "dataplex",
     "--stdio"
@@ -581,7 +607,7 @@ docker run --rm -i \
   "env": {
     "DATAPLEX_PROJECT": "my-project",
     "DATAPLEX_LOCATION": "us-central1",
-    "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/service-account.json"
+    "GOOGLE_APPLICATION_CREDENTIALS_PATH": "/path/to/service-account.json"
   }
 }
 ```
@@ -592,9 +618,7 @@ docker run --rm -i \
 |----------|----------|-------------|---------|---------|
 | `DATAPLEX_PROJECT` | Yes | GCP project ID | - | `my-project` |
 | `DATAPLEX_LOCATION` | Yes | Dataplex location | - | `us-central1` |
-| `GOOGLE_APPLICATION_CREDENTIALS` | Yes* | Path to service account JSON | - | `/creds/sa.json` |
-
-> Alternatively, mount a file directly: set `GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json` and bind `-v /absolute/path/to/service-account.json:/creds/sa.json:ro`.
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
 
 ---
 
@@ -682,10 +706,10 @@ docker run --rm -i \
   "command": "docker",
   "args": [
     "run", "--rm", "-i",
+    "-v", "${GOOGLE_APPLICATION_CREDENTIALS_PATH}:/creds/sa.json",
+    "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "-e", "FIRESTORE_PROJECT",
     "-e", "FIRESTORE_DATABASE",
-    "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
-    "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
     "--prebuilt", "firestore",
     "--stdio"
@@ -693,7 +717,7 @@ docker run --rm -i \
   "env": {
     "FIRESTORE_PROJECT": "my-project",
     "FIRESTORE_DATABASE": "(default)",
-    "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/service-account.json"
+    "GOOGLE_APPLICATION_CREDENTIALS_PATH": "/path/to/service-account.json"
   }
 }
 ```
@@ -704,7 +728,7 @@ docker run --rm -i \
 |----------|----------|-------------|---------|---------|
 | `FIRESTORE_PROJECT` | Yes | GCP project ID | - | `my-project` |
 | `FIRESTORE_DATABASE` | No | Database ID | `(default)` | `(default)` |
-| `GOOGLE_APPLICATION_CREDENTIALS` | Yes* | Path to service account JSON | - | `/creds/sa.json` |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
 
 ---
 
@@ -1235,11 +1259,11 @@ docker run --rm -i \
   "command": "docker",
   "args": [
     "run", "--rm", "-i",
+    "-v", "${GOOGLE_APPLICATION_CREDENTIALS_PATH}:/creds/sa.json",
+    "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "-e", "SPANNER_PROJECT",
     "-e", "SPANNER_INSTANCE",
     "-e", "SPANNER_DATABASE",
-    "-v", "${GOOGLE_APPLICATION_CREDENTIALS}:/creds/sa.json",
-    "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
     "--prebuilt", "spanner",
     "--stdio"
@@ -1248,7 +1272,7 @@ docker run --rm -i \
     "SPANNER_PROJECT": "my-project",
     "SPANNER_INSTANCE": "my-instance",
     "SPANNER_DATABASE": "mydb",
-    "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/service-account.json"
+    "GOOGLE_APPLICATION_CREDENTIALS_PATH": "/path/to/service-account.json"
   }
 }
 ```
@@ -1260,7 +1284,7 @@ docker run --rm -i \
 | `SPANNER_PROJECT` | Yes | GCP project ID | - | `my-project` |
 | `SPANNER_INSTANCE` | Yes | Spanner instance ID | - | `my-instance` |
 | `SPANNER_DATABASE` | Yes | Database name | - | `mydb` |
-| `GOOGLE_APPLICATION_CREDENTIALS` | Yes* | Path to service account JSON | - | `/creds/sa.json` |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
 
 ---
 
