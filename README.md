@@ -35,30 +35,30 @@ Bigtable, Couchbase, Dgraph, MongoDB, Neo4j, Redis, Redshift, SQLite, TiDB, Valk
 
 ## 📋 Supported Databases
 
-| Database | Type | Description |
-|----------|------|-------------|
-| [AlloyDB for PostgreSQL](#alloydb-for-postgresql) | SQL | Fully-managed PostgreSQL-compatible database |
-| [BigQuery](#bigquery) | Analytics | Petabyte-scale analytics data warehouse |
-| [Bigtable](#bigtable) | NoSQL | Low-latency wide-column store |
-| [Cloud SQL for MySQL](#cloud-sql-for-mysql) | SQL | Fully-managed MySQL database service |
-| [Cloud SQL for PostgreSQL](#cloud-sql-for-postgresql) | SQL | Fully-managed PostgreSQL database service |
-| [Cloud SQL for SQL Server](#cloud-sql-for-sql-server) | SQL | Fully-managed SQL Server database service |
-| [Couchbase](#couchbase) | NoSQL | Distributed document database |
-| [Dataplex](#dataplex) | Catalog | Unified data governance solution |
-| [Dgraph](#dgraph) | Graph | Distributed graph database |
-| [Firestore](#firestore) | NoSQL | Serverless document database |
-| [Looker](#looker) | BI | Business intelligence platform |
-| [MongoDB](#mongodb) | NoSQL | Document-oriented database |
-| [MySQL](#mysql) | SQL | Open-source relational database |
-| [Neo4j](#neo4j) | Graph | Graph database management system |
-| [PostgreSQL](#postgresql) | SQL | Open-source object-relational database |
-| [Redis](#redis) | Cache/NoSQL | In-memory data structure store |
-| [Redshift](#redshift) | Analytics | Amazon's data warehouse service |
-| [Spanner](#spanner) | SQL | Globally distributed relational database |
-| [SQL Server](#sql-server) | SQL | Microsoft relational database |
-| [SQLite](#sqlite) | SQL | Lightweight file-based database |
-| [TiDB](#tidb) | SQL | Distributed SQL database |
-| [Valkey](#valkey) | Cache/NoSQL | Open-source Redis fork |
+| Database | Type | Description | Prebuilt tools |
+|----------|------|-------------|----------------|
+| [AlloyDB for PostgreSQL](#alloydb-for-postgresql) | SQL | Fully-managed PostgreSQL-compatible database | Yes |
+| [BigQuery](#bigquery) | Analytics | Petabyte-scale analytics data warehouse | Yes |
+| [Bigtable](#bigtable) | NoSQL | Low-latency wide-column store | No |
+| [Cloud SQL for MySQL](#cloud-sql-for-mysql) | SQL | Fully-managed MySQL database service | Yes |
+| [Cloud SQL for PostgreSQL](#cloud-sql-for-postgresql) | SQL | Fully-managed PostgreSQL database service | Yes |
+| [Cloud SQL for SQL Server](#cloud-sql-for-sql-server) | SQL | Fully-managed SQL Server database service | Yes |
+| [Couchbase](#couchbase) | NoSQL | Distributed document database | No |
+| [Dataplex](#dataplex) | Catalog | Unified data governance solution | Yes |
+| [Dgraph](#dgraph) | Graph | Distributed graph database | No |
+| [Firestore](#firestore) | NoSQL | Serverless document database | Yes |
+| [Looker](#looker) | BI | Business intelligence platform | Yes |
+| [MongoDB](#mongodb) | NoSQL | Document-oriented database | No |
+| [MySQL](#mysql) | SQL | Open-source relational database | Yes |
+| [Neo4j](#neo4j) | Graph | Graph database management system | No |
+| [PostgreSQL](#postgresql) | SQL | Open-source object-relational database | Yes |
+| [Redis](#redis) | Cache/NoSQL | In-memory data structure store | No |
+| [Redshift](#redshift) | Analytics | Amazon's data warehouse service | No |
+| [Spanner](#spanner) | SQL | Globally distributed relational database | Yes |
+| [SQL Server](#sql-server) | SQL | Microsoft relational database | Yes |
+| [SQLite](#sqlite) | SQL | Lightweight file-based database | No |
+| [TiDB](#tidb) | SQL | Distributed SQL database | No |
+| [Valkey](#valkey) | Cache/NoSQL | Open-source Redis fork | No |
 
 ## 🗄️ Database Configurations
 
@@ -192,7 +192,7 @@ docker run --rm -i \
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|
 | `BIGQUERY_PROJECT` | Yes | GCP project ID | - | `my-project` |
-| `BIGQUERY_DATASET` | No | Default dataset | - | `my_dataset` |
+| `BIGQUERY_DATASET` | Yes | Default dataset | - | `my_dataset` |
 | `BIGQUERY_LOCATION` | No | BigQuery location | `US` | `US`, `EU` |
 | `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
 
@@ -1295,18 +1295,18 @@ Microsoft SQL Server is a relational database management system.
 ### Docker Command
 
 ```bash
-SQLSERVER_HOST=localhost \
-SQLSERVER_DATABASE=mydb \
-SQLSERVER_USER=sa \
-SQLSERVER_PASSWORD=your-password \
-SQLSERVER_PORT=1433 \
+MSSQL_HOST=localhost \
+MSSQL_DATABASE=mydb \
+MSSQL_USER=sa \
+MSSQL_PASSWORD=your-password \
+MSSQL_PORT=1433 \
 docker run --rm -i \
   --name mcp-sqlserver \
-  -e SQLSERVER_HOST \
-  -e SQLSERVER_DATABASE \
-  -e SQLSERVER_USER \
-  -e SQLSERVER_PASSWORD \
-  -e SQLSERVER_PORT \
+  -e MSSQL_HOST \
+  -e MSSQL_DATABASE \
+  -e MSSQL_USER \
+  -e MSSQL_PASSWORD \
+  -e MSSQL_PORT \
   us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
   --prebuilt mssql \
   --stdio
@@ -1319,21 +1319,21 @@ docker run --rm -i \
   "command": "docker",
   "args": [
     "run", "--rm", "-i",
-    "-e", "SQLSERVER_HOST",
-    "-e", "SQLSERVER_DATABASE",
-    "-e", "SQLSERVER_USER",
-    "-e", "SQLSERVER_PASSWORD",
-    "-e", "SQLSERVER_PORT",
+    "-e", "MSSQL_HOST",
+    "-e", "MSSQL_DATABASE",
+    "-e", "MSSQL_USER",
+    "-e", "MSSQL_PASSWORD",
+    "-e", "MSSQL_PORT",
     "us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest",
     "--prebuilt", "mssql",
     "--stdio"
   ],
   "env": {
-    "SQLSERVER_HOST": "localhost",
-    "SQLSERVER_DATABASE": "mydb",
-    "SQLSERVER_USER": "sa",
-    "SQLSERVER_PASSWORD": "your-password",
-    "SQLSERVER_PORT": "1433"
+    "MSSQL_HOST": "localhost",
+    "MSSQL_DATABASE": "mydb",
+    "MSSQL_USER": "sa",
+    "MSSQL_PASSWORD": "your-password",
+    "MSSQL_PORT": "1433"
   }
 }
 ```
@@ -1342,12 +1342,12 @@ docker run --rm -i \
 
 | Variable | Required | Description | Default | Example |
 |----------|----------|-------------|---------|---------|  
-| `SQLSERVER_HOST` | Yes | SQL Server host | - | `localhost` |
-| `SQLSERVER_PORT` | No | SQL Server port | `1433` | `1433` |
-| `SQLSERVER_DATABASE` | Yes | Database name | - | `mydb` |
-| `SQLSERVER_USER` | Yes | Username | - | `sa` |
-| `SQLSERVER_PASSWORD` | Yes | Password | - | `your-password` |
-| `SQLSERVER_TRUST_CERT` | No | Trust server certificate | `false` | `true`, `false` |
+| `MSSQL_HOST` | Yes | SQL Server host | - | `localhost` |
+| `MSSQL_PORT` | No | SQL Server port | `1433` | `1433` |
+| `MSSQL_DATABASE` | Yes | Database name | - | `mydb` |
+| `MSSQL_USER` | Yes | Username | - | `sa` |
+| `MSSQL_PASSWORD` | Yes | Password | - | `your-password` |
+| `MSSQL_TRUST_CERT` | No | Trust server certificate | `false` | `true`, `false` |
 
 ---
 
