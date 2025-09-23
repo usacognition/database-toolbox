@@ -13,107 +13,6 @@ from pathlib import Path
 import tempfile
 
 
-def test_mcp_protocol(process, client_name: str) -> bool:
-    """Test the MCP protocol against a running process."""
-    try:
-        # Send initialize request
-        initialize_request = {
-            "jsonrpc": "2.0",
-            "method": "initialize",
-            "params": {
-                "protocolVersion": "1.0.0",
-                "capabilities": {},
-                "clientInfo": {"name": client_name, "version": "1.0.0"},
-            },
-            "id": 1,
-        }
-        assert process.stdin is not None
-        process.stdin.write(json.dumps(initialize_request) + "\n")
-        process.stdin.flush()
-
-        # Read initialize response
-        assert process.stdout is not None
-        response_line = process.stdout.readline()
-        if not response_line:
-            stderr_output = process.stderr.read() if process.stderr else ""
-            print("✗ No response from server during initialize")
-            if stderr_output:
-                print(f"✗ Stderr: {stderr_output}")
-            return False
-        try:
-            response = json.loads(response_line)
-            print(
-                f"✓ Initialize response: "
-                f"{response.get('result', {}).get('serverInfo', {}).get('name', 'Unknown')}"
-            )
-        except json.JSONDecodeError:
-            stderr_output = process.stderr.read() if process.stderr else ""
-            print(f"✗ Failed to parse initialize response. Raw: {response_line}")
-            if stderr_output:
-                print(f"✗ Stderr: {stderr_output}")
-            return False
-
-        # List available tools
-        list_tools_request = {
-            "jsonrpc": "2.0",
-            "method": "tools/list",
-            "params": {},
-            "id": 2,
-        }
-        process.stdin.write(json.dumps(list_tools_request) + "\n")
-        process.stdin.flush()
-
-        response_line = process.stdout.readline()
-        if not response_line:
-            print("✗ No response to tools/list")
-            return False
-
-        response = json.loads(response_line)
-        if "result" not in response:
-            print(f"✗ Failed to list tools: {response.get('error', 'Unknown error')}")
-            return False
-
-        tools = response.get("result", {}).get("tools", [])
-        tool_names = [tool.get("name", "unknown") for tool in tools]
-        print("✓ Available tools: " + ", ".join(tool_names))
-
-        # Execute a simple query using execute_sql to verify tool calls work
-        if "execute_sql" in tool_names:
-            execute_sql_request = {
-                "jsonrpc": "2.0",
-                "method": "tools/call",
-                "params": {
-                    "name": "execute_sql",
-                    "arguments": {"sql": "SELECT 1 AS one"},
-                },
-                "id": 3,
-            }
-            process.stdin.write(json.dumps(execute_sql_request) + "\n")
-            process.stdin.flush()
-
-            exec_line = process.stdout.readline()
-            if exec_line:
-                try:
-                    exec_resp = json.loads(exec_line)
-                    if "result" in exec_resp:
-                        print("✓ execute_sql call successful")
-                    else:
-                        print(f"✗ execute_sql call failed: {exec_resp.get('error', 'Unknown error')}")
-                        return False
-                except json.JSONDecodeError:
-                    print(f"✗ execute_sql returned non-JSON: {exec_line[:200]}")
-                    return False
-
-        return len(tools) > 0
-
-    except Exception as e:
-        print(f"✗ Error during MCP protocol test: {e}")
-        stderr_output = process.stderr.read() if process.stderr else ""
-        if stderr_output:
-            print(f"✗ Stderr: {stderr_output}")
-        return False
-
-
 def load_env_file(env_path: Path) -> dict:
     values: dict[str, str] = {}
     if not env_path.exists():
@@ -205,7 +104,96 @@ def test_mcp_bigquery() -> bool:
         )
 
         try:
-            return test_mcp_protocol(process, "test-client")
+            # Send initialize request
+            initialize_request = {
+                "jsonrpc": "2.0",
+                "method": "initialize",
+                "params": {
+                    "protocolVersion": "1.0.0",
+                    "capabilities": {},
+                    "clientInfo": {"name": "test-client", "version": "1.0.0"},
+                },
+                "id": 1,
+            }
+            assert process.stdin is not None
+            process.stdin.write(json.dumps(initialize_request) + "\n")
+            process.stdin.flush()
+
+            # Read initialize response
+            assert process.stdout is not None
+            response_line = process.stdout.readline()
+            if not response_line:
+                stderr_output = process.stderr.read() if process.stderr else ""
+                print("✗ No response from server during initialize")
+                if stderr_output:
+                    print(f"✗ Stderr: {stderr_output}")
+                return False
+            try:
+                response = json.loads(response_line)
+                print(
+                    f"✓ Initialize response: "
+                    f"{response.get('result', {}).get('serverInfo', {}).get('name', 'Unknown')}"
+                )
+            except json.JSONDecodeError:
+                stderr_output = process.stderr.read() if process.stderr else ""
+                print(f"✗ Failed to parse initialize response. Raw: {response_line}")
+                if stderr_output:
+                    print(f"✗ Stderr: {stderr_output}")
+                return False
+
+            # List available tools
+            list_tools_request = {
+                "jsonrpc": "2.0",
+                "method": "tools/list",
+                "params": {},
+                "id": 2,
+            }
+            process.stdin.write(json.dumps(list_tools_request) + "\n")
+            process.stdin.flush()
+
+            response_line = process.stdout.readline()
+            if not response_line:
+                print("✗ No response to tools/list")
+                return False
+
+            response = json.loads(response_line)
+            if "result" not in response:
+                print(f"✗ Failed to list tools: {response.get('error', 'Unknown error')}")
+                return False
+
+            tools = response.get("result", {}).get("tools", [])
+            tool_names = [tool.get("name", "unknown") for tool in tools]
+            print("✓ Available tools: " + ", ".join(tool_names))
+
+            # Execute a simple query using execute_sql to verify tool calls work
+            if "execute_sql" in tool_names:
+                execute_sql_request = {
+                    "jsonrpc": "2.0",
+                    "method": "tools/call",
+                    "params": {
+                        "name": "execute_sql",
+                        "arguments": {"sql": "SELECT 1 AS one"},
+                    },
+                    "id": 3,
+                }
+                process.stdin.write(json.dumps(execute_sql_request) + "\n")
+                process.stdin.flush()
+
+                exec_line = process.stdout.readline()
+                if exec_line:
+                    try:
+                        exec_resp = json.loads(exec_line)
+                        if "result" in exec_resp:
+                            print("✓ execute_sql call successful")
+                        else:
+                            print(f"✗ execute_sql call failed: {exec_resp.get('error', 'Unknown error')}")
+                            return False
+                    except json.JSONDecodeError:
+                        print(f"✗ execute_sql returned non-JSON: {exec_line[:200]}")
+                        return False
+
+            return len(tools) > 0
+
         except Exception as e:
             print(f"✗ Error: {e}")
             stderr_output = process.stderr.read() if process.stderr else ""
