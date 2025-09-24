@@ -82,7 +82,7 @@ check_original_toolbox() {
 
 # Main execution
 main() {
-    log "Starting custom Google AI Toolbox entrypoint"
+    log "Starting custom BigQuery Toolbox entrypoint"
     
     # Check if original toolbox exists
     check_original_toolbox
