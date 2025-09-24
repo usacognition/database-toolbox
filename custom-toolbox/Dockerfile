@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y bash coreutils && rm -rf /var/lib/apt/l
 FROM us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest
 
 # Set metadata
-LABEL maintainer="Custom Toolbox Team"
+LABEL maintainer="Cognition"
 LABEL description="Google AI Toolbox with environment variable authentication support"
 LABEL version="1.0.0"
 

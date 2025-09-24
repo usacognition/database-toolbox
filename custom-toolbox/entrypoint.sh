@@ -90,12 +90,6 @@ main() {
     # Setup Google Cloud credentials if provided
     setup_credentials
     
-    # Log environment info (without exposing sensitive data)
-    log "Environment variables configured:"
-    log "  GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS:-'(not set)'}"
-    log "  BIGQUERY_PROJECT: ${BIGQUERY_PROJECT:-'(not set)'}"
-    log "  BIGQUERY_DATASET: ${BIGQUERY_DATASET:-'(not set)'}"
-    
     # Execute the original toolbox with all passed arguments
     log "Executing original toolbox with arguments: $*"
     exec "$ORIGINAL_ENTRYPOINT" "$@"
