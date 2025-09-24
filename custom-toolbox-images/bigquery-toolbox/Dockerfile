@@ -23,6 +23,9 @@ COPY --from=tools /bin/rm /bin/rm
 COPY --from=tools /lib/x86_64-linux-gnu/ /lib/x86_64-linux-gnu/
 COPY --from=tools /lib64/ /lib64/
 
+# Copy the shared Google credentials setup script
+COPY --chmod=755 setup-google-credentials.sh /usr/local/bin/setup-google-credentials.sh
+
 # Copy our custom entrypoint script with executable permissions
 COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 
