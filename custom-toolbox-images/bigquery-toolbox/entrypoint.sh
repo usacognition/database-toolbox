@@ -90,9 +90,9 @@ main() {
     # Setup Google Cloud credentials if provided
     setup_credentials
     
-    # Execute the original toolbox with all passed arguments
-    log "Executing original toolbox with arguments: $*"
-    exec "$ORIGINAL_ENTRYPOINT" "$@"
+    # Execute the original toolbox with BigQuery prebuilt and passed arguments
+    log "Executing BigQuery toolbox with arguments: $*"
+    exec "$ORIGINAL_ENTRYPOINT" "--prebuilt" "bigquery" "$@"
 }
 
 # Handle edge cases
