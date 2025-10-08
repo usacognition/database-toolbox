@@ -23,7 +23,7 @@ jobs:
       - name: Find image directories
         id: find
         run: |
-          IMAGES=$(find images -maxdepth 1 -mindepth 1 -type d -printf '{"dir":"%f"},\n' | sed '$ s/,$//' | sed 's/^/\[/;s/$/\]/')
+          IMAGES=[$(find images -maxdepth 1 -mindepth 1 -type d -printf '{"dir":"%f"},\n' | sed '$ s/,$//')]
           echo "images=$IMAGES" >> "$GITHUB_OUTPUT"
           echo "Found images: $IMAGES"
       
@@ -100,7 +100,7 @@ jobs:
       - name: Generate SBOM
         uses: anchore/sbom-action@v0
         with:
-          image: ${{ env.GHCR_REGISTRY }}/${{ github.repository }}/${{ matrix.images.dir }}:${{ steps.version.outputs.version }}
+          image: ${{ env.GHCR_REGISTRY }}/${{ github.repository }}/${{ matrix.images.dir }}:${{ steps.metadata.outputs.version }}
           format: spdx-json
           output-file: sbom-${{ matrix.images.dir }}.spdx.json
       
