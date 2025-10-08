@@ -16,27 +16,15 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       images: ${{ steps.find.outputs.images }}
-      is_semver: ${{ steps.check.outputs.is_semver }}
     steps:
       - uses: actions/checkout@v5
       
       - name: Find image directories
         id: find
         run: |
-          IMAGES=$(find images -maxdepth 1 -mindepth 1 -type d -printf '{"dir":"%f"},\n' | sed '$ s/,$//' | sed 's/^/\[/;s/$/\]/')
+          IMAGES=$(echo [$(find images -maxdepth 1 -mindepth 1 -type d -printf '{"dir":"%f"},\n' | sed '$ s/,$//')] | jq -c .)
           echo "images=$IMAGES" >> "$GITHUB_OUTPUT"
           echo "Found images: $IMAGES"
-      
-      - name: Check if semver tag
-        id: check
-        run: |
-          if [[ "${{ github.ref }}" =~ ^refs/tags/v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "is_semver=true" >> "$GITHUB_OUTPUT"
-            echo "Valid semver tag detected"
-          else
-            echo "is_semver=false" >> "$GITHUB_OUTPUT"
-            echo "Not a semver tag"
-          fi
   build:
     name: Build Database Toolboxes
     needs: find
@@ -55,7 +43,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
-      - uses: aws-actions/configure-aws-credentials@v4
+      - uses: aws-actions/configure-aws-credentials@v5
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
@@ -100,7 +88,7 @@ jobs:
       - name: Generate SBOM
         uses: anchore/sbom-action@v0
         with:
-          image: ${{ env.GHCR_REGISTRY }}/${{ github.repository }}/${{ matrix.images.dir }}:${{ steps.version.outputs.version }}
+          image: ${{ env.GHCR_REGISTRY }}/${{ github.repository }}/${{ matrix.images.dir }}:${{ steps.metadata.outputs.version }}
           format: spdx-json
           output-file: sbom-${{ matrix.images.dir }}.spdx.json
       
