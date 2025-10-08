@@ -1,0 +1,112 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+env:
+  AWS_REGION: us-west-2
+  ECR_REGISTRY: public.ecr.aws/e0h8a4b6
+  GHCR_REGISTRY: ghcr.io
+
+jobs:
+  find:
+    name: Discover Images
+    runs-on: ubuntu-latest
+    outputs:
+      images: ${{ steps.find.outputs.images }}
+      is_semver: ${{ steps.check.outputs.is_semver }}
+    steps:
+      - uses: actions/checkout@v5
+      
+      - name: Find image directories
+        id: find
+        run: |
+          IMAGES=$(find images -maxdepth 1 -mindepth 1 -type d -printf '{"dir":"%f"},\n' | sed '$ s/,$//' | sed 's/^/\[/;s/$/\]/')
+          echo "images=$IMAGES" >> "$GITHUB_OUTPUT"
+          echo "Found images: $IMAGES"
+      
+      - name: Check if semver tag
+        id: check
+        run: |
+          if [[ "${{ github.ref }}" =~ ^refs/tags/v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "is_semver=true" >> "$GITHUB_OUTPUT"
+            echo "Valid semver tag detected"
+          else
+            echo "is_semver=false" >> "$GITHUB_OUTPUT"
+            echo "Not a semver tag"
+          fi
+  build:
+    name: Build Database Toolboxes
+    needs: find
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
+      attestations: write
+    strategy:
+      fail-fast: false
+      matrix:
+        images: ${{ fromJson(needs.find.outputs.images) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - uses: aws-actions/amazon-ecr-login@v2
+      
+      - id: metadata
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.GHCR_REGISTRY }}/${{ github.repository }}/${{ matrix.images.dir }}
+            ${{ env.ECR_REGISTRY }}/mcp/${{ matrix.images.dir }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=ref,event=branch
+            type=sha,prefix=sha-,format=short
+          flavor: |
+            latest=auto
+      
+      - name: Build and push to staging ECR
+        uses: docker/build-push-action@v5
+        with:
+          context: ./images/${{ matrix.images.dir }}
+          file: ./images/${{ matrix.images.dir }}/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
+          cache-from: type=gha,scope=${{ matrix.images.dir }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.images.dir }}
+          provenance: true
+          sbom: true
+
+      - name: Attest build provenance for GHCR
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ env.GHCR_REGISTRY }}/${{ github.repository }}/${{ matrix.images.dir }}
+          subject-digest: ${{ steps.metadata.outputs.digest }}
+          push-to-registry: true
+      
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          image: ${{ env.GHCR_REGISTRY }}/${{ github.repository }}/${{ matrix.images.dir }}:${{ steps.version.outputs.version }}
+          format: spdx-json
+          output-file: sbom-${{ matrix.images.dir }}.spdx.json
+      
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-${{ matrix.images.dir }}
+          path: sbom-${{ matrix.images.dir }}.spdx.json
+          retention-days: 90
