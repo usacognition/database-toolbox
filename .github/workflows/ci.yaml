@@ -22,7 +22,7 @@ jobs:
       - name: Find image directories
         id: find
         run: |
-          IMAGES=$(echo [$(find images -maxdepth 1 -mindepth 1 -type d -printf '{"dir":"%f"},\n' | sed '$ s/,$//')] | jq)
+          IMAGES=$(echo [$(find images -maxdepth 1 -mindepth 1 -type d -printf '{"dir":"%f"},\n' | sed '$ s/,$//')] | jq -c .)
           echo "images=$IMAGES" >> "$GITHUB_OUTPUT"
           echo "Found images: $IMAGES"
   build:
