@@ -16,27 +16,15 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       images: ${{ steps.find.outputs.images }}
-      is_semver: ${{ steps.check.outputs.is_semver }}
     steps:
       - uses: actions/checkout@v5
       
       - name: Find image directories
         id: find
         run: |
-          IMAGES=[$(find images -maxdepth 1 -mindepth 1 -type d -printf '{"dir":"%f"},\n' | sed '$ s/,$//')]
+          IMAGES=$(echo [$(find images -maxdepth 1 -mindepth 1 -type d -printf '{"dir":"%f"},\n' | sed '$ s/,$//')] | jq)
           echo "images=$IMAGES" >> "$GITHUB_OUTPUT"
           echo "Found images: $IMAGES"
-      
-      - name: Check if semver tag
-        id: check
-        run: |
-          if [[ "${{ github.ref }}" =~ ^refs/tags/v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "is_semver=true" >> "$GITHUB_OUTPUT"
-            echo "Valid semver tag detected"
-          else
-            echo "is_semver=false" >> "$GITHUB_OUTPUT"
-            echo "Not a semver tag"
-          fi
   build:
     name: Build Database Toolboxes
     needs: find
