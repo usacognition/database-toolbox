@@ -1,18 +1,88 @@
-# MCP Database Server Docker Images
+# 🗄️ MCP Database Toolbox
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+<p align="center">
+  <img src="https://avatars.githubusercontent.com/u/151598966?s=200&v=4" alt="Cognition AI" width="200"/>
+</p>
 
-Docker images that provide database connectivity through the **Model Context Protocol (MCP)**. These images enable AI agents and applications to connect to database systems with minimal configuration.
+<p align="center">
+  <strong>Universal Database Connectivity for AI Agents</strong>
+</p>
 
-## ✨ Features
+<p align="center">
+  [Quick Start](#-quick-start) •
+  [Databases](#-supported-databases) •
+  [Documentation](#-documentation) •
+  [Contributing](CONTRIBUTING.md) •
+  [Community](#-community)
+</p>
 
-- 🚀 **Ready-to-Use**: Pre-built Docker images for each database type
-- 🔗 **Universal Interface**: Consistent API across all database types
-- 🔐 **Secure**: Environment-based credential management
-- 📊 **Extensive Database Support**: 20+ database systems supported
-- 🐳 **Container Native**: Optimized for containerized environments
+<p align="center">
 
-## 🐳 About These Images
+  [![License: MIT](https://img.shields.io/badge/License-MIT-pink.svg?colorA=363a4f&colorB=b7bdf8&style=for-the-badge)](https://opensource.org/licenses/MIT)
+  [![Build](https://img.shields.io/github/actions/workflow/status/cognition-ai/database-toolbox/ci.yaml?branch=main&colorA=363a4f&colorB=a6da95&style=for-the-badge)](https://github.com/cognition-ai/database-toolbox/actions)
+  [![Docker Pulls](https://img.shields.io/docker/pulls/e0h8a4b6/mcp?colorA=363a4f&colorB=f5a97f&style=for-the-badge)](https://hub.docker.com/u/e0h8a4b6)
+
+</p>
+
+---
+
+## 📖 Overview
+
+**MCP Database Toolbox** provides production-ready Docker images that enable AI agents and applications to connect to 20+ database systems through the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/). Built on Google's Database Toolbox, these images offer a unified interface for database operations across SQL, NoSQL, graph, and analytics platforms.
+
+### Why MCP Database Toolbox?
+
+- **🚀 Zero Configuration** - Pre-built Docker images ready to use
+- **🔗 Universal Interface** - Consistent API across all database types  
+- **🔐 Enterprise Security** - Environment-based credential management
+- **📊 Extensive Coverage** - 20+ database systems from SQL to NoSQL to analytics
+- **🐳 Cloud Native** - Optimized for containerized and serverless environments
+- **⚡ Production Ready** - Battle-tested with SBOM, provenance attestation, and multi-arch support
+
+---
+
+## 🚀 Quick Start
+
+Get started in under 60 seconds with PostgreSQL:
+
+```bash
+# Pull the base toolbox image
+docker pull us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest
+
+# Run with your PostgreSQL credentials
+POSTGRES_HOST=localhost \
+POSTGRES_DATABASE=mydb \
+POSTGRES_USER=postgres \
+POSTGRES_PASSWORD=secret \
+docker run --rm -i \
+  -e POSTGRES_HOST \
+  -e POSTGRES_DATABASE \
+  -e POSTGRES_USER \
+  -e POSTGRES_PASSWORD \
+  us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
+  --prebuilt postgres \
+  --stdio
+```
+
+> 💡 **Tip**: See the [full configuration guide](#-database-configurations) for your database below.
+
+---
+
+## 🏗️ Architecture
+
+### How It Works
+
+```mermaid
+graph TD
+    A["🤖 AI Agent<br/>(Claude, GPT, etc.)"] -->|MCP Protocol<br/>stdio| B["🐳 Docker Image<br/>MCP Toolbox"]
+    B -->|Database Driver| C["🗄️ Database<br/>(Any supported)"]
+    
+    style A fill:#a6da95,stroke:#363a4f,stroke-width:2px,color:#24273a
+    style B fill:#8aadf4,stroke:#363a4f,stroke-width:2px,color:#24273a
+    style C fill:#f5a97f,stroke:#363a4f,stroke-width:2px,color:#24273a
+```
+
+### 🐳 About These Images
 
 All database images use the official Google Database Toolbox as the base:
 
@@ -22,43 +92,96 @@ us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest
 
 Each database configuration runs this image with either:
 
-- The `--prebuilt` flag for databases with built-in support
-- The `--tools-file` flag for databases requiring custom configuration files
+- 🔧 **`--prebuilt` flag** - For databases with built-in support (most common)
+- 📝 **`--tools-file` flag** - For databases requiring custom configuration YAML files
+- 📡 **`--stdio` flag** - Required for MCP protocol communication
 
-For MCP mode, the `--stdio` flag is also required.
+### Prebuilt vs Custom Configuration
 
-**Databases with prebuilt configurations:**
-AlloyDB, BigQuery, Cloud SQL (MySQL, PostgreSQL, SQL Server), Dataplex, Firestore, Looker, MySQL, PostgreSQL, Spanner, SQL Server
+| **Prebuilt Support** ✅ | **Custom Config Required** 📝 |
+|-------------------------|-------------------------------|
+| AlloyDB for PostgreSQL  | Bigtable                      |
+| BigQuery                | Couchbase                     |
+| Cloud SQL (MySQL)       | Dgraph                        |
+| Cloud SQL (PostgreSQL)  | MongoDB                       |
+| Cloud SQL (SQL Server)  | Neo4j                         |
+| Dataplex                | Redis                         |
+| Firestore               | Redshift                      |
+| Looker                  | SQLite                        |
+| MySQL                   | TiDB                          |
+| PostgreSQL              | Valkey                        |
+| Spanner                 |                               |
+| SQL Server              |                               |
 
-**Databases requiring custom configuration files:**
-Bigtable, Couchbase, Dgraph, MongoDB, Neo4j, Redis, Redshift, SQLite, TiDB, Valkey
+---
+
+## 📋 Table of Contents
+
+- [Supported Databases](#-supported-databases)
+  - [SQL Databases](#sql-databases)
+  - [NoSQL Databases](#nosql-databases)
+  - [Analytics & Data Warehouses](#analytics--data-warehouses)
+  - [Graph Databases](#graph-databases)
+  - [Cache & In-Memory](#cache--in-memory)
+- [Database Configurations](#️-database-configurations)
+- [Troubleshooting](#-troubleshooting)
+- [FAQ](#-faq)
+- [Contributing](#-contributing)
+- [Community](#-community)
+- [License](#-license)
+
+---
 
 ## 📋 Supported Databases
 
-| Database | Type | Description | Prebuilt tools |
-|----------|------|-------------|----------------|
-| [AlloyDB for PostgreSQL](#alloydb-for-postgresql) | SQL | Fully-managed PostgreSQL-compatible database | Yes |
-| [BigQuery](#bigquery) | Analytics | Petabyte-scale analytics data warehouse | Yes |
-| [Bigtable](#bigtable) | NoSQL | Low-latency wide-column store | No |
-| [Cloud SQL for MySQL](#cloud-sql-for-mysql) | SQL | Fully-managed MySQL database service | Yes |
-| [Cloud SQL for PostgreSQL](#cloud-sql-for-postgresql) | SQL | Fully-managed PostgreSQL database service | Yes |
-| [Cloud SQL for SQL Server](#cloud-sql-for-sql-server) | SQL | Fully-managed SQL Server database service | Yes |
-| [Couchbase](#couchbase) | NoSQL | Distributed document database | No |
-| [Dataplex](#dataplex) | Catalog | Unified data governance solution | Yes |
-| [Dgraph](#dgraph) | Graph | Distributed graph database | No |
-| [Firestore](#firestore) | NoSQL | Serverless document database | Yes |
-| [Looker](#looker) | BI | Business intelligence platform | Yes |
-| [MongoDB](#mongodb) | NoSQL | Document-oriented database | No |
-| [MySQL](#mysql) | SQL | Open-source relational database | Yes |
-| [Neo4j](#neo4j) | Graph | Graph database management system | No |
-| [PostgreSQL](#postgresql) | SQL | Open-source object-relational database | Yes |
-| [Redis](#redis) | Cache/NoSQL | In-memory data structure store | No |
-| [Redshift](#redshift) | Analytics | Amazon's data warehouse service | No |
-| [Spanner](#spanner) | SQL | Globally distributed relational database | Yes |
-| [SQL Server](#sql-server) | SQL | Microsoft relational database | Yes |
-| [SQLite](#sqlite) | SQL | Lightweight file-based database | No |
-| [TiDB](#tidb) | SQL | Distributed SQL database | No |
-| [Valkey](#valkey) | Cache/NoSQL | Open-source Redis fork | No |
+### SQL Databases
+
+| Database | Description | Prebuilt | Provider |
+|----------|-------------|----------|----------|
+| [AlloyDB for PostgreSQL](#alloydb-for-postgresql) | Fully-managed PostgreSQL-compatible database | ✅ | Google Cloud |
+| [Cloud SQL for MySQL](#cloud-sql-for-mysql) | Fully-managed MySQL database service | ✅ | Google Cloud |
+| [Cloud SQL for PostgreSQL](#cloud-sql-for-postgresql) | Fully-managed PostgreSQL database service | ✅ | Google Cloud |
+| [Cloud SQL for SQL Server](#cloud-sql-for-sql-server) | Fully-managed SQL Server database service | ✅ | Google Cloud |
+| [MySQL](#mysql) | Open-source relational database | ✅ | Community |
+| [PostgreSQL](#postgresql) | Open-source object-relational database | ✅ | Community |
+| [Spanner](#spanner) | Globally distributed relational database | ✅ | Google Cloud |
+| [SQL Server](#sql-server) | Microsoft relational database | ✅ | Microsoft |
+| [SQLite](#sqlite) | Lightweight file-based database | 📝 | Community |
+| [TiDB](#tidb) | Distributed SQL database | 📝 | PingCAP |
+
+### NoSQL Databases
+
+| Database | Description | Prebuilt | Type |
+|----------|-------------|----------|------|
+| [Bigtable](#bigtable) | Low-latency wide-column store | 📝 | Wide-Column |
+| [Couchbase](#couchbase) | Distributed document database | 📝 | Document |
+| [Firestore](#firestore) | Serverless document database | ✅ | Document |
+| [MongoDB](#mongodb) | Document-oriented database | 📝 | Document |
+
+### Analytics & Data Warehouses
+
+| Database | Description | Prebuilt | Provider |
+|----------|-------------|----------|----------|
+| [BigQuery](#bigquery) | Petabyte-scale analytics data warehouse | ✅ | Google Cloud |
+| [Dataplex](#dataplex) | Unified data governance solution | ✅ | Google Cloud |
+| [Looker](#looker) | Business intelligence platform | ✅ | Google Cloud |
+| [Redshift](#redshift) | Amazon's data warehouse service | 📝 | AWS |
+
+### Graph Databases
+
+| Database | Description | Prebuilt | Type |
+|----------|-------------|----------|------|
+| [Dgraph](#dgraph) | Distributed graph database | 📝 | Native Graph |
+| [Neo4j](#neo4j) | Graph database management system | 📝 | Native Graph |
+
+### Cache & In-Memory
+
+| Database | Description | Prebuilt | Type |
+|----------|-------------|----------|------|
+| [Redis](#redis) | In-memory data structure store | 📝 | Key-Value |
+| [Valkey](#valkey) | Open-source Redis fork | 📝 | Key-Value |
+
+> **Legend**: ✅ = Prebuilt configuration available | 📝 = Custom YAML configuration required
 
 ## 🗄️ Database Configurations
 
@@ -1536,11 +1659,184 @@ docker run --rm -i \
 
 ---
 
+## 🔧 Troubleshooting
+
+### Common Issues
+
+<details>
+<summary><b>Connection refused or timeout errors</b></summary>
+
+**Problem**: Docker container cannot reach your database.
+
+**Solutions**:
+- Use `host.docker.internal` instead of `localhost` on macOS/Windows
+- Ensure database port is accessible from Docker network
+- Check firewall rules and security groups
+- For cloud databases, verify IP allowlisting
+</details>
+
+<details>
+<summary><b>Authentication failures</b></summary>
+
+**Problem**: Invalid credentials or permission denied.
+
+**Solutions**:
+- Verify environment variables are set correctly
+- Check user has required database permissions
+- For GCP services, ensure service account has appropriate IAM roles
+- Verify credentials file path is correctly mounted in Docker
+</details>
+
+<details>
+<summary><b>Custom tools configuration not working</b></summary>
+
+**Problem**: Database requires custom YAML but configuration fails.
+
+**Solutions**:
+- Ensure YAML file is valid (use online YAML validator)
+- Verify file is correctly mounted into container
+- Check file permissions (must be readable by container)
+- Review database-specific examples in this README
+</details>
+
+<details>
+<summary><b>Image pull errors</b></summary>
+
+**Problem**: Cannot pull base toolbox image.
+
+**Solutions**:
+- Authenticate with Google Cloud: `gcloud auth configure-docker us-central1-docker.pkg.dev`
+- Verify network connectivity
+- Check Docker daemon is running
+- Try alternative registry if available
+</details>
+
+### Getting Help
+
+- 📚 Check the [FAQ](#-faq) below
+- 🐛 [Report bugs](https://github.com/cognition-ai/database-toolbox/issues/new?template=bug_report.md)
+- 💡 [Request features](https://github.com/cognition-ai/database-toolbox/issues/new?template=feature_request.md)
+- 💬 Join our [discussions](https://github.com/cognition-ai/database-toolbox/discussions)
+
+---
+
+## ❓ FAQ
+
+### General Questions
+
+**Q: What is the Model Context Protocol (MCP)?**  
+A: MCP is a protocol that enables AI agents to interact with external tools and data sources. Learn more at [modelcontextprotocol.io](https://modelcontextprotocol.io/).
+
+**Q: Do I need to build images myself?**  
+A: No! All images are pre-built and available from public registries. Just pull and run.
+
+**Q: Which databases are production-ready?**  
+A: All databases with ✅ (prebuilt) support are production-ready. Custom configuration databases (📝) are also production-ready but require YAML setup.
+
+**Q: Can I use this without Docker?**  
+A: While these images are designed for Docker, you can use the underlying Google Database Toolbox directly. See [their documentation](https://googleapis.github.io/genai-toolbox/).
+
+**Q: How do I secure credentials?**  
+A: Use environment variables (never hardcode), Docker secrets, or secret management services like HashiCorp Vault, AWS Secrets Manager, or GCP Secret Manager.
+
+### Technical Questions
+
+**Q: What architectures are supported?**  
+A: Images support both `linux/amd64` and `linux/arm64` architectures.
+
+**Q: How do I use custom SQL queries?**  
+A: Most databases support an `execute_sql` tool. For custom tools, create a YAML configuration with your queries.
+
+**Q: Can I add a new database?**  
+A: Yes! See our [Contributing Guide](CONTRIBUTING.md) for instructions on adding database support.
+
+**Q: How are images versioned?**  
+A: We use semantic versioning. Images are tagged with version numbers, commit SHAs, and `latest` for the most recent stable release.
+
+**Q: Are there rate limits?**  
+A: No rate limits from the toolbox itself. Check your database provider's limits.
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions from the community! Whether you're fixing bugs, adding new database support, or improving documentation, your help is appreciated.
+
+### Ways to Contribute
+
+- 🐛 **Report bugs** - Help us identify and fix issues
+- ✨ **Suggest features** - Share your ideas for improvements
+- 📝 **Improve docs** - Help make our documentation clearer
+- 🔧 **Add databases** - Contribute support for new database systems
+- 🧪 **Write tests** - Improve our test coverage
+- 🌍 **Spread the word** - Star the repo and share with others
+
+### Get Started
+
+1. Read our [Contributing Guide](CONTRIBUTING.md)
+2. Check the [Code of Conduct](CODE_OF_CONDUCT.md)
+3. Look for [good first issues](https://github.com/cognition-ai/database-toolbox/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+4. Join the [discussions](https://github.com/cognition-ai/database-toolbox/discussions)
+
+---
+
+## 🌟 Community
+
+### Connect With Us
+
+- 💬 **Discussions** - [GitHub Discussions](https://github.com/cognition-ai/database-toolbox/discussions)
+- 🐛 **Issues** - [GitHub Issues](https://github.com/cognition-ai/database-toolbox/issues)
+- 🌐 **Website** - [cognition.ai](https://cognition.ai)
+- 📧 **Email** - [info@cognition.ai](mailto:info@cognition.ai)
+
+### Contributors
+
+Thanks to all our contributors! 🎉
+
+<!-- ALL-CONTRIBUTORS-LIST:START -->
+<!-- This section is automatically generated. Contributions will be recognized here. -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+### Acknowledgments
+
+- Built on [Google Database Toolbox](https://googleapis.github.io/genai-toolbox/)
+- Implements [Model Context Protocol](https://modelcontextprotocol.io/)
+- Inspired by the open-source community
+
+---
+
 ## 📚 Additional Resources
 
-- [Google Database Toolbox Documentation](https://googleapis.github.io/genai-toolbox/)
-- [Model Context Protocol Specification](https://modelcontextprotocol.io/)
+### Documentation
+
+- 📖 [Google Database Toolbox Documentation](https://googleapis.github.io/genai-toolbox/)
+- 📖 [Model Context Protocol Specification](https://modelcontextprotocol.io/)
+- 📖 [Docker Documentation](https://docs.docker.com/)
+
+### Related Projects
+
+- [MCP Servers](https://github.com/modelcontextprotocol/servers) - Official MCP server implementations
+- [Genkit](https://github.com/firebase/genkit) - AI application framework
+- [LangChain](https://github.com/langchain-ai/langchain) - Framework for LLM applications
+
+---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+### Third-Party Licenses
+
+This project uses the Google Database Toolbox, which has its own license. Please review their [license terms](https://github.com/googleapis/genai-toolbox/blob/main/LICENSE).
+
+---
+
+<div align="center">
+
+**[⬆ back to top](#-mcp-database-toolbox)**
+
+Made with ❤️ by [Cognition AI](https://cognition.ai)
+
+⭐ Star us on GitHub — it motivates us a lot!
+
+</div>
