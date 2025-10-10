@@ -58,8 +58,8 @@ jobs:
       - id: metadata
         uses: docker/metadata-action@v5
         with:
+          # ${{ env.ECR_REGISTRY }}/database-toolbox/${{ matrix.images.dir }}
           images: |
-            ${{ env.ECR_REGISTRY }}/mcp/${{ matrix.images.dir }}
             ${{ env.GHCR_REGISTRY }}/${{ github.repository }}/${{ matrix.images.dir }}
           tags: |
             type=semver,pattern={{version}}
