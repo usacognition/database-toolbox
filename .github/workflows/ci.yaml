@@ -6,7 +6,7 @@ on:
     tags: ['v*']
 
 env:
-  AWS_REGION: us-west-2
+  AWS_REGION: us-east-1
   ECR_REGISTRY: public.ecr.aws/e0h8a4b6
   GHCR_REGISTRY: ghcr.io
 
