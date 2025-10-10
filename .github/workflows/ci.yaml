@@ -85,24 +85,3 @@ jobs:
           cache-to: type=gha,mode=max,scope=${{ matrix.images.dir }}
           provenance: true
           sbom: true
-
-      - name: Attest build provenance for GHCR
-        uses: actions/attest-build-provenance@v3
-        with:
-          subject-name: ${{ env.GHCR_REGISTRY }}/${{ github.repository }}/${{ matrix.images.dir }}
-          subject-digest: ${{ steps.metadata.outputs.digest }}
-          push-to-registry: true
-      
-      - name: Generate SBOM
-        uses: anchore/sbom-action@v0
-        with:
-          image: ${{ env.GHCR_REGISTRY }}/${{ github.repository }}/${{ matrix.images.dir }}:${{ steps.metadata.outputs.version }}
-          format: spdx-json
-          output-file: sbom-${{ matrix.images.dir }}.spdx.json
-      
-      - name: Upload SBOM artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: sbom-${{ matrix.images.dir }}
-          path: sbom-${{ matrix.images.dir }}.spdx.json
-          retention-days: 90
