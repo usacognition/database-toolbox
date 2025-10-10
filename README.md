@@ -9,18 +9,26 @@
 </p>
 
 <p align="center">
-  [Quick Start](#-quick-start) •
-  [Databases](#-supported-databases) •
-  [Documentation](#-documentation) •
-  [Contributing](CONTRIBUTING.md) •
-  [Community](#-community)
+  <a href="#-quick-start">Quick Start</a> •
+  <a href="#-supported-databases">Databases</a> •
+  <a href="#-documentation">Documentation</a> •
+  <a href="CONTRIBUTING.md">Contributing</a> •
+  <a href="#-community">Community</a>
 </p>
 
 <p align="center">
+  
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/github/license/usacognition/database-toolbox?colorA=363a4f&colorB=b7bdf8&style=for-the-badge" alt="License: MIT"/>
+  </a>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-pink.svg?colorA=363a4f&colorB=b7bdf8&style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![Build](https://img.shields.io/github/actions/workflow/status/cognition-ai/database-toolbox/ci.yaml?branch=main&colorA=363a4f&colorB=a6da95&style=for-the-badge)](https://github.com/cognition-ai/database-toolbox/actions)
-[![Docker Pulls](https://img.shields.io/docker/pulls/e0h8a4b6/mcp?colorA=363a4f&colorB=f5a97f&style=for-the-badge)](https://hub.docker.com/u/e0h8a4b6)
+  <a href="https://github.com/usacognition/database-toolbox/actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/usacognition/database-toolbox/ci.yaml?branch=main&colorA=363a4f&style=for-the-badge" alt="Build"/>
+  </a>
+
+  <a href="https://github.com/usacognition/database-toolbox/releases">
+    <img src="https://img.shields.io/github/v/tag/usacognition/database-toolbox?colorA=363a4f&colorB=f5a97f&style=for-the-badge" alt="Docker Pulls"/>
+  </a>
 
 </p>
 
