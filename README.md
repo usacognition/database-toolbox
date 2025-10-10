@@ -37,7 +37,6 @@
 - **🐳 Cloud Native** - Optimized for containerized and serverless environments
 - **⚡ Production Ready** - Battle-tested with SBOM, provenance attestation, and multi-arch support
 
----
 
 ## 🚀 Quick Start
 
@@ -65,7 +64,6 @@ docker run --rm -i \
 > [!TIP]
 > See the [full configuration guide](#-database-configurations) for your database below.
 
----
 
 ## 🏗️ Architecture
 
@@ -108,7 +106,6 @@ Each database configuration runs this image with either:
 | Spanner                 |                               |
 | SQL Server              |                               |
 
----
 
 ## 📋 Table of Contents
 
@@ -125,7 +122,6 @@ Each database configuration runs this image with either:
 - [Community](#-community)
 - [License](#-license)
 
----
 
 ## 📋 Supported Databases
 
@@ -181,7 +177,6 @@ Each database configuration runs this image with either:
 
 ## 🗄️ Database Configurations
 
----
 
 ## AlloyDB for PostgreSQL
 
@@ -260,7 +255,6 @@ docker run --rm -i \
 | `ALLOYDB_POSTGRES_PASSWORD`           | Yes      | Database password            | -       | `your-password`                 |
 | `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON | -       | `/path/to/service-account.json` |
 
----
 
 ## BigQuery
 
@@ -315,7 +309,6 @@ docker run --rm -i \
 | `BIGQUERY_LOCATION`                   | No       | BigQuery location            | `US`    | `US`, `EU`                      |
 | `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON | -       | `/path/to/service-account.json` |
 
----
 
 ## Bigtable
 
@@ -382,7 +375,6 @@ docker run --rm -i \
 | `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON     | -       | `/path/to/service-account.json` |
 | `BIGTABLE_TOOLS_FILE`                 | Yes      | Path to tools configuration YAML | -       | `/path/to/bigtable.yaml`        |
 
----
 
 ## Cloud SQL for MySQL
 
@@ -461,7 +453,6 @@ docker run --rm -i \
 | `CLOUD_SQL_MYSQL_PASSWORD`            | Yes      | Database password                           | -       | `your-password`                 |
 | `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON                | -       | `/path/to/service-account.json` |
 
----
 
 ## Cloud SQL for PostgreSQL
 
@@ -540,7 +531,6 @@ docker run --rm -i \
 | `CLOUD_SQL_POSTGRES_IP_ADDRESS`       | Yes      | Public IP address of the Cloud SQL instance | -       | `34.133.171.252`                |
 | `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON                | -       | `/path/to/service-account.json` |
 
----
 
 ## Cloud SQL for SQL Server
 
@@ -619,7 +609,6 @@ docker run --rm -i \
 | `CLOUD_SQL_MSSQL_PASSWORD`            | Yes      | Database password                           | -       | `your-password`                 |
 | `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON                | -       | `/path/to/service-account.json` |
 
----
 
 ## Couchbase
 
@@ -685,7 +674,6 @@ docker run --rm -i \
 | `COUCHBASE_PASSWORD`   | Yes      | Password                         | -       | `your-password`           |
 | `COUCHBASE_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/couchbase.yaml` |
 
----
 
 ## Dataplex
 
@@ -741,7 +729,6 @@ docker run --rm -i \
 | `DATAPLEX_LOCATION`                   | Yes      | Dataplex location            | -       | `us-central1`                   |
 | `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON | -       | `/path/to/service-account.json` |
 
----
 
 ## Dgraph
 
@@ -798,7 +785,6 @@ docker run --rm -i \
 | `DGRAPH_API_KEY`    | No       | API key if using Dgraph Cloud    | -       | `your-api-key`         |
 | `DGRAPH_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/dgraph.yaml` |
 
----
 
 ## Firestore
 
@@ -852,7 +838,6 @@ docker run --rm -i \
 | `FIRESTORE_DATABASE`                  | No       | Database ID                  | `(default)` | `(default)`                     |
 | `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON | -           | `/path/to/service-account.json` |
 
----
 
 ## Looker
 
@@ -904,7 +889,6 @@ docker run --rm -i \
 | `LOOKER_CLIENT_ID`     | Yes      | API client ID       | -       | `your-client-id`               |
 | `LOOKER_CLIENT_SECRET` | Yes      | API client secret   | -       | `your-client-secret`           |
 
----
 
 ## MongoDB
 
@@ -969,7 +953,6 @@ docker run --rm -i \
 | `MONGODB_PASSWORD`   | No       | Password                         | -       | `your-password`             |
 | `MONGODB_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/mongodb.yaml`     |
 
----
 
 ## MySQL
 
@@ -1031,7 +1014,6 @@ docker run --rm -i \
 | `MYSQL_USER`     | Yes      | Username      | -       | `root`          |
 | `MYSQL_PASSWORD` | Yes      | Password      | -       | `your-password` |
 
----
 
 ## Neo4j
 
@@ -1096,7 +1078,6 @@ docker run --rm -i \
 | `NEO4J_DATABASE`   | No       | Database name                    | `neo4j` | `neo4j`                 |
 | `NEO4J_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/neo4j.yaml`   |
 
----
 
 ## PostgreSQL
 
@@ -1159,7 +1140,6 @@ docker run --rm -i \
 | `POSTGRES_PASSWORD` | Yes      | Password        | -        | `your-password`      |
 | `POSTGRES_SSL_MODE` | No       | SSL mode        | `prefer` | `disable`, `require` |
 
----
 
 ## Redis
 
@@ -1223,7 +1203,6 @@ docker run --rm -i \
 | `REDIS_USERNAME`   | No       | Username (Redis 6+)              | -       | `default`             |
 | `REDIS_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/redis.yaml` |
 
----
 
 ## Redshift
 
@@ -1353,7 +1332,6 @@ docker run --rm -i \
 | `POSTGRES_PASSWORD`   | Yes      | Password                         | -       | `your-password`                       |
 | `REDSHIFT_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/redshift.yaml`              |
 
----
 
 ## Spanner
 
@@ -1412,7 +1390,6 @@ docker run --rm -i \
 | `SPANNER_DATABASE`                    | Yes      | Database name                | -       | `mydb`                          |
 | `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON | -       | `/path/to/service-account.json` |
 
----
 
 ## SQL Server
 
@@ -1475,7 +1452,6 @@ docker run --rm -i \
 | `MSSQL_PASSWORD`   | Yes      | Password                 | -       | `your-password` |
 | `MSSQL_TRUST_CERT` | No       | Trust server certificate | `false` | `true`, `false` |
 
----
 
 ## SQLite
 
@@ -1529,7 +1505,6 @@ docker run --rm -i \
 | `SQLITE_READONLY`   | No       | Open in read-only mode           | `false` | `true`, `false`        |
 | `SQLITE_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/sqlite.yaml` |
 
----
 
 ## TiDB
 
@@ -1599,7 +1574,6 @@ docker run --rm -i \
 | `TIDB_PASSWORD`   | No       | Password                         | -       | `your-password`      |
 | `TIDB_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/tidb.yaml` |
 
----
 
 ## Valkey
 
@@ -1663,7 +1637,6 @@ docker run --rm -i \
 | `VALKEY_USERNAME`   | No       | Username                         | -       | `default`              |
 | `VALKEY_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/valkey.yaml` |
 
----
 
 ## 🔧 Troubleshooting
 
@@ -1728,7 +1701,6 @@ docker run --rm -i \
 - 💡 [Request features](https://github.com/cognition-ai/database-toolbox/issues/new?template=feature_request.md)
 - 💬 Join our [discussions](https://github.com/cognition-ai/database-toolbox/discussions)
 
----
 
 ## ❓ FAQ
 
@@ -1766,7 +1738,6 @@ A: We use semantic versioning. Images are tagged with version numbers, commit SH
 **Q: Are there rate limits?**  
 A: No rate limits from the toolbox itself. Check your database provider's limits.
 
----
 
 ## 🤝 Contributing
 
@@ -1788,7 +1759,6 @@ We welcome contributions from the community! Whether you're fixing bugs, adding 
 3. Look for [good first issues](https://github.com/cognition-ai/database-toolbox/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 4. Join the [discussions](https://github.com/cognition-ai/database-toolbox/discussions)
 
----
 
 ## 🌟 Community
 
@@ -1813,7 +1783,6 @@ Thanks to all our contributors! 🎉
 - Implements [Model Context Protocol](https://modelcontextprotocol.io/)
 - Inspired by the open-source community
 
----
 
 ## 📚 Additional Resources
 
@@ -1829,7 +1798,6 @@ Thanks to all our contributors! 🎉
 - [Genkit](https://github.com/firebase/genkit) - AI application framework
 - [LangChain](https://github.com/langchain-ai/langchain) - Framework for LLM applications
 
----
 
 ## 📄 License
 
@@ -1839,7 +1807,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 This project uses the Google Database Toolbox, which has its own license. Please review their [license terms](https://github.com/googleapis/genai-toolbox/blob/main/LICENSE).
 
----
 
 <div align="center">
 
