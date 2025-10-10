@@ -17,19 +17,9 @@
 </p>
 
 <p align="center">
-  
-  <a href="https://opensource.org/licenses/MIT">
-    <img src="https://img.shields.io/github/license/usacognition/database-toolbox?colorA=363a4f&colorB=b7bdf8&style=for-the-badge" alt="License: MIT"/>
-  </a>
-
-  <a href="https://github.com/usacognition/database-toolbox/actions">
-    <img src="https://img.shields.io/github/actions/workflow/status/usacognition/database-toolbox/ci.yaml?branch=main&colorA=363a4f&style=for-the-badge" alt="Build"/>
-  </a>
-
-  <a href="https://github.com/usacognition/database-toolbox/releases">
-    <img src="https://img.shields.io/github/v/tag/usacognition/database-toolbox?colorA=363a4f&colorB=f5a97f&style=for-the-badge" alt="Docker Pulls"/>
-  </a>
-
+  <img src="https://img.shields.io/github/license/usacognition/database-toolbox?colorA=363a4f&colorB=b7bdf8&style=for-the-badge" alt="License: MIT"/>
+  <img src="https://img.shields.io/github/actions/workflow/status/usacognition/database-toolbox/ci.yaml?branch=main&colorA=363a4f&style=for-the-badge" alt="Build"/>
+  <img src="https://img.shields.io/github/v/tag/usacognition/database-toolbox?colorA=363a4f&colorB=f5a97f&style=for-the-badge" alt="Docker Pulls"/>
 </p>
 
 ---
@@ -72,7 +62,8 @@ docker run --rm -i \
   --stdio
 ```
 
-> 💡 **Tip**: See the [full configuration guide](#-database-configurations) for your database below.
+> [!TIP]
+> See the [full configuration guide](#-database-configurations) for your database below.
 
 ---
 
@@ -84,10 +75,6 @@ docker run --rm -i \
 graph TD
     A["🤖 AI Agent<br/>(Claude, GPT, etc.)"] -->|MCP Protocol<br/>stdio| B["🐳 Docker Image<br/>MCP Toolbox"]
     B -->|Database Driver| C["🗄️ Database<br/>(Any supported)"]
-
-    style A fill:#a6da95,stroke:#363a4f,stroke-width:2px,color:#24273a
-    style B fill:#8aadf4,stroke:#363a4f,stroke-width:2px,color:#24273a
-    style C fill:#f5a97f,stroke:#363a4f,stroke-width:2px,color:#24273a
 ```
 
 ### 🐳 About These Images
@@ -189,7 +176,8 @@ Each database configuration runs this image with either:
 | [Redis](#redis)   | In-memory data structure store | 📝       | Key-Value |
 | [Valkey](#valkey) | Open-source Redis fork         | 📝       | Key-Value |
 
-> **Legend**: ✅ = Prebuilt configuration available | 📝 = Custom YAML configuration required
+> [!INFO]
+> ✅ = Prebuilt configuration available | 📝 = Custom YAML configuration required
 
 ## 🗄️ Database Configurations
 
@@ -333,7 +321,8 @@ docker run --rm -i \
 
 Bigtable is a low-latency NoSQL database service for machine learning and operational analytics.
 
-> **Note**: Bigtable requires a custom tools configuration file. Create a `bigtable.yaml` file with your specific tools configuration.
+> [!Note] 
+> Bigtable requires a custom tools configuration file. Create a `bigtable.yaml` file with your specific tools configuration.
 
 ### Docker Command
 
@@ -636,7 +625,8 @@ docker run --rm -i \
 
 Couchbase is a distributed NoSQL database.
 
-> **Note**: Couchbase requires a custom tools configuration file. Create a `couchbase.yaml` file with your specific tools configuration.
+> [!Note] 
+> Couchbase requires a custom tools configuration file. Create a `couchbase.yaml` file with your specific tools configuration.
 
 ### Docker Command
 
@@ -757,7 +747,8 @@ docker run --rm -i \
 
 Dgraph is a distributed graph database built for production.
 
-> **Note**: Dgraph requires a custom tools configuration file. Create a `dgraph.yaml` file with your specific tools configuration.
+> [!Note] 
+> Dgraph requires a custom tools configuration file. Create a `dgraph.yaml` file with your specific tools configuration.
 
 ### Docker Command
 
@@ -919,7 +910,8 @@ docker run --rm -i \
 
 MongoDB is a document-oriented NoSQL database.
 
-> **Note**: MongoDB requires a custom tools configuration file. Create a `mongodb.yaml` file with your specific tools configuration.
+> [!Note] 
+> MongoDB requires a custom tools configuration file. Create a `mongodb.yaml` file with your specific tools configuration.
 
 ### Docker Command
 
@@ -1045,7 +1037,8 @@ docker run --rm -i \
 
 Neo4j is a graph database management system.
 
-> **Note**: Neo4j requires a custom tools configuration file. Create a `neo4j.yaml` file with your specific tools configuration.
+> [!Note] 
+> Neo4j requires a custom tools configuration file. Create a `neo4j.yaml` file with your specific tools configuration.
 
 ### Docker Command
 
@@ -1172,7 +1165,8 @@ docker run --rm -i \
 
 Redis is an in-memory data structure store.
 
-> **Note**: Redis requires a custom tools configuration file. Create a `redis.yaml` file with your specific tools configuration.
+> [!Note] 
+> Redis requires a custom tools configuration file. Create a `redis.yaml` file with your specific tools configuration.
 
 ### Docker Command
 
@@ -1235,7 +1229,8 @@ docker run --rm -i \
 
 Amazon Redshift is a fast, scalable data warehouse that makes it simple and cost-effective to analyze all your data using standard SQL and your existing business intelligence tools.
 
-> **Note**: Redshift requires a custom tools configuration file because it doesn't support all PostgreSQL features used in the prebuilt tools (e.g., `array_agg` with `ORDER BY`).
+> [!Note] 
+> Redshift requires a custom tools configuration file because it doesn't support all PostgreSQL features used in the prebuilt tools (e.g., `array_agg` with `ORDER BY`).
 
 ### Creating the Redshift Configuration
 
@@ -1486,7 +1481,8 @@ docker run --rm -i \
 
 SQLite is a lightweight, file-based relational database.
 
-> **Note**: SQLite requires a custom tools configuration file. Create a `sqlite.yaml` file with your specific tools configuration.
+> [!Note] 
+> SQLite requires a custom tools configuration file. Create a `sqlite.yaml` file with your specific tools configuration.
 
 ### Docker Command
 
@@ -1539,7 +1535,8 @@ docker run --rm -i \
 
 TiDB is a distributed SQL database.
 
-> **Note**: TiDB requires a custom tools configuration file. Create a `tidb.yaml` file with your specific tools configuration.
+> [!Note] 
+> TiDB requires a custom tools configuration file. Create a `tidb.yaml` file with your specific tools configuration.
 
 ### Docker Command
 
@@ -1608,7 +1605,8 @@ docker run --rm -i \
 
 Valkey is an open-source in-memory data store, forked from Redis.
 
-> **Note**: Valkey requires a custom tools configuration file. Create a `valkey.yaml` file with your specific tools configuration.
+> [!Note] 
+> Valkey requires a custom tools configuration file. Create a `valkey.yaml` file with your specific tools configuration.
 
 ### Docker Command
 
