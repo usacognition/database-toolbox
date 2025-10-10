@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/license/usacognition/database-toolbox?colorA=363a4f&colorB=b7bdf8&style=for-the-badge" alt="License: MIT"/>
+  <img src="https://img.shields.io/github/license/usacognition/database-toolbox?style=for-the-badge&colorA=363a4f&colorB=b7bdf8" alt="License: Apache 2.0"/>
   <img src="https://img.shields.io/github/actions/workflow/status/usacognition/database-toolbox/ci.yaml?branch=main&colorA=363a4f&style=for-the-badge" alt="Build"/>
   <img src="https://img.shields.io/github/v/tag/usacognition/database-toolbox?colorA=363a4f&colorB=f5a97f&style=for-the-badge" alt="Docker Pulls"/>
 </p>
@@ -1809,8 +1809,6 @@ This project uses the Google Database Toolbox, which has its own license. Please
 
 
 <div align="center">
-
-**[⬆ back to top](#-mcp-database-toolbox)**
 
 Made with ❤️ by [Cognition AI](https://cognition.ai)
 
