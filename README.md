@@ -18,9 +18,9 @@
 
 <p align="center">
 
-  [![License: MIT](https://img.shields.io/badge/License-MIT-pink.svg?colorA=363a4f&colorB=b7bdf8&style=for-the-badge)](https://opensource.org/licenses/MIT)
-  [![Build](https://img.shields.io/github/actions/workflow/status/cognition-ai/database-toolbox/ci.yaml?branch=main&colorA=363a4f&colorB=a6da95&style=for-the-badge)](https://github.com/cognition-ai/database-toolbox/actions)
-  [![Docker Pulls](https://img.shields.io/docker/pulls/e0h8a4b6/mcp?colorA=363a4f&colorB=f5a97f&style=for-the-badge)](https://hub.docker.com/u/e0h8a4b6)
+[![License: MIT](https://img.shields.io/badge/License-MIT-pink.svg?colorA=363a4f&colorB=b7bdf8&style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Build](https://img.shields.io/github/actions/workflow/status/cognition-ai/database-toolbox/ci.yaml?branch=main&colorA=363a4f&colorB=a6da95&style=for-the-badge)](https://github.com/cognition-ai/database-toolbox/actions)
+[![Docker Pulls](https://img.shields.io/docker/pulls/e0h8a4b6/mcp?colorA=363a4f&colorB=f5a97f&style=for-the-badge)](https://hub.docker.com/u/e0h8a4b6)
 
 </p>
 
@@ -33,7 +33,7 @@
 ### Why MCP Database Toolbox?
 
 - **🚀 Zero Configuration** - Pre-built Docker images ready to use
-- **🔗 Universal Interface** - Consistent API across all database types  
+- **🔗 Universal Interface** - Consistent API across all database types
 - **🔐 Enterprise Security** - Environment-based credential management
 - **📊 Extensive Coverage** - 20+ database systems from SQL to NoSQL to analytics
 - **🐳 Cloud Native** - Optimized for containerized and serverless environments
@@ -76,7 +76,7 @@ docker run --rm -i \
 graph TD
     A["🤖 AI Agent<br/>(Claude, GPT, etc.)"] -->|MCP Protocol<br/>stdio| B["🐳 Docker Image<br/>MCP Toolbox"]
     B -->|Database Driver| C["🗄️ Database<br/>(Any supported)"]
-    
+
     style A fill:#a6da95,stroke:#363a4f,stroke-width:2px,color:#24273a
     style B fill:#8aadf4,stroke:#363a4f,stroke-width:2px,color:#24273a
     style C fill:#f5a97f,stroke:#363a4f,stroke-width:2px,color:#24273a
@@ -99,7 +99,7 @@ Each database configuration runs this image with either:
 ### Prebuilt vs Custom Configuration
 
 | **Prebuilt Support** ✅ | **Custom Config Required** 📝 |
-|-------------------------|-------------------------------|
+| ----------------------- | ----------------------------- |
 | AlloyDB for PostgreSQL  | Bigtable                      |
 | BigQuery                | Couchbase                     |
 | Cloud SQL (MySQL)       | Dgraph                        |
@@ -136,50 +136,50 @@ Each database configuration runs this image with either:
 
 ### SQL Databases
 
-| Database | Description | Prebuilt | Provider |
-|----------|-------------|----------|----------|
-| [AlloyDB for PostgreSQL](#alloydb-for-postgresql) | Fully-managed PostgreSQL-compatible database | ✅ | Google Cloud |
-| [Cloud SQL for MySQL](#cloud-sql-for-mysql) | Fully-managed MySQL database service | ✅ | Google Cloud |
-| [Cloud SQL for PostgreSQL](#cloud-sql-for-postgresql) | Fully-managed PostgreSQL database service | ✅ | Google Cloud |
-| [Cloud SQL for SQL Server](#cloud-sql-for-sql-server) | Fully-managed SQL Server database service | ✅ | Google Cloud |
-| [MySQL](#mysql) | Open-source relational database | ✅ | Community |
-| [PostgreSQL](#postgresql) | Open-source object-relational database | ✅ | Community |
-| [Spanner](#spanner) | Globally distributed relational database | ✅ | Google Cloud |
-| [SQL Server](#sql-server) | Microsoft relational database | ✅ | Microsoft |
-| [SQLite](#sqlite) | Lightweight file-based database | 📝 | Community |
-| [TiDB](#tidb) | Distributed SQL database | 📝 | PingCAP |
+| Database                                              | Description                                  | Prebuilt | Provider     |
+| ----------------------------------------------------- | -------------------------------------------- | -------- | ------------ |
+| [AlloyDB for PostgreSQL](#alloydb-for-postgresql)     | Fully-managed PostgreSQL-compatible database | ✅       | Google Cloud |
+| [Cloud SQL for MySQL](#cloud-sql-for-mysql)           | Fully-managed MySQL database service         | ✅       | Google Cloud |
+| [Cloud SQL for PostgreSQL](#cloud-sql-for-postgresql) | Fully-managed PostgreSQL database service    | ✅       | Google Cloud |
+| [Cloud SQL for SQL Server](#cloud-sql-for-sql-server) | Fully-managed SQL Server database service    | ✅       | Google Cloud |
+| [MySQL](#mysql)                                       | Open-source relational database              | ✅       | Community    |
+| [PostgreSQL](#postgresql)                             | Open-source object-relational database       | ✅       | Community    |
+| [Spanner](#spanner)                                   | Globally distributed relational database     | ✅       | Google Cloud |
+| [SQL Server](#sql-server)                             | Microsoft relational database                | ✅       | Microsoft    |
+| [SQLite](#sqlite)                                     | Lightweight file-based database              | 📝       | Community    |
+| [TiDB](#tidb)                                         | Distributed SQL database                     | 📝       | PingCAP      |
 
 ### NoSQL Databases
 
-| Database | Description | Prebuilt | Type |
-|----------|-------------|----------|------|
-| [Bigtable](#bigtable) | Low-latency wide-column store | 📝 | Wide-Column |
-| [Couchbase](#couchbase) | Distributed document database | 📝 | Document |
-| [Firestore](#firestore) | Serverless document database | ✅ | Document |
-| [MongoDB](#mongodb) | Document-oriented database | 📝 | Document |
+| Database                | Description                   | Prebuilt | Type        |
+| ----------------------- | ----------------------------- | -------- | ----------- |
+| [Bigtable](#bigtable)   | Low-latency wide-column store | 📝       | Wide-Column |
+| [Couchbase](#couchbase) | Distributed document database | 📝       | Document    |
+| [Firestore](#firestore) | Serverless document database  | ✅       | Document    |
+| [MongoDB](#mongodb)     | Document-oriented database    | 📝       | Document    |
 
 ### Analytics & Data Warehouses
 
-| Database | Description | Prebuilt | Provider |
-|----------|-------------|----------|----------|
-| [BigQuery](#bigquery) | Petabyte-scale analytics data warehouse | ✅ | Google Cloud |
-| [Dataplex](#dataplex) | Unified data governance solution | ✅ | Google Cloud |
-| [Looker](#looker) | Business intelligence platform | ✅ | Google Cloud |
-| [Redshift](#redshift) | Amazon's data warehouse service | 📝 | AWS |
+| Database              | Description                             | Prebuilt | Provider     |
+| --------------------- | --------------------------------------- | -------- | ------------ |
+| [BigQuery](#bigquery) | Petabyte-scale analytics data warehouse | ✅       | Google Cloud |
+| [Dataplex](#dataplex) | Unified data governance solution        | ✅       | Google Cloud |
+| [Looker](#looker)     | Business intelligence platform          | ✅       | Google Cloud |
+| [Redshift](#redshift) | Amazon's data warehouse service         | 📝       | AWS          |
 
 ### Graph Databases
 
-| Database | Description | Prebuilt | Type |
-|----------|-------------|----------|------|
-| [Dgraph](#dgraph) | Distributed graph database | 📝 | Native Graph |
-| [Neo4j](#neo4j) | Graph database management system | 📝 | Native Graph |
+| Database          | Description                      | Prebuilt | Type         |
+| ----------------- | -------------------------------- | -------- | ------------ |
+| [Dgraph](#dgraph) | Distributed graph database       | 📝       | Native Graph |
+| [Neo4j](#neo4j)   | Graph database management system | 📝       | Native Graph |
 
 ### Cache & In-Memory
 
-| Database | Description | Prebuilt | Type |
-|----------|-------------|----------|------|
-| [Redis](#redis) | In-memory data structure store | 📝 | Key-Value |
-| [Valkey](#valkey) | Open-source Redis fork | 📝 | Key-Value |
+| Database          | Description                    | Prebuilt | Type      |
+| ----------------- | ------------------------------ | -------- | --------- |
+| [Redis](#redis)   | In-memory data structure store | 📝       | Key-Value |
+| [Valkey](#valkey) | Open-source Redis fork         | 📝       | Key-Value |
 
 > **Legend**: ✅ = Prebuilt configuration available | 📝 = Custom YAML configuration required
 
@@ -228,7 +228,7 @@ docker run --rm -i \
     "-v", "${GOOGLE_APPLICATION_CREDENTIALS_PATH}:/creds/sa.json",
     "-e", "GOOGLE_APPLICATION_CREDENTIALS=/creds/sa.json",
     "-e", "ALLOYDB_POSTGRES_PROJECT",
-    "-e", "ALLOYDB_POSTGRES_REGION", 
+    "-e", "ALLOYDB_POSTGRES_REGION",
     "-e", "ALLOYDB_POSTGRES_CLUSTER",
     "-e", "ALLOYDB_POSTGRES_INSTANCE",
     "-e", "ALLOYDB_POSTGRES_DATABASE",
@@ -253,16 +253,16 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `ALLOYDB_POSTGRES_PROJECT` | Yes | GCP project ID | - | `my-project` |
-| `ALLOYDB_POSTGRES_REGION` | Yes | GCP region | - | `us-central1` |
-| `ALLOYDB_POSTGRES_CLUSTER` | Yes | AlloyDB cluster ID | - | `my-cluster` |
-| `ALLOYDB_POSTGRES_INSTANCE` | Yes | AlloyDB instance ID | - | `my-instance` |
-| `ALLOYDB_POSTGRES_DATABASE` | Yes | Database name | - | `mydb` |
-| `ALLOYDB_POSTGRES_USER` | Yes | Database username | - | `postgres` |
-| `ALLOYDB_POSTGRES_PASSWORD` | Yes | Database password | - | `your-password` |
-| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
+| Variable                              | Required | Description                  | Default | Example                         |
+| ------------------------------------- | -------- | ---------------------------- | ------- | ------------------------------- |
+| `ALLOYDB_POSTGRES_PROJECT`            | Yes      | GCP project ID               | -       | `my-project`                    |
+| `ALLOYDB_POSTGRES_REGION`             | Yes      | GCP region                   | -       | `us-central1`                   |
+| `ALLOYDB_POSTGRES_CLUSTER`            | Yes      | AlloyDB cluster ID           | -       | `my-cluster`                    |
+| `ALLOYDB_POSTGRES_INSTANCE`           | Yes      | AlloyDB instance ID          | -       | `my-instance`                   |
+| `ALLOYDB_POSTGRES_DATABASE`           | Yes      | Database name                | -       | `mydb`                          |
+| `ALLOYDB_POSTGRES_USER`               | Yes      | Database username            | -       | `postgres`                      |
+| `ALLOYDB_POSTGRES_PASSWORD`           | Yes      | Database password            | -       | `your-password`                 |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON | -       | `/path/to/service-account.json` |
 
 ---
 
@@ -312,12 +312,12 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `BIGQUERY_PROJECT` | Yes | GCP project ID | - | `my-project` |
-| `BIGQUERY_DATASET` | Yes | Default dataset | - | `my_dataset` |
-| `BIGQUERY_LOCATION` | No | BigQuery location | `US` | `US`, `EU` |
-| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
+| Variable                              | Required | Description                  | Default | Example                         |
+| ------------------------------------- | -------- | ---------------------------- | ------- | ------------------------------- |
+| `BIGQUERY_PROJECT`                    | Yes      | GCP project ID               | -       | `my-project`                    |
+| `BIGQUERY_DATASET`                    | Yes      | Default dataset              | -       | `my_dataset`                    |
+| `BIGQUERY_LOCATION`                   | No       | BigQuery location            | `US`    | `US`, `EU`                      |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON | -       | `/path/to/service-account.json` |
 
 ---
 
@@ -377,13 +377,13 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `BIGTABLE_PROJECT` | Yes | GCP project ID | - | `my-project` |
-| `BIGTABLE_INSTANCE` | Yes | Bigtable instance ID | - | `my-instance` |
-| `BIGTABLE_TABLE` | Yes | Bigtable table name | - | `my-table` |
-| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
-| `BIGTABLE_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/bigtable.yaml` |
+| Variable                              | Required | Description                      | Default | Example                         |
+| ------------------------------------- | -------- | -------------------------------- | ------- | ------------------------------- |
+| `BIGTABLE_PROJECT`                    | Yes      | GCP project ID                   | -       | `my-project`                    |
+| `BIGTABLE_INSTANCE`                   | Yes      | Bigtable instance ID             | -       | `my-instance`                   |
+| `BIGTABLE_TABLE`                      | Yes      | Bigtable table name              | -       | `my-table`                      |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON     | -       | `/path/to/service-account.json` |
+| `BIGTABLE_TOOLS_FILE`                 | Yes      | Path to tools configuration YAML | -       | `/path/to/bigtable.yaml`        |
 
 ---
 
@@ -453,16 +453,16 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `CLOUD_SQL_MYSQL_PROJECT` | Yes | GCP project ID | - | `my-project` |
-| `CLOUD_SQL_MYSQL_REGION` | Yes | GCP region | - | `us-central1` |
-| `CLOUD_SQL_MYSQL_INSTANCE` | Yes | Cloud SQL instance name | - | `my-instance` |
-| `CLOUD_SQL_MYSQL_DATABASE` | Yes | Database name | - | `mydb` |
-| `CLOUD_SQL_MYSQL_USER` | Yes | Database username | - | `root` |
-| `CLOUD_SQL_MYSQL_IP_ADDRESS` | Yes | Public IP address of the Cloud SQL instance | - | `34.133.171.252` |
-| `CLOUD_SQL_MYSQL_PASSWORD` | Yes | Database password | - | `your-password` |
-| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
+| Variable                              | Required | Description                                 | Default | Example                         |
+| ------------------------------------- | -------- | ------------------------------------------- | ------- | ------------------------------- |
+| `CLOUD_SQL_MYSQL_PROJECT`             | Yes      | GCP project ID                              | -       | `my-project`                    |
+| `CLOUD_SQL_MYSQL_REGION`              | Yes      | GCP region                                  | -       | `us-central1`                   |
+| `CLOUD_SQL_MYSQL_INSTANCE`            | Yes      | Cloud SQL instance name                     | -       | `my-instance`                   |
+| `CLOUD_SQL_MYSQL_DATABASE`            | Yes      | Database name                               | -       | `mydb`                          |
+| `CLOUD_SQL_MYSQL_USER`                | Yes      | Database username                           | -       | `root`                          |
+| `CLOUD_SQL_MYSQL_IP_ADDRESS`          | Yes      | Public IP address of the Cloud SQL instance | -       | `34.133.171.252`                |
+| `CLOUD_SQL_MYSQL_PASSWORD`            | Yes      | Database password                           | -       | `your-password`                 |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON                | -       | `/path/to/service-account.json` |
 
 ---
 
@@ -532,16 +532,16 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `CLOUD_SQL_POSTGRES_PROJECT` | Yes | GCP project ID | - | `my-project` |
-| `CLOUD_SQL_POSTGRES_REGION` | Yes | GCP region | - | `us-central1` |
-| `CLOUD_SQL_POSTGRES_INSTANCE` | Yes | Cloud SQL instance name | - | `my-instance` |
-| `CLOUD_SQL_POSTGRES_DATABASE` | Yes | Database name | - | `mydb` |
-| `CLOUD_SQL_POSTGRES_USER` | Yes | Database username | - | `postgres` |
-| `CLOUD_SQL_POSTGRES_PASSWORD` | Yes | Database password | - | `your-password` |
-| `CLOUD_SQL_POSTGRES_IP_ADDRESS` | Yes | Public IP address of the Cloud SQL instance | - | `34.133.171.252` |
-| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
+| Variable                              | Required | Description                                 | Default | Example                         |
+| ------------------------------------- | -------- | ------------------------------------------- | ------- | ------------------------------- |
+| `CLOUD_SQL_POSTGRES_PROJECT`          | Yes      | GCP project ID                              | -       | `my-project`                    |
+| `CLOUD_SQL_POSTGRES_REGION`           | Yes      | GCP region                                  | -       | `us-central1`                   |
+| `CLOUD_SQL_POSTGRES_INSTANCE`         | Yes      | Cloud SQL instance name                     | -       | `my-instance`                   |
+| `CLOUD_SQL_POSTGRES_DATABASE`         | Yes      | Database name                               | -       | `mydb`                          |
+| `CLOUD_SQL_POSTGRES_USER`             | Yes      | Database username                           | -       | `postgres`                      |
+| `CLOUD_SQL_POSTGRES_PASSWORD`         | Yes      | Database password                           | -       | `your-password`                 |
+| `CLOUD_SQL_POSTGRES_IP_ADDRESS`       | Yes      | Public IP address of the Cloud SQL instance | -       | `34.133.171.252`                |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON                | -       | `/path/to/service-account.json` |
 
 ---
 
@@ -611,16 +611,16 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `CLOUD_SQL_MSSQL_PROJECT` | Yes | GCP project ID | - | `my-project` |
-| `CLOUD_SQL_MSSQL_REGION` | Yes | GCP region | - | `us-central1` |
-| `CLOUD_SQL_MSSQL_INSTANCE` | Yes | Cloud SQL instance name | - | `my-instance` |
-| `CLOUD_SQL_MSSQL_DATABASE` | Yes | Database name | - | `mydb` |
-| `CLOUD_SQL_MSSQL_USER` | Yes | Database username | - | `sqlserver` |
-| `CLOUD_SQL_MSSQL_IP_ADDRESS` | Yes | Public IP address of the Cloud SQL instance | - | `34.133.171.252` |
-| `CLOUD_SQL_MSSQL_PASSWORD` | Yes | Database password | - | `your-password` |
-| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
+| Variable                              | Required | Description                                 | Default | Example                         |
+| ------------------------------------- | -------- | ------------------------------------------- | ------- | ------------------------------- |
+| `CLOUD_SQL_MSSQL_PROJECT`             | Yes      | GCP project ID                              | -       | `my-project`                    |
+| `CLOUD_SQL_MSSQL_REGION`              | Yes      | GCP region                                  | -       | `us-central1`                   |
+| `CLOUD_SQL_MSSQL_INSTANCE`            | Yes      | Cloud SQL instance name                     | -       | `my-instance`                   |
+| `CLOUD_SQL_MSSQL_DATABASE`            | Yes      | Database name                               | -       | `mydb`                          |
+| `CLOUD_SQL_MSSQL_USER`                | Yes      | Database username                           | -       | `sqlserver`                     |
+| `CLOUD_SQL_MSSQL_IP_ADDRESS`          | Yes      | Public IP address of the Cloud SQL instance | -       | `34.133.171.252`                |
+| `CLOUD_SQL_MSSQL_PASSWORD`            | Yes      | Database password                           | -       | `your-password`                 |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON                | -       | `/path/to/service-account.json` |
 
 ---
 
@@ -678,14 +678,14 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `COUCHBASE_HOST` | Yes | Couchbase host | - | `localhost` |
-| `COUCHBASE_PORT` | No | Couchbase port | `8091` | `8091` |
-| `COUCHBASE_BUCKET` | Yes | Bucket name | - | `my-bucket` |
-| `COUCHBASE_USERNAME` | Yes | Username | - | `Administrator` |
-| `COUCHBASE_PASSWORD` | Yes | Password | - | `your-password` |
-| `COUCHBASE_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/couchbase.yaml` |
+| Variable               | Required | Description                      | Default | Example                   |
+| ---------------------- | -------- | -------------------------------- | ------- | ------------------------- |
+| `COUCHBASE_HOST`       | Yes      | Couchbase host                   | -       | `localhost`               |
+| `COUCHBASE_PORT`       | No       | Couchbase port                   | `8091`  | `8091`                    |
+| `COUCHBASE_BUCKET`     | Yes      | Bucket name                      | -       | `my-bucket`               |
+| `COUCHBASE_USERNAME`   | Yes      | Username                         | -       | `Administrator`           |
+| `COUCHBASE_PASSWORD`   | Yes      | Password                         | -       | `your-password`           |
+| `COUCHBASE_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/couchbase.yaml` |
 
 ---
 
@@ -737,11 +737,11 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `DATAPLEX_PROJECT` | Yes | GCP project ID | - | `my-project` |
-| `DATAPLEX_LOCATION` | Yes | Dataplex location | - | `us-central1` |
-| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
+| Variable                              | Required | Description                  | Default | Example                         |
+| ------------------------------------- | -------- | ---------------------------- | ------- | ------------------------------- |
+| `DATAPLEX_PROJECT`                    | Yes      | GCP project ID               | -       | `my-project`                    |
+| `DATAPLEX_LOCATION`                   | Yes      | Dataplex location            | -       | `us-central1`                   |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON | -       | `/path/to/service-account.json` |
 
 ---
 
@@ -792,12 +792,12 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `DGRAPH_HOST` | Yes | Dgraph host | - | `localhost` |
-| `DGRAPH_PORT` | No | Dgraph gRPC port | `9080` | `9080` |
-| `DGRAPH_API_KEY` | No | API key if using Dgraph Cloud | - | `your-api-key` |
-| `DGRAPH_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/dgraph.yaml` |
+| Variable            | Required | Description                      | Default | Example                |
+| ------------------- | -------- | -------------------------------- | ------- | ---------------------- |
+| `DGRAPH_HOST`       | Yes      | Dgraph host                      | -       | `localhost`            |
+| `DGRAPH_PORT`       | No       | Dgraph gRPC port                 | `9080`  | `9080`                 |
+| `DGRAPH_API_KEY`    | No       | API key if using Dgraph Cloud    | -       | `your-api-key`         |
+| `DGRAPH_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/dgraph.yaml` |
 
 ---
 
@@ -847,11 +847,11 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `FIRESTORE_PROJECT` | Yes | GCP project ID | - | `my-project` |
-| `FIRESTORE_DATABASE` | No | Database ID | `(default)` | `(default)` |
-| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
+| Variable                              | Required | Description                  | Default     | Example                         |
+| ------------------------------------- | -------- | ---------------------------- | ----------- | ------------------------------- |
+| `FIRESTORE_PROJECT`                   | Yes      | GCP project ID               | -           | `my-project`                    |
+| `FIRESTORE_DATABASE`                  | No       | Database ID                  | `(default)` | `(default)`                     |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON | -           | `/path/to/service-account.json` |
 
 ---
 
@@ -899,11 +899,11 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `LOOKER_BASE_URL` | Yes | Looker instance URL | - | `https://mycompany.looker.com` |
-| `LOOKER_CLIENT_ID` | Yes | API client ID | - | `your-client-id` |
-| `LOOKER_CLIENT_SECRET` | Yes | API client secret | - | `your-client-secret` |
+| Variable               | Required | Description         | Default | Example                        |
+| ---------------------- | -------- | ------------------- | ------- | ------------------------------ |
+| `LOOKER_BASE_URL`      | Yes      | Looker instance URL | -       | `https://mycompany.looker.com` |
+| `LOOKER_CLIENT_ID`     | Yes      | API client ID       | -       | `your-client-id`               |
+| `LOOKER_CLIENT_SECRET` | Yes      | API client secret   | -       | `your-client-secret`           |
 
 ---
 
@@ -961,13 +961,13 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `MONGODB_URI` | Yes | MongoDB connection URI | - | `mongodb://localhost:27017` |
-| `MONGODB_DATABASE` | Yes | Database name | - | `mydb` |
-| `MONGODB_USERNAME` | No | Username | - | `admin` |
-| `MONGODB_PASSWORD` | No | Password | - | `your-password` |
-| `MONGODB_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/mongodb.yaml` |
+| Variable             | Required | Description                      | Default | Example                     |
+| -------------------- | -------- | -------------------------------- | ------- | --------------------------- |
+| `MONGODB_URI`        | Yes      | MongoDB connection URI           | -       | `mongodb://localhost:27017` |
+| `MONGODB_DATABASE`   | Yes      | Database name                    | -       | `mydb`                      |
+| `MONGODB_USERNAME`   | No       | Username                         | -       | `admin`                     |
+| `MONGODB_PASSWORD`   | No       | Password                         | -       | `your-password`             |
+| `MONGODB_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/mongodb.yaml`     |
 
 ---
 
@@ -1023,13 +1023,13 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `MYSQL_HOST` | Yes | MySQL host | - | `localhost` |
-| `MYSQL_PORT` | No | MySQL port | `3306` | `3306` |
-| `MYSQL_DATABASE` | Yes | Database name | - | `mydb` |
-| `MYSQL_USER` | Yes | Username | - | `root` |
-| `MYSQL_PASSWORD` | Yes | Password | - | `your-password` |
+| Variable         | Required | Description   | Default | Example         |
+| ---------------- | -------- | ------------- | ------- | --------------- |
+| `MYSQL_HOST`     | Yes      | MySQL host    | -       | `localhost`     |
+| `MYSQL_PORT`     | No       | MySQL port    | `3306`  | `3306`          |
+| `MYSQL_DATABASE` | Yes      | Database name | -       | `mydb`          |
+| `MYSQL_USER`     | Yes      | Username      | -       | `root`          |
+| `MYSQL_PASSWORD` | Yes      | Password      | -       | `your-password` |
 
 ---
 
@@ -1087,13 +1087,13 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `NEO4J_URI` | Yes | Neo4j connection URI | - | `bolt://localhost:7687` |
-| `NEO4J_USERNAME` | Yes | Username | - | `neo4j` |
-| `NEO4J_PASSWORD` | Yes | Password | - | `your-password` |
-| `NEO4J_DATABASE` | No | Database name | `neo4j` | `neo4j` |
-| `NEO4J_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/neo4j.yaml` |
+| Variable           | Required | Description                      | Default | Example                 |
+| ------------------ | -------- | -------------------------------- | ------- | ----------------------- |
+| `NEO4J_URI`        | Yes      | Neo4j connection URI             | -       | `bolt://localhost:7687` |
+| `NEO4J_USERNAME`   | Yes      | Username                         | -       | `neo4j`                 |
+| `NEO4J_PASSWORD`   | Yes      | Password                         | -       | `your-password`         |
+| `NEO4J_DATABASE`   | No       | Database name                    | `neo4j` | `neo4j`                 |
+| `NEO4J_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/neo4j.yaml`   |
 
 ---
 
@@ -1149,14 +1149,14 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `POSTGRES_HOST` | Yes | PostgreSQL host | - | `localhost` |
-| `POSTGRES_PORT` | No | PostgreSQL port | `5432` | `5432` |
-| `POSTGRES_DATABASE` | Yes | Database name | - | `mydb` |
-| `POSTGRES_USER` | Yes | Username | - | `postgres` |
-| `POSTGRES_PASSWORD` | Yes | Password | - | `your-password` |
-| `POSTGRES_SSL_MODE` | No | SSL mode | `prefer` | `disable`, `require` |
+| Variable            | Required | Description     | Default  | Example              |
+| ------------------- | -------- | --------------- | -------- | -------------------- |
+| `POSTGRES_HOST`     | Yes      | PostgreSQL host | -        | `localhost`          |
+| `POSTGRES_PORT`     | No       | PostgreSQL port | `5432`   | `5432`               |
+| `POSTGRES_DATABASE` | Yes      | Database name   | -        | `mydb`               |
+| `POSTGRES_USER`     | Yes      | Username        | -        | `postgres`           |
+| `POSTGRES_PASSWORD` | Yes      | Password        | -        | `your-password`      |
+| `POSTGRES_SSL_MODE` | No       | SSL mode        | `prefer` | `disable`, `require` |
 
 ---
 
@@ -1212,14 +1212,14 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|  
-| `REDIS_HOST` | Yes | Redis host | - | `localhost` |
-| `REDIS_PORT` | No | Redis port | `6379` | `6379` |
-| `REDIS_PASSWORD` | No | Password | - | `your-password` |
-| `REDIS_DB` | No | Database number | `0` | `0` |
-| `REDIS_USERNAME` | No | Username (Redis 6+) | - | `default` |
-| `REDIS_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/redis.yaml` |
+| Variable           | Required | Description                      | Default | Example               |
+| ------------------ | -------- | -------------------------------- | ------- | --------------------- |
+| `REDIS_HOST`       | Yes      | Redis host                       | -       | `localhost`           |
+| `REDIS_PORT`       | No       | Redis port                       | `6379`  | `6379`                |
+| `REDIS_PASSWORD`   | No       | Password                         | -       | `your-password`       |
+| `REDIS_DB`         | No       | Database number                  | `0`     | `0`                   |
+| `REDIS_USERNAME`   | No       | Username (Redis 6+)              | -       | `default`             |
+| `REDIS_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/redis.yaml` |
 
 ---
 
@@ -1341,14 +1341,14 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `POSTGRES_HOST` | Yes | Redshift cluster endpoint | - | `your-cluster.redshift.amazonaws.com` |
-| `POSTGRES_PORT` | No | Redshift port | `5439` | `5439` |
-| `POSTGRES_DATABASE` | Yes | Database name | - | `mydb` |
-| `POSTGRES_USER` | Yes | Username | - | `awsuser` |
-| `POSTGRES_PASSWORD` | Yes | Password | - | `your-password` |
-| `REDSHIFT_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/redshift.yaml` |
+| Variable              | Required | Description                      | Default | Example                               |
+| --------------------- | -------- | -------------------------------- | ------- | ------------------------------------- |
+| `POSTGRES_HOST`       | Yes      | Redshift cluster endpoint        | -       | `your-cluster.redshift.amazonaws.com` |
+| `POSTGRES_PORT`       | No       | Redshift port                    | `5439`  | `5439`                                |
+| `POSTGRES_DATABASE`   | Yes      | Database name                    | -       | `mydb`                                |
+| `POSTGRES_USER`       | Yes      | Username                         | -       | `awsuser`                             |
+| `POSTGRES_PASSWORD`   | Yes      | Password                         | -       | `your-password`                       |
+| `REDSHIFT_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/redshift.yaml`              |
 
 ---
 
@@ -1402,12 +1402,12 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|  
-| `SPANNER_PROJECT` | Yes | GCP project ID | - | `my-project` |
-| `SPANNER_INSTANCE` | Yes | Spanner instance ID | - | `my-instance` |
-| `SPANNER_DATABASE` | Yes | Database name | - | `mydb` |
-| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes | Path to service account JSON | - | `/path/to/service-account.json` |
+| Variable                              | Required | Description                  | Default | Example                         |
+| ------------------------------------- | -------- | ---------------------------- | ------- | ------------------------------- |
+| `SPANNER_PROJECT`                     | Yes      | GCP project ID               | -       | `my-project`                    |
+| `SPANNER_INSTANCE`                    | Yes      | Spanner instance ID          | -       | `my-instance`                   |
+| `SPANNER_DATABASE`                    | Yes      | Database name                | -       | `mydb`                          |
+| `GOOGLE_APPLICATION_CREDENTIALS_PATH` | Yes      | Path to service account JSON | -       | `/path/to/service-account.json` |
 
 ---
 
@@ -1463,14 +1463,14 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|  
-| `MSSQL_HOST` | Yes | SQL Server host | - | `localhost` |
-| `MSSQL_PORT` | No | SQL Server port | `1433` | `1433` |
-| `MSSQL_DATABASE` | Yes | Database name | - | `mydb` |
-| `MSSQL_USER` | Yes | Username | - | `sa` |
-| `MSSQL_PASSWORD` | Yes | Password | - | `your-password` |
-| `MSSQL_TRUST_CERT` | No | Trust server certificate | `false` | `true`, `false` |
+| Variable           | Required | Description              | Default | Example         |
+| ------------------ | -------- | ------------------------ | ------- | --------------- |
+| `MSSQL_HOST`       | Yes      | SQL Server host          | -       | `localhost`     |
+| `MSSQL_PORT`       | No       | SQL Server port          | `1433`  | `1433`          |
+| `MSSQL_DATABASE`   | Yes      | Database name            | -       | `mydb`          |
+| `MSSQL_USER`       | Yes      | Username                 | -       | `sa`            |
+| `MSSQL_PASSWORD`   | Yes      | Password                 | -       | `your-password` |
+| `MSSQL_TRUST_CERT` | No       | Trust server certificate | `false` | `true`, `false` |
 
 ---
 
@@ -1519,11 +1519,11 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|  
-| `SQLITE_FILE` | Yes | Path to SQLite file | - | `/data/mydb.sqlite` |
-| `SQLITE_READONLY` | No | Open in read-only mode | `false` | `true`, `false` |
-| `SQLITE_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/sqlite.yaml` |
+| Variable            | Required | Description                      | Default | Example                |
+| ------------------- | -------- | -------------------------------- | ------- | ---------------------- |
+| `SQLITE_FILE`       | Yes      | Path to SQLite file              | -       | `/data/mydb.sqlite`    |
+| `SQLITE_READONLY`   | No       | Open in read-only mode           | `false` | `true`, `false`        |
+| `SQLITE_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/sqlite.yaml` |
 
 ---
 
@@ -1585,14 +1585,14 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|  
-| `TIDB_HOST` | Yes | TiDB host | - | `localhost` |
-| `TIDB_PORT` | No | TiDB port | `4000` | `4000` |
-| `TIDB_DATABASE` | Yes | Database name | - | `mydb` |
-| `TIDB_USER` | Yes | Username | - | `root` |
-| `TIDB_PASSWORD` | No | Password | - | `your-password` |
-| `TIDB_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/tidb.yaml` |
+| Variable          | Required | Description                      | Default | Example              |
+| ----------------- | -------- | -------------------------------- | ------- | -------------------- |
+| `TIDB_HOST`       | Yes      | TiDB host                        | -       | `localhost`          |
+| `TIDB_PORT`       | No       | TiDB port                        | `4000`  | `4000`               |
+| `TIDB_DATABASE`   | Yes      | Database name                    | -       | `mydb`               |
+| `TIDB_USER`       | Yes      | Username                         | -       | `root`               |
+| `TIDB_PASSWORD`   | No       | Password                         | -       | `your-password`      |
+| `TIDB_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/tidb.yaml` |
 
 ---
 
@@ -1648,14 +1648,14 @@ docker run --rm -i \
 
 ### Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|  
-| `VALKEY_HOST` | Yes | Valkey host | - | `localhost` |
-| `VALKEY_PORT` | No | Valkey port | `6379` | `6379` |
-| `VALKEY_PASSWORD` | No | Password | - | `your-password` |
-| `VALKEY_DB` | No | Database number | `0` | `0` |
-| `VALKEY_USERNAME` | No | Username | - | `default` |
-| `VALKEY_TOOLS_FILE` | Yes | Path to tools configuration YAML | - | `/path/to/valkey.yaml` |
+| Variable            | Required | Description                      | Default | Example                |
+| ------------------- | -------- | -------------------------------- | ------- | ---------------------- |
+| `VALKEY_HOST`       | Yes      | Valkey host                      | -       | `localhost`            |
+| `VALKEY_PORT`       | No       | Valkey port                      | `6379`  | `6379`                 |
+| `VALKEY_PASSWORD`   | No       | Password                         | -       | `your-password`        |
+| `VALKEY_DB`         | No       | Database number                  | `0`     | `0`                    |
+| `VALKEY_USERNAME`   | No       | Username                         | -       | `default`              |
+| `VALKEY_TOOLS_FILE` | Yes      | Path to tools configuration YAML | -       | `/path/to/valkey.yaml` |
 
 ---
 
@@ -1669,6 +1669,7 @@ docker run --rm -i \
 **Problem**: Docker container cannot reach your database.
 
 **Solutions**:
+
 - Use `host.docker.internal` instead of `localhost` on macOS/Windows
 - Ensure database port is accessible from Docker network
 - Check firewall rules and security groups
@@ -1681,6 +1682,7 @@ docker run --rm -i \
 **Problem**: Invalid credentials or permission denied.
 
 **Solutions**:
+
 - Verify environment variables are set correctly
 - Check user has required database permissions
 - For GCP services, ensure service account has appropriate IAM roles
@@ -1693,6 +1695,7 @@ docker run --rm -i \
 **Problem**: Database requires custom YAML but configuration fails.
 
 **Solutions**:
+
 - Ensure YAML file is valid (use online YAML validator)
 - Verify file is correctly mounted into container
 - Check file permissions (must be readable by container)
@@ -1705,6 +1708,7 @@ docker run --rm -i \
 **Problem**: Cannot pull base toolbox image.
 
 **Solutions**:
+
 - Authenticate with Google Cloud: `gcloud auth configure-docker us-central1-docker.pkg.dev`
 - Verify network connectivity
 - Check Docker daemon is running

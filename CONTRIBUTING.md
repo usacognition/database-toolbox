@@ -40,6 +40,7 @@ Before you begin, ensure you have the following installed:
 - **A code editor** - We recommend [VS Code](https://code.visualstudio.com/)
 
 Optional but recommended:
+
 - **Google Cloud CLI** (for GCP database testing) - [Install gcloud](https://cloud.google.com/sdk/docs/install)
 - **AWS CLI** (for AWS database testing) - [Install AWS CLI](https://aws.amazon.com/cli/)
 
@@ -62,6 +63,7 @@ database-toolbox/
 ```
 
 Each database has its own subdirectory in `images/` with:
+
 - `Dockerfile` - Image build instructions
 - `README.md` - Database-specific documentation
 - Configuration files (if needed)
@@ -268,30 +270,32 @@ Brief description of the database.
 
 ## Environment Variables
 
-| Variable | Required | Description | Default | Example |
-|----------|----------|-------------|---------|---------|
-| `VAR_NAME` | Yes | Variable description | - | `example-value` |
+| Variable   | Required | Description          | Default | Example         |
+| ---------- | -------- | -------------------- | ------- | --------------- |
+| `VAR_NAME` | Yes      | Variable description | -       | `example-value` |
 
 ## Quick Start
 
 \`\`\`bash
+
 # Docker command example
+
 docker run --rm -i \
-  -e VAR_NAME=value \
-  us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
-  --prebuilt your-database \
-  --stdio
+ -e VAR_NAME=value \
+ us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
+ --prebuilt your-database \
+ --stdio
 \`\`\`
 
 ## MCP Client Configuration
 
 \`\`\`json
 {
-  "your-database": {
-    "command": "docker",
-    "args": [...],
-    "env": {...}
-  }
+"your-database": {
+"command": "docker",
+"args": [...],
+"env": {...}
+}
 }
 \`\`\`
 
@@ -377,6 +381,7 @@ Documentation improvements are always welcome! You can:
 - **Add diagrams** - Visual aids help understanding
 
 Documentation files to improve:
+
 - `README.md` - Main documentation
 - `CONTRIBUTING.md` - This file
 - Database-specific READMEs in `images/*/README.md`
@@ -393,6 +398,7 @@ Good tests ensure reliability. You can contribute by:
 5. **Performance tests** - Ensure images are efficient
 
 Test guidelines:
+
 - Tests should be reproducible
 - Use clear, descriptive test names
 - Include both positive and negative test cases
@@ -452,6 +458,7 @@ git commit -m "test(bigquery): add integration tests"
 ```
 
 **Types:**
+
 - `feat` - New feature
 - `fix` - Bug fix
 - `docs` - Documentation changes
@@ -477,6 +484,7 @@ git commit -m "test(bigquery): add integration tests"
 ### Submitting the PR
 
 1. **Push your branch** to your fork
+
    ```bash
    git push origin feature/your-feature-name
    ```
@@ -484,6 +492,7 @@ git commit -m "test(bigquery): add integration tests"
 2. **Open a Pull Request** on GitHub
 
 3. **Fill out the PR template** with:
+
    - Clear description of changes
    - Related issue numbers (e.g., "Fixes #123")
    - Type of change (bug fix, feature, docs, etc.)
@@ -502,6 +511,7 @@ git commit -m "test(bigquery): add integration tests"
 ### PR Requirements
 
 Your PR must:
+
 - ✅ Pass all CI/CD checks
 - ✅ Have at least one approving review
 - ✅ Have no unresolved conversations
@@ -611,6 +621,7 @@ export DB_PASSWORD="real-password"
 ### CI/CD Testing
 
 The CI/CD pipeline automatically:
+
 - Builds all images
 - Runs tests
 - Checks for vulnerabilities
@@ -628,6 +639,7 @@ Check the status in the GitHub Actions tab.
 ### Versioning
 
 We follow [Semantic Versioning](https://semver.org/):
+
 - `MAJOR.MINOR.PATCH` (e.g., `1.2.3`)
 - **MAJOR** - Breaking changes
 - **MINOR** - New features (backwards compatible)
@@ -663,6 +675,7 @@ We follow [Semantic Versioning](https://semver.org/):
 ### Recognition
 
 We value all contributions! Contributors are:
+
 - Listed in the README
 - Mentioned in release notes
 - Given credit in commit history
